@@ -315,3 +315,17 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/python,windows,linux,macos,visualstudiocode
+# Backup directories and files
+src/frontend-backup-*/
+*-backup/
+*.backup
+*_backup.py
+
+# Temporary fix scripts
+fix-*.sh
+
+# Old status reports
+*_STATUS.md
+*_SUCCESS.md
+*_FIXED.md
+*_COMPLETE.md
