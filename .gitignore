@@ -329,3 +329,8 @@ fix-*.sh
 *_SUCCESS.md
 *_FIXED.md
 *_COMPLETE.md
+
+# CDK and Node dependencies
+deployments/infrastructure/cdk/node_modules/
+**/cdk.out/
+node_modules/
