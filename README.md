@@ -92,6 +92,34 @@ npm install
 
 See [SECURITY_AUDIT_REPORT.md](./SECURITY_AUDIT_REPORT.md) for detailed security assessment.
 
+## 🏗️ Multi-Agent Architecture
+
+Our system implements a **production-grade multi-agent architecture** with 5 specialized AI agents:
+
+### 🤖 Intelligent Agents
+
+1. **Risk Assessment Agent** - Credit risk, market risk, portfolio analysis
+2. **Compliance Monitoring Agent** - AML, KYC, regulatory compliance
+3. **Document Processing Agent** - OCR, data extraction, classification
+4. **Customer Service Agent** - Natural language Q&A, support
+5. **Fraud Detection Agent** - Anomaly detection, pattern recognition
+
+### 🔄 Agent Orchestration
+
+```
+Sequential:  Task → Agent1 → Agent2 → Agent3 → Result
+
+Parallel:    Task ─┬─→ Agent1 ─┬─→ Aggregator → Result
+                   ├─→ Agent2 ─┤
+                   └─→ Agent3 ─┘
+
+Hierarchical: Supervisor ─┬─→ Sub-Agent1
+                          ├─→ Sub-Agent2
+                          └─→ Sub-Agent3
+```
+
+**📖 Detailed Architecture**: [ARCHITECTURE.md](./ARCHITECTURE.md) | [Multi-Agent Docs](./docs/architecture/MULTI_AGENT_ARCHITECTURE.md)
+
 ## 🛠️ Technology Stack
 
 **Backend**: FastAPI, LangChain, LangGraph, PostgreSQL, MongoDB, Redis, AWS Bedrock
