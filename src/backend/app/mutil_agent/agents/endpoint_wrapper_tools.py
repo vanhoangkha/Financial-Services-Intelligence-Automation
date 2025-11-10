@@ -17,52 +17,70 @@ logger = logging.getLogger(__name__)
 @tool
 def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = None) -> str:
     """
-    Compliance document validation tool - wraps /compliance/document endpoint
+    Compliance document validation tool - uses services directly (not routes)
     Preserves EXACT logic from compliance_routes.py
     """
     try:
         logger.info(f"🔧 [COMPLIANCE_TOOL] Processing: {query[:100]}...")
-        
+
         if file_data and file_data.get('raw_bytes'):
-            # Import EXACT endpoint function
-            from app.mutil_agent.routes.v1.compliance_routes import validate_document_file
-            
+            # Use services directly instead of routes (better architecture)
+            from app.mutil_agent.services.compliance_service import ComplianceValidationService
+            from app.mutil_agent.services.text_service import TextSummaryService
+
             try:
-                # Create UploadFile object - EXACT same as endpoint expects
-                file_obj = UploadFile(
-                    filename=file_data.get('filename', 'document.pdf'),
-                    file=io.BytesIO(file_data.get('raw_bytes')),
-                    size=len(file_data.get('raw_bytes', b'')),
-                    headers={"content-type": file_data.get('content_type', 'application/pdf')}
-                )
-                
-                # Reset file pointer
-                file_obj.file.seek(0)
-                
-                # Call EXACT endpoint function with EXACT parameters
-                async def call_endpoint():
-                    return await validate_document_file(
-                        file=file_obj,
-                        document_type=None  # Auto-detect as in endpoint
+                file_content = file_data.get('raw_bytes')
+                filename = file_data.get('filename', 'document.pdf')
+                file_extension = os.path.splitext(filename)[1].lower()
+
+                # Extract text from document using service
+                text_service = TextSummaryService()
+
+                async def extract_and_validate():
+                    # Extract text (same as route logic)
+                    extracted_text = await text_service.extract_text_from_document(
+                        file_content=file_content,
+                        file_extension=file_extension,
+                        filename=filename
                     )
-                
+
+                    if not extracted_text or len(extracted_text.strip()) < 50:
+                        raise ValueError("Không thể trích xuất đủ văn bản từ file để kiểm tra tuân thủ")
+
+                    # Validate compliance using service
+                    compliance_service = ComplianceValidationService()
+                    validation_result = await compliance_service.validate_document_compliance(
+                        ocr_text=extracted_text,
+                        document_type=None  # Auto-detect
+                    )
+
+                    # Add file info to result (same as route)
+                    validation_result["file_info"] = {
+                        "filename": filename,
+                        "file_size": len(file_content),
+                        "file_type": file_extension,
+                        "extracted_text_length": len(extracted_text)
+                    }
+
+                    return validation_result
+
                 # Execute with proper async handling
                 try:
-                    result = asyncio.run(call_endpoint())
+                    data = asyncio.run(extract_and_validate())
                 except RuntimeError as e:
                     if "cannot be called from a running event loop" in str(e):
                         import concurrent.futures
                         def run_in_thread():
-                            return asyncio.run(call_endpoint())
+                            return asyncio.run(extract_and_validate())
                         with concurrent.futures.ThreadPoolExecutor() as executor:
                             future = executor.submit(run_in_thread)
-                            result = future.result(timeout=30)
+                            data = future.result(timeout=30)
                     else:
                         raise e
-                
+
                 # Format response using EXACT endpoint result structure
-                if result and isinstance(result, dict):
-                    data = result
+                if data and isinstance(data, dict):
+                    # Use data directly (already has the validation result)
                     
                     response = f"""⚖️ **Kiểm tra tuân thủ - VPBank K-MULT**
 
@@ -155,55 +173,72 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
 @tool
 def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] = None) -> str:
     """
-    Text summary document tool - wraps /text/summary/document endpoint
+    Text summary document tool - uses services directly (not routes)
     Preserves EXACT logic from text_routes.py
     """
     try:
         logger.info(f"📄 [TEXT_SUMMARY_TOOL] Processing: {query[:100]}...")
-        
+
         if file_data and file_data.get('raw_bytes'):
-            # Import EXACT endpoint function
-            from app.mutil_agent.routes.v1.text_routes import summarize_document
-            
+            # Use service directly instead of route (better architecture)
+            from app.mutil_agent.services.text_service import TextSummaryService
+
             try:
-                # Create UploadFile object - EXACT same as endpoint expects
-                file_obj = UploadFile(
-                    filename=file_data.get('filename', 'document.pdf'),
-                    file=io.BytesIO(file_data.get('raw_bytes')),
-                    size=len(file_data.get('raw_bytes', b'')),
-                    headers={"content-type": file_data.get('content_type', 'application/pdf')}
-                )
-                
-                # Reset file pointer
-                file_obj.file.seek(0)
-                
-                # Call EXACT endpoint function with EXACT parameters from endpoint
-                async def call_endpoint():
-                    return await summarize_document(
-                        file=file_obj,
-                        summary_type="general",  # Default from endpoint
-                        max_length=300,         # Default from endpoint
-                        language="vietnamese",   # Default from endpoint
-                        max_pages=None          # Default from endpoint
+                file_content = file_data.get('raw_bytes')
+                filename = file_data.get('filename', 'document.pdf')
+                file_extension = os.path.splitext(filename)[1].lower()
+
+                # Use TextSummaryService directly
+                text_service = TextSummaryService()
+
+                async def extract_and_summarize():
+                    # Extract text from document (same as route logic)
+                    extracted_text = await text_service.extract_text_from_document(
+                        file_content=file_content,
+                        file_extension=file_extension,
+                        filename=filename,
+                        max_pages=None
                     )
-                
+
+                    # Validate extracted text
+                    if len(extracted_text.strip()) < 50:
+                        raise ValueError("Không thể trích xuất đủ nội dung từ tài liệu để tóm tắt")
+
+                    # Generate summary (same as route logic)
+                    summary_result = await text_service.summarize_text(
+                        text=extracted_text,
+                        summary_type="general",
+                        max_length=300,
+                        language="vietnamese"
+                    )
+
+                    # Add document info to response (same as route)
+                    summary_result["document_info"] = {
+                        "filename": filename,
+                        "file_size": len(file_content),
+                        "file_type": file_extension,
+                        "extracted_text_length": len(extracted_text),
+                        "max_pages_processed": "all"
+                    }
+
+                    return summary_result
+
                 # Execute with proper async handling
                 try:
-                    result = asyncio.run(call_endpoint())
+                    data = asyncio.run(extract_and_summarize())
                 except RuntimeError as e:
                     if "cannot be called from a running event loop" in str(e):
                         import concurrent.futures
                         def run_in_thread():
-                            return asyncio.run(call_endpoint())
+                            return asyncio.run(extract_and_summarize())
                         with concurrent.futures.ThreadPoolExecutor() as executor:
                             future = executor.submit(run_in_thread)
-                            result = future.result(timeout=60)  # Longer timeout for large files
+                            data = future.result(timeout=60)  # Longer timeout for large files
                     else:
                         raise e
-                
+
                 # Format response using EXACT endpoint result structure
-                if result and isinstance(result, dict):
-                    data = result
+                if data and isinstance(data, dict):
                     
                     response = f"""📄 **Tóm tắt tài liệu: {file_data.get('filename', 'Unknown')}**
 
@@ -314,41 +349,39 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
 @tool
 def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None) -> str:
     """
-    Risk assessment tool - wraps /risk/assess endpoint
+    Risk assessment tool - uses service directly (not routes)
     Preserves EXACT logic from risk_routes.py
     """
     try:
         logger.info(f"🔧 [RISK_TOOL] Processing: {query[:100]}...")
-        
+
         # Import required models and services
         from app.mutil_agent.models.risk import RiskAssessmentRequest
-        from app.mutil_agent.routes.v1.risk_routes import assess_risk_endpoint, assess_risk_file_endpoint
-        from fastapi import UploadFile
-        import io
-        
+        from app.mutil_agent.services.risk_service import assess_risk
+
         # Extract basic risk data from query
         financial_data = _extract_risk_data_from_query(query)
-        
+
         # Extract text from file if provided
         if file_data and file_data.get('raw_bytes'):
             logger.info(f"🔧 [RISK_TOOL] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
-            
+
             try:
                 # Extract text from file
                 file_text = extract_text_from_file(file_data)
                 financial_data['financial_documents'] = file_text
                 logger.info(f"🔧 [RISK_TOOL] Extracted {len(file_text)} characters from file")
-                
+
                 if not file_text.strip():
                     logger.warning("🔧 [RISK_TOOL] No text extracted from file, proceeding with basic data")
-                
+
             except Exception as file_error:
                 logger.error(f"🔧 [RISK_TOOL] File processing error: {file_error}")
                 return f"❌ **Lỗi xử lý file**: {str(file_error)}"
-        
-        # Handle risk assessment with file content
-        async def call_endpoint():
-            # Create RiskAssessmentRequest object với file content
+
+        # Handle risk assessment with file content - use service directly
+        async def call_service():
+            # Create RiskAssessmentRequest object
             risk_request = RiskAssessmentRequest(
                 entity_id=f"entity_{uuid4().hex[:8]}",
                 entity_type="doanh nghiệp",
@@ -363,27 +396,28 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
                 loan_purpose=financial_data.get('loan_purpose', 'Kinh doanh'),
                 assessment_type="comprehensive",
                 collateral_type=financial_data.get('collateral_type', 'Không tài sản đảm bảo'),
-                financial_documents=financial_data.get('financial_documents', '')  # ✅ Thêm file content
+                financial_documents=financial_data.get('financial_documents', '')
             )
-            
-            return await assess_risk_endpoint(risk_request)
-            
-            # Execute with proper async handling
-            try:
-                result = asyncio.run(call_endpoint())
-            except RuntimeError as e:
-                if "cannot be called from a running event loop" in str(e):
-                    import concurrent.futures
-                    def run_in_thread():
-                        return asyncio.run(call_endpoint())
-                    with concurrent.futures.ThreadPoolExecutor() as executor:
-                        future = executor.submit(run_in_thread)
-                        result = future.result(timeout=30)
-                else:
-                    raise e
-            
-            logger.info("🔧 [RISK_TOOL] Successfully processed text with DIRECT endpoint call")
-        
+
+            # Call service directly (not route)
+            return await assess_risk(risk_request)
+
+        # Execute with proper async handling
+        try:
+            result = asyncio.run(call_service())
+        except RuntimeError as e:
+            if "cannot be called from a running event loop" in str(e):
+                import concurrent.futures
+                def run_in_thread():
+                    return asyncio.run(call_service())
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future = executor.submit(run_in_thread)
+                    result = future.result(timeout=30)
+            else:
+                raise e
+
+        logger.info("🔧 [RISK_TOOL] Successfully processed with service call")
+
         # Format response using EXACT endpoint result structure
         if result and isinstance(result, dict):
             data = result.get('data', {})

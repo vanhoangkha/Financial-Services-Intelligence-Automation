@@ -398,13 +398,13 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
     """
     try:
         logger.info(f"🔧 [RISK_AGENT] TOOL CALLED with query: {query[:100]}...")
-        
+
         # Import required models and services
         from app.mutil_agent.models.risk import RiskAssessmentRequest
-        from app.mutil_agent.routes.v1.risk_routes import assess_risk_endpoint, assess_risk_file_endpoint
+        # Removed unused route imports - using service directly instead
         from fastapi import UploadFile
         import io
-        
+
         # Extract basic info from query for risk assessment
         financial_data = _extract_basic_risk_data_from_query(query)
         
