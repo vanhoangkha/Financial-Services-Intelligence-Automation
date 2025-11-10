@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.base import CheckpointMetadata
-from app.mutil_agent.config import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, VERIFY_HTTPS
+from app.multi_agent.config import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN, VERIFY_HTTPS
 
 _dynamodb_client = None
 _dynamodb_resource = None

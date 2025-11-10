@@ -70,7 +70,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onShowSnackbar }) => {
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
-      console.error('Failed to save settings:', error);
+      // console.error('Failed to save settings:', error);
     } finally {
       setIsSaving(false);
     }

@@ -10,7 +10,7 @@ import boto3
 from boto3.dynamodb.types import TypeDeserializer
 from botocore.exceptions import ClientError
 
-from app.mutil_agent.config import (
+from app.multi_agent.config import (
     AWS_REGION,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,

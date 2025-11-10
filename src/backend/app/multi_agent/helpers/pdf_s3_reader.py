@@ -9,7 +9,7 @@ import PyPDF2
 import boto3
 from botocore.exceptions import ClientError
 
-from app.mutil_agent.helpers.s3_config import get_s3_config
+from app.multi_agent.helpers.s3_config import get_s3_config
 
 logger = logging.getLogger(__name__)
 

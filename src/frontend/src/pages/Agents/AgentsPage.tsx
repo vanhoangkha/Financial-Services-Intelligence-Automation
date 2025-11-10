@@ -134,7 +134,7 @@ const AgentsPage: React.FC<AgentsPageProps> = ({ agents, setAgents, onShowSnackb
       setModalVisible(false);
       resetForm();
     } catch (error) {
-      console.error('Failed to save agent:', error);
+      // console.error('Failed to save agent:', error);
       onShowSnackbar('Failed to save agent', 'error');
     }
   };
@@ -150,7 +150,7 @@ const AgentsPage: React.FC<AgentsPageProps> = ({ agents, setAgents, onShowSnackb
         throw new Error('Delete failed');
       }
     } catch (error) {
-      console.error('Failed to delete agent:', error);
+      // console.error('Failed to delete agent:', error);
       onShowSnackbar('Failed to delete agent', 'error');
     }
   };

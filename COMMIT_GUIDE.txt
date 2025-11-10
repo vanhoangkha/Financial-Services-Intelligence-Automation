@@ -1,0 +1,55 @@
+╔════════════════════════════════════════════════════════════╗
+║          GIT COMMIT MESSAGES - NGẮN GỌN                    ║
+╚════════════════════════════════════════════════════════════╝
+
+✅ CÁCH VIẾT COMMIT NGẮN (Max 50 chars)
+
+Format: <type>: <subject>
+
+TYPES:
+  feat      - Tính năng mới
+  fix       - Sửa bug
+  docs      - Cập nhật docs
+  style     - Format code
+  refactor  - Refactor code
+  test      - Thêm tests
+  chore     - Maintenance
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ EXAMPLES (GOOD - NGẮN):
+
+feat: add Strands agent
+fix: update security
+docs: update README
+refactor: rename folder
+chore: remove files
+style: format code
+test: add agent tests
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ EXAMPLES (BAD - DÀI):
+
+feat: Complete BFSI production-ready transformation with comprehensive security updates
+docs: Rewrite README to focus on Strands Agent Framework with detailed examples
+refactor: Reorganize project with international-standard multi-agent architecture
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 QUICK COMMIT:
+
+git add .
+git commit -m "feat: add feature"
+git push
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 GIT CONFIG (ĐÃ SETUP):
+
+user.name  = ubuntu-claude
+user.email = ubuntu.claude@system.local
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIP: Giữ commit message <= 50 characters!

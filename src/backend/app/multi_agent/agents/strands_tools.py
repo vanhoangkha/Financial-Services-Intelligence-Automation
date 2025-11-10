@@ -14,9 +14,9 @@ from strands_tools import retrieve, http_request
 from botocore.config import Config as BotocoreConfig
 
 # Import existing services
-from app.mutil_agent.services.compliance_service import ComplianceValidationService
-from app.mutil_agent.services.risk_service import assess_risk
-from app.mutil_agent.models.risk import RiskAssessmentRequest
+from app.multi_agent.services.compliance_service import ComplianceValidationService
+from app.multi_agent.services.risk_service import assess_risk
+from app.multi_agent.models.risk import RiskAssessmentRequest
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)

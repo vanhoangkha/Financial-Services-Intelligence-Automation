@@ -16,7 +16,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, agent }) => {
   const isUser = message.sender === 'user';
 
   // Debug logging for ALL messages - this should ALWAYS run
-  console.log('🚨 MessageBubble ENTRY:', {
+  // console.log('🚨 MessageBubble ENTRY:', {
     messageId: message.id,
     isUser,
     agentName: agent.name,
@@ -31,7 +31,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, agent }) => {
   const looksLikeCompliance = message.content.includes('compliance_status') && 
                               message.content.includes('document_type');
   
-  console.log('🔍 Quick Compliance Check:', {
+  // console.log('🔍 Quick Compliance Check:', {
     looksLikeCompliance,
     hasComplianceStatus: message.content.includes('compliance_status'),
     hasDocumentType: message.content.includes('document_type'),
@@ -51,7 +51,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, agent }) => {
       const parsed = JSON.parse(content);
       
       // More detailed debug logging
-      console.log('🔍 Detailed Compliance Check:', {
+      // console.log('🔍 Detailed Compliance Check:', {
         contentPreview: content.substring(0, 200) + '...',
         parsedKeys: Object.keys(parsed),
         hasStatus: parsed.status === 'success',
@@ -68,11 +68,11 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, agent }) => {
              parsed.data.compliance_status && 
              parsed.data.document_type;
       
-      console.log('🔍 Compliance Result:', result);
+      // console.log('🔍 Compliance Result:', result);
       
       return result;
     } catch (error) {
-      console.log('❌ JSON Parse Error:', error);
+      // console.log('❌ JSON Parse Error:', error);
       return false;
     }
   };

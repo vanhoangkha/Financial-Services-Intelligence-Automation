@@ -19,7 +19,7 @@ from datetime import datetime
 from uuid import uuid4
 
 # Import VPBank configurations
-from app.mutil_agent.config import (
+from app.multi_agent.config import (
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
     AWS_BEDROCK_REGION,
@@ -29,9 +29,9 @@ from app.mutil_agent.config import (
 )
 
 # Import existing VPBank services
-from app.mutil_agent.services.text_service import TextSummaryService
-from app.mutil_agent.services.compliance_service import ComplianceValidationService
-from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+from app.multi_agent.services.text_service import TextSummaryService
+from app.multi_agent.services.compliance_service import ComplianceValidationService
+from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +148,7 @@ def text_summary_agent(query: str, file_data: Optional[Dict[str, Any]] = None) -
         logger.info(f"[TEXT_SUMMARY_AGENT] Processing: {query[:100]}...")
         
         # Import the actual node function
-        from app.mutil_agent.agents.conversation_agent.nodes.text_summary_node import _extract_text_from_message
+        from app.multi_agent.agents.conversation_agent.nodes.text_summary_node import _extract_text_from_message
         
         # Initialize services (giống node)
         text_service = TextSummaryService()
@@ -168,7 +168,7 @@ def text_summary_agent(query: str, file_data: Optional[Dict[str, Any]] = None) -
                 
                 # Use existing extraction logic from helpers
                 if content_type == "application/pdf":
-                    from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+                    from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
                     pdf_extractor = ImprovedPDFExtractor()
                     pdf_result = pdf_extractor.extract_text_from_pdf(raw_bytes)
                     text_to_summarize = pdf_result.get('text', '')
@@ -252,8 +252,8 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                 return "❌ **Lỗi kiểm tra tuân thủ**: File rỗng hoặc không hợp lệ"
             
             # Import the EXACT service instead of endpoint
-            from app.mutil_agent.services.compliance_service import ComplianceValidationService
-            from app.mutil_agent.services.text_service import TextSummaryService
+            from app.multi_agent.services.compliance_service import ComplianceValidationService
+            from app.multi_agent.services.text_service import TextSummaryService
             
             try:
                 # Initialize services
@@ -337,7 +337,7 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
             # Handle text-based compliance queries using DIRECT node logic
             try:
                 # Import the actual node functions
-                from app.mutil_agent.agents.conversation_agent.nodes.compliance_node import (
+                from app.multi_agent.agents.conversation_agent.nodes.compliance_node import (
                     _determine_query_type,
                     _handle_regulation_query,
                     _handle_compliance_help,
@@ -400,7 +400,7 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
         logger.info(f"🔧 [RISK_AGENT] TOOL CALLED with query: {query[:100]}...")
 
         # Import required models and services
-        from app.mutil_agent.models.risk import RiskAssessmentRequest
+        from app.multi_agent.models.risk import RiskAssessmentRequest
         # Removed unused route imports - using service directly instead
         from fastapi import UploadFile
         import io
@@ -419,7 +419,7 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
                 
                 file_text = ""
                 if content_type == "application/pdf":
-                    from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+                    from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
                     extractor = ImprovedPDFExtractor()
                     result = extractor.extract_text_from_pdf(raw_bytes)
                     file_text = result.get('text', '').strip()
@@ -443,8 +443,8 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
         
         # Call risk assessment with file content
         async def call_risk_api():
-            from app.mutil_agent.models.risk import RiskAssessmentRequest
-            from app.mutil_agent.services.risk_service import assess_risk
+            from app.multi_agent.models.risk import RiskAssessmentRequest
+            from app.multi_agent.services.risk_service import assess_risk
             
             risk_request = RiskAssessmentRequest(
                 applicant_name=financial_data.get('applicant_name', 'Khách hàng'),

@@ -14,11 +14,11 @@ try:
 except ImportError as e:
     logging.warning(f"Document processing libraries not available: {e}")
 
-from app.mutil_agent.services.bedrock_service import BedrockService
-from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
-from app.mutil_agent.helpers.dynamic_summary_config import DynamicSummaryConfig
+from app.multi_agent.services.bedrock_service import BedrockService
+from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+from app.multi_agent.helpers.dynamic_summary_config import DynamicSummaryConfig
 
-from app.mutil_agent.config import (
+from app.multi_agent.config import (
     BEDROCK_RT, 
     MODEL_MAPPING, 
     CONVERSATION_CHAT_MODEL_NAME,
@@ -117,7 +117,7 @@ class TextSummaryService:
                 document_analysis = analysis
             
             # Import chunking helper only when needed
-            from app.mutil_agent.helpers.document_chunking_helper import DocumentChunkingHelper
+            from app.multi_agent.helpers.document_chunking_helper import DocumentChunkingHelper
             
             # Initialize chunking helper
             chunking_helper = DocumentChunkingHelper()

@@ -5,7 +5,7 @@ Simplified configuration for S3 operations using IAM roles or default credential
 
 from typing import Optional
 from dataclasses import dataclass
-from app.mutil_agent.config import (
+from app.multi_agent.config import (
     AWS_REGION,
     EXTRACTED_CONTENT_BUCKET
 )

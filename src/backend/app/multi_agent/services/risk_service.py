@@ -1,8 +1,8 @@
-from app.mutil_agent.models.risk import (
+from app.multi_agent.models.risk import (
     RiskAssessmentRequest, RiskAssessmentResponse, RiskMonitorResponse, RiskAlertRequest, RiskScoreHistoryResponse, MarketDataResponse, Threat
 )
-from app.mutil_agent.services.bedrock_service import BedrockService
-from app.mutil_agent.config import (
+from app.multi_agent.services.bedrock_service import BedrockService
+from app.multi_agent.config import (
     MODEL_MAPPING,
     CONVERSATION_CHAT_MODEL_NAME,
     CONVERSATION_CHAT_TOP_P,

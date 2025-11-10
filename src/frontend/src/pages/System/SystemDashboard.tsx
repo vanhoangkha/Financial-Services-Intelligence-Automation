@@ -100,7 +100,7 @@ const SystemDashboard: React.FC<SystemDashboardProps> = ({ onShowSnackbar }) => 
       const data = await response.json();
       setSystemHealth(data);
     } catch (error) {
-      console.error('Error loading system health:', error);
+      // console.error('Error loading system health:', error);
     }
   };
 
@@ -128,7 +128,7 @@ const SystemDashboard: React.FC<SystemDashboardProps> = ({ onShowSnackbar }) => 
       
       setDetailedHealth(mockDetailedHealth);
     } catch (error) {
-      console.error('Error loading detailed health:', error);
+      // console.error('Error loading detailed health:', error);
     }
   };
 
@@ -171,7 +171,7 @@ const SystemDashboard: React.FC<SystemDashboardProps> = ({ onShowSnackbar }) => 
       const results = await Promise.all(healthPromises);
       setServiceHealths(results);
     } catch (error) {
-      console.error('Error loading service healths:', error);
+      // console.error('Error loading service healths:', error);
     }
   };
 

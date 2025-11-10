@@ -84,7 +84,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       const response = await chatAPI.sendMessage(request);
 
       // Debug logging to see response structure
-      console.log('🔍 API Response:', {
+      // console.log('🔍 API Response:', {
         status: response.status,
         data: response.data,
         dataType: typeof response.data,
@@ -102,11 +102,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           if (parsed && typeof parsed === 'object') {
             // If it's a valid JSON object, use it as the content
             messageContent = JSON.stringify(parsed);
-            console.log('✅ Parsed JSON response successfully');
+            // console.log('✅ Parsed JSON response successfully');
           }
         } catch (e) {
           // If parsing fails, use the original string
-          console.log('ℹ️ Response is not JSON, using as plain text');
+          // console.log('ℹ️ Response is not JSON, using as plain text');
         }
 
         // If response.data is a ConversationResponse, create a Message object
@@ -124,7 +124,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         throw new Error(response.message || 'Failed to send message');
       }
     } catch (error) {
-      console.error('Failed to send message:', error);
+      // console.error('Failed to send message:', error);
       onShowSnackbar('Không thể gửi tin nhắn. Vui lòng thử lại.', 'error');
       
       // Remove the user message if sending failed

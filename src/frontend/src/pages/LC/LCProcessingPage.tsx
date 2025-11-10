@@ -97,7 +97,7 @@ const LCProcessingPage: React.FC<LCProcessingPageProps> = ({ onShowSnackbar }) =
         onShowSnackbar('Xử lý LC thành công!', 'success');
       }, 5000);
     } catch (error) {
-      console.error('LC processing error:', error);
+      // console.error('LC processing error:', error);
       onShowSnackbar('Không thể xử lý LC. Vui lòng thử lại.', 'error');
       setLoading(false);
     }

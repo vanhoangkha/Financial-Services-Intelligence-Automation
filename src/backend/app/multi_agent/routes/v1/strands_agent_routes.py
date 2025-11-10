@@ -13,8 +13,8 @@ from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Body
 from fastapi.responses import JSONResponse
 
-from app.mutil_agent.schemas.base import ResponseStatus
-from app.mutil_agent.services.strands_agent_service import strands_service
+from app.multi_agent.schemas.base import ResponseStatus
+from app.multi_agent.services.strands_agent_service import strands_service
 
 router = APIRouter()
 
@@ -209,7 +209,7 @@ async def strands_supervisor_with_file_upload(
                     )
                 
                 # Extract text from file using existing text service
-                from app.mutil_agent.services.text_service import TextSummaryService
+                from app.multi_agent.services.text_service import TextSummaryService
                 text_service = TextSummaryService()
                 
                 file_content = await text_service.extract_text_from_document(

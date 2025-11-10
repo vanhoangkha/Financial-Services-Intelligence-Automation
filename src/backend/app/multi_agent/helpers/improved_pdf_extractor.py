@@ -290,7 +290,7 @@ Gợi ý giải pháp:
     def _perform_ocr_extraction(self, file_content: bytes, pdf_analysis: Dict[str, Any]) -> str:
         """Perform OCR extraction with optimized fallback handling"""
         try:
-            from app.mutil_agent.helpers.lightweight_ocr import LightweightOCR
+            from app.multi_agent.helpers.lightweight_ocr import LightweightOCR
             
             ocr_extractor = LightweightOCR()
             max_pages = getattr(self, 'max_pages', None)

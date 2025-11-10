@@ -1,7 +1,7 @@
 from langchain_aws import ChatBedrockConverse
 
-from app.mutil_agent.config import BEDROCK_RT
-from app.mutil_agent.interfaces.ai_model_interface import AIModelInterface
+from app.multi_agent.config import BEDROCK_RT
+from app.multi_agent.interfaces.ai_model_interface import AIModelInterface
 
 
 class BedrockService(AIModelInterface):

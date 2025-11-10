@@ -117,7 +117,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
       const data = await response.json();
       setSystemStatus(data);
     } catch (error) {
-      console.error('Error loading system status:', error);
+      // console.error('Error loading system status:', error);
     }
   };
 
@@ -171,12 +171,12 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
           const parsed = JSON.parse(messageContent);
           if (parsed.status === 'success' && parsed.data && parsed.data.compliance_status) {
             // This is a compliance response - keep it as JSON string for MessageBubble to handle
-            console.log('✅ Detected compliance response in PureStrandsInterface');
+            // console.log('✅ Detected compliance response in PureStrandsInterface');
             messageContent = JSON.stringify(parsed);
           }
         } catch (e) {
           // If parsing fails, use original content
-          console.log('ℹ️ Could not parse response as JSON, using as plain text');
+          // console.log('ℹ️ Could not parse response as JSON, using as plain text');
         }
       }
 
@@ -194,7 +194,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
       onShowSnackbar('Xử lý thành công', 'success');
 
     } catch (error) {
-      console.error('Error processing message:', error);
+      // console.error('Error processing message:', error);
 
       const errorMessage: ChatMessage = {
         id: `error-${Date.now()}`,
@@ -399,7 +399,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
                                   );
                                 }
                               } catch (e) {
-                                console.log('Could not parse compliance response:', e);
+                                // console.log('Could not parse compliance response:', e);
                               }
                             }
 

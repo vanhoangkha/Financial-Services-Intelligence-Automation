@@ -74,7 +74,7 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
         throw new Error(response.message || 'Có lỗi xảy ra khi tóm tắt văn bản');
       }
     } catch (error) {
-      console.error('Text summary error:', error);
+      // console.error('Text summary error:', error);
       onShowSnackbar('Không thể tóm tắt văn bản. Vui lòng thử lại.', 'error');
     } finally {
       setLoading(false);
@@ -89,26 +89,26 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
 
     setLoading(true);
     try {
-      console.log('Starting document summary...');
+      // console.log('Starting document summary...');
       onShowSnackbar('Đang xử lý tài liệu, vui lòng chờ...', 'info');
 
       const response = await textAPI.summarizeDocument(documentForm.file!, documentForm.summary_type, documentForm.language);
 
-      console.log('Document summary response:', response);
-      console.log('Response status:', response.status);
-      console.log('Response data:', response.data);
+      // console.log('Document summary response:', response);
+      // console.log('Response status:', response.status);
+      // console.log('Response data:', response.data);
 
       if (response.status === 'success' && response.data) {
         setResult(response.data);
         onShowSnackbar('Tóm tắt tài liệu thành công!', 'success');
-        console.log('Success: Document summarized successfully');
+        // console.log('Success: Document summarized successfully');
       } else {
-        console.error('Response indicates failure:', response);
+        // console.error('Response indicates failure:', response);
         throw new Error(response.message || 'Có lỗi xảy ra khi tóm tắt tài liệu');
       }
     } catch (error) {
-      console.error('Document summary error:', error);
-      console.error('Error details:', {
+      // console.error('Document summary error:', error);
+      // console.error('Error details:', {
         name: error instanceof Error ? error.name : 'Unknown',
         message: error instanceof Error ? error.message : 'Unknown error',
         stack: error instanceof Error ? error.stack : 'No stack trace'

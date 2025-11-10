@@ -5,7 +5,7 @@ from beanie import Document
 from pydantic import Field
 from fastapi_pagination import Page
 from typing import TypeVar, Any, Dict
-from app.mutil_agent.schemas.base import ResponseStatus
+from app.multi_agent.schemas.base import ResponseStatus
 
 Base = declarative_base()
 

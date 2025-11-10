@@ -18,8 +18,8 @@
 # from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorClientSession
 # from pymongo import UpdateOne
 
-# from app.mutil_agent import models
-# from app.mutil_agent.config import (
+# from app.multi_agent import models
+# from app.multi_agent.config import (
 #     MONGO_DB_NAME,
 #     MONGODB_URI,
 # )

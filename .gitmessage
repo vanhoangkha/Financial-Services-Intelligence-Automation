@@ -1,0 +1,23 @@
+# Commit Message Template (Ngắn gọn)
+# Format: <type>: <subject> (max 50 chars)
+#
+# Types:
+#   feat:     New feature
+#   fix:      Bug fix
+#   docs:     Documentation only
+#   style:    Formatting, no code change
+#   refactor: Code restructure
+#   test:     Adding tests
+#   chore:    Maintenance
+#
+# Examples (SHORT):
+#   feat: add risk agent
+#   fix: update security config
+#   docs: update README
+#   refactor: rename multi_agent
+#   chore: remove old docs
+#   style: format code
+#
+# NO long descriptions
+# NO body text
+# Just one line!

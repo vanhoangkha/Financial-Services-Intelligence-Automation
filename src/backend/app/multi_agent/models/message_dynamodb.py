@@ -7,8 +7,8 @@ from typing import Any, Dict, List, Optional, ClassVar
 from datetime import datetime
 
 from pydantic import Field
-from app.mutil_agent.models.dynamodb_base import DynamoDBModel
-from app.mutil_agent.config import DYNAMODB_MESSAGE_TABLE
+from app.multi_agent.models.dynamodb_base import DynamoDBModel
+from app.multi_agent.config import DYNAMODB_MESSAGE_TABLE
 
 
 class MessageTypesDynamoDB(str, Enum):
@@ -43,7 +43,7 @@ class MessageQueryBuilder:
     
     async def to_list(self) -> List["MessageDynamoDB"]:
         """Execute the query and return results as a list."""
-        from app.mutil_agent.databases.dynamodb_message_ops import DynamoDBMessageOperations
+        from app.multi_agent.databases.dynamodb_message_ops import DynamoDBMessageOperations
         
         ops = DynamoDBMessageOperations()
         
@@ -120,7 +120,7 @@ class MessageDynamoDB(DynamoDBModel):
         Find messages by conversation - optimized method.
         Alternative to using find() with complex queries.
         """
-        from app.mutil_agent.databases.dynamodb_message_ops import DynamoDBMessageOperations
+        from app.multi_agent.databases.dynamodb_message_ops import DynamoDBMessageOperations
         
         # Convert UUIDs to strings for DynamoDB
         conversation_id_str = str(conversation_id)
@@ -171,7 +171,7 @@ class MessageDynamoDB(DynamoDBModel):
         """Create DynamoDB table if it doesn't exist."""
         import boto3
         from botocore.exceptions import ClientError
-        from app.mutil_agent.config import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
+        from app.multi_agent.config import AWS_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN
         
         client_kwargs = {
             "region_name": AWS_REGION,

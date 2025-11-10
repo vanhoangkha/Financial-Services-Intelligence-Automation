@@ -3,7 +3,7 @@ import logging
 import psycopg2
 from fastapi import Depends
 from typing import Optional, Dict, List, Any, Union
-from app.mutil_agent.config import PG_DATABASE, PG_USER, PG_HOST, PG_PASSWORD, PG_PORT
+from app.multi_agent.config import PG_DATABASE, PG_USER, PG_HOST, PG_PASSWORD, PG_PORT
 
 
 def get_postgres_connection():

@@ -26,16 +26,16 @@ from fastapi_pagination import add_pagination
 import uvicorn
 
 # Import custom modules
-from app.mutil_agent.middleware.custom_middleware import CustomMiddleware
-from app.mutil_agent.routes.v1_routes import router as v1_router
-from app.mutil_agent.routes.v1_public_routes import router as v1_public_routes
-from app.mutil_agent.databases.dynamodb import initiate_dynamodb
-from app.mutil_agent.models.message_dynamodb import MessageDynamoDB
-from app.mutil_agent.config import AWS_REGION, DEFAULT_MODEL_NAME
+from app.multi_agent.middleware.custom_middleware import CustomMiddleware
+from app.multi_agent.routes.v1_routes import router as v1_router
+from app.multi_agent.routes.v1_public_routes import router as v1_public_routes
+from app.multi_agent.databases.dynamodb import initiate_dynamodb
+from app.multi_agent.models.message_dynamodb import MessageDynamoDB
+from app.multi_agent.config import AWS_REGION, DEFAULT_MODEL_NAME
 
 # Import Strands Agent routes
 try:
-    from app.mutil_agent.routes.v1.strands_agent_routes import router as strands_router
+    from app.multi_agent.routes.v1.strands_agent_routes import router as strands_router
     STRANDS_AGENTS_AVAILABLE = True
     print("[STARTUP] ✅ Strands Agents system loaded successfully")
 except ImportError as e:
@@ -44,7 +44,7 @@ except ImportError as e:
 
 # Import Pure Strands Agents router
 try:
-    from app.mutil_agent.routes.pure_strands_routes import pure_strands_router
+    from app.multi_agent.routes.pure_strands_routes import pure_strands_router
     PURE_STRANDS_AVAILABLE = True
     print("[STARTUP] VPBank Pure Strands Agents system loaded successfully")
 except ImportError as e:
@@ -157,19 +157,19 @@ app.add_middleware(
     allowed_hosts=["*"]  # Configure appropriately for production
 )
 
-# CORS middleware - MUST be added first
+# CORS middleware - Secure configuration for BFSI
+import os
+ALLOWED_ORIGINS = os.getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000,http://localhost:8080,https://d2bwc7cu1vx0pc.cloudfront.net,http://vpbank-kmult-frontend-20250719.s3-website-us-east-1.amazonaws.com"
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:8080",
-        "https://d2bwc7cu1vx0pc.cloudfront.net",
-        "http://vpbank-kmult-frontend-20250719.s3-website-us-east-1.amazonaws.com",
-        "*"  # Allow all for development - restrict in production
-    ],
+    allow_origins=ALLOWED_ORIGINS,  # No wildcard - specific origins only
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Authorization", "X-Request-ID"],
 )
 
 # Custom middleware

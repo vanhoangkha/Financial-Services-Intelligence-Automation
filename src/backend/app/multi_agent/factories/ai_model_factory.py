@@ -1,11 +1,11 @@
-from app.mutil_agent.config import DEFAULT_MODEL_NAME
-from app.mutil_agent.config import (
+from app.multi_agent.config import DEFAULT_MODEL_NAME
+from app.multi_agent.config import (
     MODEL_MAPPING,
     LLM_TEMPERATURE,
     LLM_TOP_P,
     LLM_MAX_TOKENS,
 )
-from app.mutil_agent.services.bedrock_service import BedrockService
+from app.multi_agent.services.bedrock_service import BedrockService
 
 
 class AIModelFactory:

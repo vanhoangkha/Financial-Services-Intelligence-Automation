@@ -25,8 +25,8 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
 
         if file_data and file_data.get('raw_bytes'):
             # Use services directly instead of routes (better architecture)
-            from app.mutil_agent.services.compliance_service import ComplianceValidationService
-            from app.mutil_agent.services.text_service import TextSummaryService
+            from app.multi_agent.services.compliance_service import ComplianceValidationService
+            from app.multi_agent.services.text_service import TextSummaryService
 
             try:
                 file_content = file_data.get('raw_bytes')
@@ -129,7 +129,7 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
         else:
             # Handle text-based queries using compliance node logic
             try:
-                from app.mutil_agent.agents.conversation_agent.nodes.compliance_node import (
+                from app.multi_agent.agents.conversation_agent.nodes.compliance_node import (
                     _determine_query_type,
                     _handle_regulation_query,
                     _handle_compliance_help,
@@ -181,7 +181,7 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
 
         if file_data and file_data.get('raw_bytes'):
             # Use service directly instead of route (better architecture)
-            from app.mutil_agent.services.text_service import TextSummaryService
+            from app.multi_agent.services.text_service import TextSummaryService
 
             try:
                 file_content = file_data.get('raw_bytes')
@@ -277,8 +277,8 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
         else:
             # Handle text-based queries using text summary node logic
             try:
-                from app.mutil_agent.agents.conversation_agent.nodes.text_summary_node import _extract_text_from_message
-                from app.mutil_agent.services.text_service import TextSummaryService
+                from app.multi_agent.agents.conversation_agent.nodes.text_summary_node import _extract_text_from_message
+                from app.multi_agent.services.text_service import TextSummaryService
                 
                 # Extract text using EXACT node logic
                 text_to_summarize = _extract_text_from_message(query)
@@ -356,8 +356,8 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
         logger.info(f"🔧 [RISK_TOOL] Processing: {query[:100]}...")
 
         # Import required models and services
-        from app.mutil_agent.models.risk import RiskAssessmentRequest
-        from app.mutil_agent.services.risk_service import assess_risk
+        from app.multi_agent.models.risk import RiskAssessmentRequest
+        from app.multi_agent.services.risk_service import assess_risk
 
         # Extract basic risk data from query
         financial_data = _extract_risk_data_from_query(query)
@@ -482,7 +482,7 @@ def extract_text_from_file(file_data: Dict[str, Any]) -> str:
         content_type = file_data.get('content_type', '')
         
         if content_type == "application/pdf":
-            from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+            from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
             extractor = ImprovedPDFExtractor()
             result = extractor.extract_text_from_pdf(raw_bytes)
             return result.get('text', '').strip()

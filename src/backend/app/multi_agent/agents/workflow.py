@@ -1,6 +1,6 @@
 from typing import Any
 
-from app.mutil_agent.agents.graph import get_graph
+from app.multi_agent.agents.graph import get_graph
 
 
 class BaseWorkflow:

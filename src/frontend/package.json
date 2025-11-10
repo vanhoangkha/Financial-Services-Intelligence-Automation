@@ -19,7 +19,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/uuid": "^10.0.0",
     "axios": "^1.10.0",
-    "framer-motion": "^12.25.0",
+    "framer-motion": "^11.11.17",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-dropzone": "^14.4.1",

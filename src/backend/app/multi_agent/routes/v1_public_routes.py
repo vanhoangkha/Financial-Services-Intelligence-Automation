@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.mutil_agent.routes.v1.public.health_check import router as health_check
+from app.multi_agent.routes.v1.public.health_check import router as health_check
 
 router = APIRouter()
 

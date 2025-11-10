@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
         setLoading(false);
       }, 1000);
     } catch (error) {
-      console.error('Failed to load dashboard data:', error);
+      // console.error('Failed to load dashboard data:', error);
       setLoading(false);
     }
   };

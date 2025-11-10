@@ -3,8 +3,8 @@ from uuid import UUID, uuid4
 
 from pydantic import Field
 
-from app.mutil_agent.config import CONVERSATION_COLLECTION
-from app.mutil_agent.models.base import TimestampedModel
+from app.multi_agent.config import CONVERSATION_COLLECTION
+from app.multi_agent.models.base import TimestampedModel
 
 
 class Conversation(TimestampedModel):

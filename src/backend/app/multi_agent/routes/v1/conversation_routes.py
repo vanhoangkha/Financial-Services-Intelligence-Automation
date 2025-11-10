@@ -5,17 +5,17 @@ from uuid import UUID
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse, JSONResponse
 
-from app.mutil_agent.agents.conversation_agent.state import ConversationState
-from app.mutil_agent.exceptions import DefaultException
-from app.mutil_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
-from app.mutil_agent.repositories.conversation_repository import ConversationRepository
-from app.mutil_agent.schemas.base import (
+from app.multi_agent.agents.conversation_agent.state import ConversationState
+from app.multi_agent.exceptions import DefaultException
+from app.multi_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
+from app.multi_agent.repositories.conversation_repository import ConversationRepository
+from app.multi_agent.schemas.base import (
     ConversationRequest,
     SuccessResponse,
     ResponseStatus,
 )
 
-from app.mutil_agent.services.conversation_service import stream_chat
+from app.multi_agent.services.conversation_service import stream_chat
 
 router = APIRouter()
 

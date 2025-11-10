@@ -4,17 +4,17 @@ import asyncio
 from contextlib import asynccontextmanager
 from uuid import UUID
 
-from app.mutil_agent.agents.conversation_agent.state import ConversationState
-from app.mutil_agent.agents.conversation_agent.workflow import get_conversation_workflow
-from app.mutil_agent.config import (
+from app.multi_agent.agents.conversation_agent.state import ConversationState
+from app.multi_agent.agents.conversation_agent.workflow import get_conversation_workflow
+from app.multi_agent.config import (
     DYNAMODB_CHECKPOINT_TABLE,
     DYNAMODB_WRITES_TABLE,
 )
-from app.mutil_agent.databases.dynamodb import (
+from app.multi_agent.databases.dynamodb import (
     AsyncDynamoDBSaver
 )
-from app.mutil_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
-from app.mutil_agent.schemas.base import (
+from app.multi_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
+from app.multi_agent.schemas.base import (
     ConversationRequest,
     ResponseStatus,
 )

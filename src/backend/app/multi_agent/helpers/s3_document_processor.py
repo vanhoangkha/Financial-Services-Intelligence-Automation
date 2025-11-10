@@ -8,10 +8,10 @@ from typing import Dict, Any, List, Optional
 from dataclasses import dataclass
 import asyncio
 
-from app.mutil_agent.helpers.s3_file_loader import S3FileLoader
-from app.mutil_agent.helpers.s3_config import get_s3_config
-from app.mutil_agent.factories.ai_model_factory import AIModelFactory
-from app.mutil_agent.config import (
+from app.multi_agent.helpers.s3_file_loader import S3FileLoader
+from app.multi_agent.helpers.s3_config import get_s3_config
+from app.multi_agent.factories.ai_model_factory import AIModelFactory
+from app.multi_agent.config import (
     CONVERSATION_CHAT_MODEL_NAME,
     CONVERSATION_CHAT_TOP_P,
     CONVERSATION_CHAT_TEMPERATURE,

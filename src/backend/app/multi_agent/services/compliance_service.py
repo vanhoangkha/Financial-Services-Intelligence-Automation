@@ -6,9 +6,9 @@ import re
 from typing import Optional, Dict, Any, List
 from enum import Enum
 
-from app.mutil_agent.services.bedrock_service import BedrockService
-from app.mutil_agent.services.compliance_config import ComplianceConfig
-from app.mutil_agent.config import (
+from app.multi_agent.services.bedrock_service import BedrockService
+from app.multi_agent.services.compliance_config import ComplianceConfig
+from app.multi_agent.config import (
     BEDROCK_KNOWLEDGEBASE,
     KNOWLEDGEBASE_ID,
     MODEL_MAPPING,

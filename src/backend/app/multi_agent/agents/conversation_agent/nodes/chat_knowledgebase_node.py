@@ -5,23 +5,23 @@ from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langchain_core.runnables.config import RunnableConfig
 from langgraph.types import StreamWriter
 
-from app.mutil_agent.agents.conversation_agent.prompts.system_prompts import (
+from app.multi_agent.agents.conversation_agent.prompts.system_prompts import (
     system_prompt_chat_node,
 )
-from app.mutil_agent.agents.conversation_agent.prompts.user_prompts import (
+from app.multi_agent.agents.conversation_agent.prompts.user_prompts import (
     user_prompt_chat_node,
 )
-from app.mutil_agent.agents.conversation_agent.state import ConversationState
-from app.mutil_agent.config import (
+from app.multi_agent.agents.conversation_agent.state import ConversationState
+from app.multi_agent.config import (
     BEDROCK_KNOWLEDGEBASE,
     KNOWLEDGEBASE_ID,
     MESSAGES_LIMIT,
 )
-from app.mutil_agent.exceptions import StreamingException
-from app.mutil_agent.factories.ai_model_factory import AIModelFactory
-from app.mutil_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
-from app.mutil_agent.utils.helpers import StreamWriter as ConversationStreamWriter
-from app.mutil_agent.databases.dynamodb import get_db_session_with_context
+from app.multi_agent.exceptions import StreamingException
+from app.multi_agent.factories.ai_model_factory import AIModelFactory
+from app.multi_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
+from app.multi_agent.utils.helpers import StreamWriter as ConversationStreamWriter
+from app.multi_agent.databases.dynamodb import get_db_session_with_context
 
 async def chat_knowledgebase_node(
     state: ConversationState, config: RunnableConfig, writer: StreamWriter

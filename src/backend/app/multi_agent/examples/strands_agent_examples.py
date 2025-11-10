@@ -11,7 +11,7 @@ import logging
 from typing import Dict, Any
 
 # Import Strands Agent tools
-from app.mutil_agent.agents.strands_tools import (
+from app.multi_agent.agents.strands_tools import (
     compliance_validation_agent,
     risk_assessment_agent,
     document_intelligence_agent,

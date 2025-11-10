@@ -32,7 +32,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ agents, loading, onShowSnackbar }) 
         setChatSessions(response.data);
       }
     } catch (error) {
-      console.error('Failed to load chat sessions:', error);
+      // console.error('Failed to load chat sessions:', error);
       onShowSnackbar('Failed to load chat sessions', 'error');
     }
   }, [onShowSnackbar]);

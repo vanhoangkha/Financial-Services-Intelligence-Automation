@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClientSession
-from app.mutil_agent.models.conversation import Conversation
+from app.multi_agent.models.conversation import Conversation
 
 
 class ConversationRepository:

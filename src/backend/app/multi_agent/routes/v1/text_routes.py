@@ -6,9 +6,9 @@ from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from fastapi.responses import JSONResponse
 
-from app.mutil_agent.schemas.base import ResponseStatus
-from app.mutil_agent.services.text_service import TextSummaryService
-from app.mutil_agent.helpers.dynamic_summary_config import analyze_document_for_summary
+from app.multi_agent.schemas.base import ResponseStatus
+from app.multi_agent.services.text_service import TextSummaryService
+from app.multi_agent.helpers.dynamic_summary_config import analyze_document_for_summary
 
 router = APIRouter()
 
@@ -422,7 +422,7 @@ async def analyze_document_for_summary_endpoint(
         )
         
         # Analyze document
-        from app.mutil_agent.helpers.dynamic_summary_config import analyze_document_for_summary
+        from app.multi_agent.helpers.dynamic_summary_config import analyze_document_for_summary
         analysis = analyze_document_for_summary(extracted_text)
         
         # Add file info

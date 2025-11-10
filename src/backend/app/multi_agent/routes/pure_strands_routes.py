@@ -10,7 +10,7 @@ import json
 from datetime import datetime
 
 # Import Pure Strands system
-from app.mutil_agent.agents.pure_strands_vpbank_system import (
+from app.multi_agent.agents.pure_strands_vpbank_system import (
     process_pure_strands_request
 )
 
@@ -165,7 +165,7 @@ async def process_request(
 async def get_system_status():
     """Get Pure Strands system status and available agents"""
     try:
-        from app.mutil_agent.agents.pure_strands_vpbank_system import get_pure_strands_system_status
+        from app.multi_agent.agents.pure_strands_vpbank_system import get_pure_strands_system_status
         
         status = get_pure_strands_system_status()
         return {

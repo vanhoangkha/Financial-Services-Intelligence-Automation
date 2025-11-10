@@ -6,9 +6,9 @@ from pydantic import BaseModel, Field
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Body
 from fastapi.responses import JSONResponse
 
-from app.mutil_agent.schemas.base import ResponseStatus
-from app.mutil_agent.services.compliance_service import ComplianceValidationService
-from app.mutil_agent.services.compliance_config import ComplianceConfig
+from app.multi_agent.schemas.base import ResponseStatus
+from app.multi_agent.services.compliance_service import ComplianceValidationService
+from app.multi_agent.services.compliance_config import ComplianceConfig
 
 router = APIRouter()
 
@@ -176,7 +176,7 @@ async def validate_document_file(
         compliance_service = ComplianceValidationService()
         
         # Extract text from document (reuse text service logic)
-        from app.mutil_agent.services.text_service import TextSummaryService
+        from app.multi_agent.services.text_service import TextSummaryService
         text_service = TextSummaryService()
         
         extracted_text = await text_service.extract_text_from_document(

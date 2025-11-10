@@ -15,7 +15,7 @@ from langgraph.checkpoint.base import (
     BaseCheckpointSaver,
 )
 
-from app.mutil_agent.config import DYNAMODB_CHECKPOINT_TABLE, DYNAMODB_WRITES_TABLE
+from app.multi_agent.config import DYNAMODB_CHECKPOINT_TABLE, DYNAMODB_WRITES_TABLE
 from .dynamodb_utils import (
     get_dynamodb_client,
     get_dynamodb_resource,

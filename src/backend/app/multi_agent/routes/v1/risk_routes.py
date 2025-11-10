@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
-from app.mutil_agent.models.risk import (
+from app.multi_agent.models.risk import (
     RiskAssessmentRequest, RiskAssessmentResponse, RiskMonitorResponse, RiskAlertRequest, RiskScoreHistoryResponse, MarketDataResponse, CreditAssessmentResponseShort
 )
-from app.mutil_agent.services.risk_service import (
+from app.multi_agent.services.risk_service import (
     assess_risk, get_monitor_status, receive_alert_webhook, get_score_history, get_market_data
 )
-from app.mutil_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
-from app.mutil_agent.helpers import extract_text_from_docx
-from app.mutil_agent.helpers.lightweight_ocr import LightweightOCR
+from app.multi_agent.helpers.improved_pdf_extractor import ImprovedPDFExtractor
+from app.multi_agent.helpers import extract_text_from_docx
+from app.multi_agent.helpers.lightweight_ocr import LightweightOCR
 import time
 
 router = APIRouter()
@@ -61,7 +61,7 @@ async def assess_risk_file_endpoint(
             result = extractor.extract_text_from_pdf(file_bytes)
             text = result.get('text', '').strip()
         elif file.content_type in ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"]:
-            from app.mutil_agent.helpers import extract_text_from_docx
+            from app.multi_agent.helpers import extract_text_from_docx
             text = extract_text_from_docx(file_bytes)
         elif file.content_type.startswith("image/"):
             ocr = LightweightOCR()

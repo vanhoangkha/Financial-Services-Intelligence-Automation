@@ -6,11 +6,11 @@ from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.runnables.config import RunnableConfig
 from langgraph.types import StreamWriter
 
-from app.mutil_agent.agents.conversation_agent.state import ConversationState
-from app.mutil_agent.databases.dynamodb import get_db_session_with_context
-from app.mutil_agent.services.compliance_service import ComplianceValidationService
-from app.mutil_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
-from app.mutil_agent.utils.helpers import StreamWriter as ConversationStreamWriter
+from app.multi_agent.agents.conversation_agent.state import ConversationState
+from app.multi_agent.databases.dynamodb import get_db_session_with_context
+from app.multi_agent.services.compliance_service import ComplianceValidationService
+from app.multi_agent.models.message_dynamodb import MessageDynamoDB as Message, MessageTypesDynamoDB as MessageTypes
+from app.multi_agent.utils.helpers import StreamWriter as ConversationStreamWriter
 
 logger = logging.getLogger(__name__)
 

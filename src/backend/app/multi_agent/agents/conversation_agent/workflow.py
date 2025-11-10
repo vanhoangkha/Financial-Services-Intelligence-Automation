@@ -4,13 +4,13 @@ import re
 
 from langgraph.constants import START, END
 
-from app.mutil_agent.agents.conversation_agent.nodes.chat_knowledgebase_node import (
+from app.multi_agent.agents.conversation_agent.nodes.chat_knowledgebase_node import (
     chat_knowledgebase_node,
 )
-from app.mutil_agent.agents.conversation_agent.nodes.chat_node import chat_node
-from app.mutil_agent.agents.conversation_agent.nodes.text_summary_node import text_summary_node
-from app.mutil_agent.agents.conversation_agent.state import ConversationState
-from app.mutil_agent.agents.workflow import BaseWorkflow
+from app.multi_agent.agents.conversation_agent.nodes.chat_node import chat_node
+from app.multi_agent.agents.conversation_agent.nodes.text_summary_node import text_summary_node
+from app.multi_agent.agents.conversation_agent.state import ConversationState
+from app.multi_agent.agents.workflow import BaseWorkflow
 
 
 def determine_initial_routing(state: ConversationState) -> str:

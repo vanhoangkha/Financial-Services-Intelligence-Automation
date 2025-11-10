@@ -6,14 +6,14 @@ Improved API organization with comprehensive health checks
 from fastapi import APIRouter
 
 # Import all route modules
-from app.mutil_agent.routes.v1.conversation_routes import router as conversation_router
-from app.mutil_agent.routes.v1.text_routes import router as text_router
-from app.mutil_agent.routes.v1.risk_routes import router as risk_router
-from app.mutil_agent.routes.v1.compliance_routes import router as compliance_router
-from app.mutil_agent.routes.v1.agents_routes import router as agents_router
-from app.mutil_agent.routes.v1.knowledge_routes import router as knowledge_router
-from app.mutil_agent.routes.pure_strands_routes import pure_strands_router
-from app.mutil_agent.routes.v1.health_routes import router as health_router
+from app.multi_agent.routes.v1.conversation_routes import router as conversation_router
+from app.multi_agent.routes.v1.text_routes import router as text_router
+from app.multi_agent.routes.v1.risk_routes import router as risk_router
+from app.multi_agent.routes.v1.compliance_routes import router as compliance_router
+from app.multi_agent.routes.v1.agents_routes import router as agents_router
+from app.multi_agent.routes.v1.knowledge_routes import router as knowledge_router
+from app.multi_agent.routes.pure_strands_routes import pure_strands_router
+from app.multi_agent.routes.v1.health_routes import router as health_router
 
 router = APIRouter()
 

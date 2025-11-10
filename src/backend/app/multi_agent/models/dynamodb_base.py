@@ -9,7 +9,7 @@ import boto3
 from boto3.dynamodb.types import TypeSerializer, TypeDeserializer
 from botocore.exceptions import ClientError
 
-from app.mutil_agent.config import (
+from app.multi_agent.config import (
     AWS_REGION,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
@@ -46,7 +46,7 @@ class DynamoDBModel(BaseModel):
         """Get DynamoDB client singleton."""
         if cls._client is None:
             # Import VERIFY_HTTPS from config
-            from app.mutil_agent.config import VERIFY_HTTPS, AWS_SESSION_TOKEN
+            from app.multi_agent.config import VERIFY_HTTPS, AWS_SESSION_TOKEN
             
             client_kwargs = {
                 "region_name": AWS_REGION,
@@ -67,7 +67,7 @@ class DynamoDBModel(BaseModel):
         """Get DynamoDB resource singleton."""
         if cls._resource is None:
             # Import VERIFY_HTTPS from config
-            from app.mutil_agent.config import VERIFY_HTTPS, AWS_SESSION_TOKEN
+            from app.multi_agent.config import VERIFY_HTTPS, AWS_SESSION_TOKEN
             
             resource_kwargs = {
                 "region_name": AWS_REGION,
