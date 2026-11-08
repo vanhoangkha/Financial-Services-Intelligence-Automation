@@ -255,7 +255,7 @@ const KnowledgeBasePage: React.FC<KnowledgeBasePageProps> = ({ onShowSnackbar })
             </SpaceBetween>
           }
         >
-          🧠 Knowledge Base Management
+          Knowledge Base Management
         </Header>
       }
     >

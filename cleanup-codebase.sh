@@ -5,12 +5,12 @@
 
 set -e  # Exit on error
 
-echo "🧹 VPBank K-MULT Agent Studio - Code Cleanup"
+echo "VPBank K-MULT Agent Studio - Code Cleanup"
 echo "=============================================="
 
 # Backup before cleanup
 echo ""
-echo "📦 Creating backup..."
+echo "Creating backup..."
 tar -czf vpbank-kmult-backup-$(date +%Y%m%d-%H%M%S).tar.gz \
   src/backend/app/mutil_agent/main_*.py \
   src/backend/app/mutil_agent/routes/v1/*_fixed.py \
@@ -18,11 +18,11 @@ tar -czf vpbank-kmult-backup-$(date +%Y%m%d-%H%M%S).tar.gz \
   src/frontend-backup-main/ \
   2>/dev/null || true
 
-echo "✅ Backup created"
+echo "Backup created"
 
 # Phase 1: Backend cleanup
 echo ""
-echo "🔧 Cleaning backend..."
+echo "Cleaning backend..."
 
 # Delete duplicate main files
 rm -f src/backend/app/mutil_agent/main_updated.py
@@ -51,7 +51,7 @@ echo "  ✓ Removed 2 backup files"
 
 # Phase 2: Frontend cleanup
 echo ""
-echo "🎨 Cleaning frontend..."
+echo "Cleaning frontend..."
 
 # Delete backup frontend
 if [ -d "src/frontend-backup-main" ]; then
@@ -77,7 +77,7 @@ fi
 
 # Phase 3: Documentation cleanup
 echo ""
-echo "📚 Organizing documentation..."
+echo "Organizing documentation..."
 
 # Create directories
 mkdir -p docs/archive/deployment-history
@@ -118,7 +118,7 @@ echo "  ✓ Moved infrastructure configs"
 
 # Phase 4: Update .gitignore
 echo ""
-echo "📝 Updating .gitignore..."
+echo "Updating .gitignore..."
 if ! grep -q "Backup directories and files" .gitignore; then
   cat >> .gitignore << 'EOF'
 
@@ -144,7 +144,7 @@ fi
 
 # Summary
 echo ""
-echo "✨ Cleanup Complete!"
+echo "Cleanup Complete!"
 echo "==================="
 echo ""
 echo "Summary:"
@@ -153,10 +153,10 @@ echo "  • Frontend: Backup directory removed (1.2MB)"
 echo "  • Documentation: Organized and archived"
 echo "  • Scripts: Moved to proper locations"
 echo ""
-echo "📊 Estimated space saved: ~1.3MB"
-echo "📈 Maintainability improvement: ~40%"
+echo "Estimated space saved: ~1.3MB"
+echo "Maintainability improvement: ~40%"
 echo ""
-echo "⚠️  Important:"
+echo "Important:"
 echo "  1. Review changes before committing"
 echo "  2. Run tests to ensure nothing broke"
 echo "  3. Backup file created: vpbank-kmult-backup-*.tar.gz"

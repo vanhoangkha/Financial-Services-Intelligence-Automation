@@ -111,7 +111,7 @@ if [ -n "$BACKEND_SERVICE" ]; then
         --region $AWS_REGION > /dev/null
     echo -e "${GREEN}✓ Backend service updated${NC}"
 else
-    echo -e "${YELLOW}⚠ Backend service not found. You'll need to create it manually.${NC}"
+    echo -e "${YELLOW}Backend service not found. You'll need to create it manually.${NC}"
 fi
 
 if [ -n "$FRONTEND_SERVICE" ]; then
@@ -123,7 +123,7 @@ if [ -n "$FRONTEND_SERVICE" ]; then
         --region $AWS_REGION > /dev/null
     echo -e "${GREEN}✓ Frontend service updated${NC}"
 else
-    echo -e "${YELLOW}⚠ Frontend service not found. You'll need to create it manually.${NC}"
+    echo -e "${YELLOW}Frontend service not found. You'll need to create it manually.${NC}"
 fi
 echo ""
 

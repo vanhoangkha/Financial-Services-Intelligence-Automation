@@ -38,7 +38,7 @@ echo -e "${BLUE}"
 cat << "EOF"
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║    🧪 VPBank K-MULT Agent Studio - Testing Suite           ║
+║    VPBank K-MULT Agent Studio - Testing Suite           ║
 ║    Enterprise Multi-Agent Banking Platform                   ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -48,12 +48,12 @@ echo -e "${NC}"
 TEST_TYPE=${1:-"all"}
 ENVIRONMENT=${2:-"test"}
 
-print_header "🔍 Test Configuration"
+print_header "Test Configuration"
 print_status "Test Type: $TEST_TYPE"
 print_status "Environment: $ENVIRONMENT"
 
 # Ensure services are running
-print_header "🚀 Checking Service Status..."
+print_header "Checking Service Status..."
 
 if ! curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health >/dev/null 2>&1; then
     print_warning "Backend service not running. Starting services..."
@@ -62,9 +62,9 @@ if ! curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health
 fi
 
 if curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health >/dev/null 2>&1; then
-    print_status "✅ Backend service is healthy"
+    print_status "Backend service is healthy"
 else
-    print_error "❌ Backend service is not responding"
+    print_error "Backend service is not responding"
     exit 1
 fi
 
@@ -77,7 +77,7 @@ run_test() {
     local test_name="$1"
     local test_command="$2"
     
-    echo -n "  🧪 $test_name... "
+    echo -n "  $test_name... "
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     
     if eval "$test_command" >/dev/null 2>&1; then
@@ -93,7 +93,7 @@ run_test() {
 
 # Health Check Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "health" ]; then
-    print_header "🏥 Health Check Tests"
+    print_header "Health Check Tests"
     
     run_test "Backend Health Check" "curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health"
     run_test "Frontend Accessibility" "curl -f http://localhost:3000"
@@ -102,7 +102,7 @@ fi
 
 # API Endpoint Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "api" ]; then
-    print_header "🔗 API Endpoint Tests"
+    print_header "API Endpoint Tests"
     
     # Test basic API endpoints
     run_test "API Root Endpoint" "curl -f http://localhost:8080/"
@@ -115,7 +115,7 @@ fi
 
 # Multi-Agent System Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "agents" ]; then
-    print_header "🤖 Multi-Agent System Tests"
+    print_header "Multi-Agent System Tests"
     
     # Test individual agents (mock tests)
     run_test "Supervisor Agent" "echo 'Mock test for Supervisor Agent' && true"
@@ -129,7 +129,7 @@ fi
 
 # Performance Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "performance" ]; then
-    print_header "⚡ Performance Tests"
+    print_header "Performance Tests"
     
     # Basic performance tests
     run_test "API Response Time < 3s" "timeout 3s curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health"
@@ -141,7 +141,7 @@ fi
 
 # Security Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "security" ]; then
-    print_header "🔒 Security Tests"
+    print_header "Security Tests"
     
     # Basic security checks
     run_test "HTTPS Headers Check" "curl -I http://localhost:8080 | grep -i 'server' || true"
@@ -151,7 +151,7 @@ fi
 
 # Integration Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "integration" ]; then
-    print_header "🔄 Integration Tests"
+    print_header "Integration Tests"
     
     # Test service integration
     run_test "Frontend-Backend Integration" "curl -f http://localhost:3000 && curl -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health"
@@ -161,7 +161,7 @@ fi
 
 # Banking Compliance Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "compliance" ]; then
-    print_header "⚖️ Banking Compliance Tests"
+    print_header "Banking Compliance Tests"
     
     # Mock compliance tests
     run_test "SBV Regulation Compliance" "echo 'SBV compliance check' && true"
@@ -173,7 +173,7 @@ fi
 
 # Docker Container Tests
 if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "docker" ]; then
-    print_header "🐳 Docker Container Tests"
+    print_header "Docker Container Tests"
     
     run_test "Backend Container Running" "docker ps | grep vpbank-kmult-backend"
     run_test "Frontend Container Running" "docker ps | grep vpbank-kmult-frontend"
@@ -182,7 +182,7 @@ if [ "$TEST_TYPE" = "all" ] || [ "$TEST_TYPE" = "docker" ]; then
 fi
 
 # Test Summary
-print_header "📊 Test Results Summary"
+print_header "Test Results Summary"
 echo "================================"
 print_status "Total Tests: $TOTAL_TESTS"
 print_success "Passed: $PASSED_TESTS"
@@ -198,29 +198,29 @@ if [ $TOTAL_TESTS -gt 0 ]; then
     print_status "Success Rate: $SUCCESS_RATE%"
 fi
 
-print_header "🏦 Banking Platform Test Coverage"
+print_header "Banking Platform Test Coverage"
 echo "================================"
-print_status "✅ Health & Availability Tests"
-print_status "✅ API Endpoint Validation"
-print_status "✅ Multi-Agent System Tests"
-print_status "✅ Performance Benchmarks"
-print_status "✅ Security Compliance"
-print_status "✅ Integration Validation"
-print_status "✅ Banking Regulation Compliance"
-print_status "✅ Container Infrastructure"
+print_status "Health & Availability Tests"
+print_status "API Endpoint Validation"
+print_status "Multi-Agent System Tests"
+print_status "Performance Benchmarks"
+print_status "Security Compliance"
+print_status "Integration Validation"
+print_status "Banking Regulation Compliance"
+print_status "Container Infrastructure"
 
 if [ $FAILED_TESTS -eq 0 ]; then
     print_success ""
-    print_success "🎉 All tests passed! VPBank K-MULT Agent Studio is ready for production."
+    print_success "All tests passed! VPBank K-MULT Agent Studio is ready for production."
     print_success ""
-    print_success "🏦 Banking Platform Status:"
+    print_success "Banking Platform Status:"
     print_success "   • Multi-Agent System: Operational"
     print_success "   • Document Processing: Ready"
     print_success "   • Compliance Validation: Active"
     print_success "   • Risk Assessment: Functional"
     print_success "   • Decision Making: Enabled"
     print_success ""
-    print_success "📈 Performance Metrics:"
+    print_success "Performance Metrics:"
     print_success "   • 10,000+ documents/day capacity"
     print_success "   • 99.5% OCR accuracy"
     print_success "   • < 1% error rate"
@@ -228,7 +228,7 @@ if [ $FAILED_TESTS -eq 0 ]; then
     exit 0
 else
     print_error ""
-    print_error "❌ Some tests failed. Please review the results above."
+    print_error "Some tests failed. Please review the results above."
     print_error "Run specific test suites with: ./test.sh [health|api|agents|performance|security|integration|compliance|docker]"
     exit 1
 fi

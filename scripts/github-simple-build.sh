@@ -10,7 +10,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}🚀 Simple GitHub CodeBuild Setup${NC}"
+echo -e "${BLUE}Simple GitHub CodeBuild Setup${NC}"
 echo "=================================="
 
 PROJECT_NAME="VPBankKMult-GitHub-Simple"
@@ -39,7 +39,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:latest'
 
-echo -e "${BLUE}📋 Configuration:${NC}"
+echo -e "${BLUE}Configuration:${NC}"
 echo "• Project: $PROJECT_NAME"
 echo "• Repository: $GITHUB_REPO"
 echo ""
@@ -89,18 +89,18 @@ cat > /tmp/simple-github-project.json << EOF
 EOF
 
 # Create project
-echo -e "${BLUE}🔨 Creating simple GitHub project...${NC}"
+echo -e "${BLUE}Creating simple GitHub project...${NC}"
 aws codebuild create-project --cli-input-json file:///tmp/simple-github-project.json --region us-east-1
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ Project created successfully${NC}"
+    echo -e "${GREEN}Project created successfully${NC}"
     
     # Start build
-    echo -e "${BLUE}🚀 Starting build...${NC}"
+    echo -e "${BLUE}Starting build...${NC}"
     BUILD_ID=$(aws codebuild start-build --project-name $PROJECT_NAME --region us-east-1 --query 'build.id' --output text)
     
-    echo -e "${GREEN}✅ Build started: $BUILD_ID${NC}"
-    echo -e "${BLUE}🔗 Monitor at: https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME/build/$BUILD_ID${NC}"
+    echo -e "${GREEN}Build started: $BUILD_ID${NC}"
+    echo -e "${BLUE}Monitor at: https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME/build/$BUILD_ID${NC}"
     
     # Quick status check
     sleep 60
@@ -108,14 +108,14 @@ if [ $? -eq 0 ]; then
     echo -e "${BLUE}Current Status: $BUILD_STATUS${NC}"
     
 else
-    echo -e "${RED}❌ Failed to create project${NC}"
+    echo -e "${RED}Failed to create project${NC}"
 fi
 
 # Cleanup
 rm -f /tmp/simple-github-project.json
 
 echo ""
-echo -e "${GREEN}🎉 Simple GitHub Setup Complete!${NC}"
+echo -e "${GREEN}Simple GitHub Setup Complete!${NC}"
 echo "• Project: $PROJECT_NAME"
 echo "• Repository: $GITHUB_REPO (PUBLIC)"
 echo "• No GitHub token required!"

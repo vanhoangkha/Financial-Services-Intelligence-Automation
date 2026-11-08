@@ -13,7 +13,7 @@ RED='\033[0;31m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-echo -e "${BLUE}🏗️ VPBank K-MULT Agent Studio - AWS Infrastructure Setup${NC}"
+echo -e "${BLUE}VPBank K-MULT Agent Studio - AWS Infrastructure Setup${NC}"
 echo "=================================================================="
 
 # Configuration
@@ -25,7 +25,7 @@ ECR_REPO="vpbank-kmult-backend"
 ECS_CLUSTER="vpbank-kmult-cluster"
 VPC_NAME="vpbank-kmult-vpc"
 
-echo -e "${CYAN}📋 Infrastructure Configuration:${NC}"
+echo -e "${CYAN}Infrastructure Configuration:${NC}"
 echo "   AWS Region: $AWS_REGION"
 echo "   Project Name: $PROJECT_NAME"
 echo "   S3 Bucket: $S3_BUCKET"
@@ -36,15 +36,15 @@ echo ""
 # Function to check command success
 check_success() {
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✅ $1${NC}"
+        echo -e "${GREEN}$1${NC}"
     else
-        echo -e "${RED}❌ $1 failed${NC}"
+        echo -e "${RED}$1 failed${NC}"
         exit 1
     fi
 }
 
 # Step 1: Create S3 bucket for frontend
-echo -e "${BLUE}🪣 Step 1: Creating S3 Bucket for Frontend${NC}"
+echo -e "${BLUE}Step 1: Creating S3 Bucket for Frontend${NC}"
 aws s3 mb s3://$S3_BUCKET --region $AWS_REGION 2>/dev/null || echo "Bucket may already exist"
 
 # Configure bucket for static website hosting
@@ -71,22 +71,22 @@ aws s3api put-bucket-policy --bucket $S3_BUCKET --policy file://bucket-policy.js
 check_success "S3 bucket policy applied"
 
 # Step 2: Create ECR repository
-echo -e "${BLUE}📦 Step 2: Creating ECR Repository${NC}"
+echo -e "${BLUE}Step 2: Creating ECR Repository${NC}"
 aws ecr create-repository --repository-name $ECR_REPO --region $AWS_REGION 2>/dev/null || echo "Repository may already exist"
 check_success "ECR repository ready"
 
 # Step 3: Create ECS Cluster
-echo -e "${BLUE}⚙️ Step 3: Creating ECS Cluster${NC}"
+echo -e "${BLUE}Step 3: Creating ECS Cluster${NC}"
 aws ecs create-cluster --cluster-name $ECS_CLUSTER --region $AWS_REGION 2>/dev/null || echo "Cluster may already exist"
 check_success "ECS cluster ready"
 
 # Step 4: Create CloudWatch Log Group
-echo -e "${BLUE}📊 Step 4: Creating CloudWatch Log Group${NC}"
+echo -e "${BLUE}Step 4: Creating CloudWatch Log Group${NC}"
 aws logs create-log-group --log-group-name "/ecs/$PROJECT_NAME" --region $AWS_REGION 2>/dev/null || echo "Log group may already exist"
 check_success "CloudWatch log group ready"
 
 # Step 5: Create IAM roles if they don't exist
-echo -e "${BLUE}🔐 Step 5: Setting up IAM Roles${NC}"
+echo -e "${BLUE}Step 5: Setting up IAM Roles${NC}"
 
 # ECS Task Execution Role
 cat > ecs-task-execution-role.json << EOF
@@ -148,7 +148,7 @@ aws iam attach-role-policy --role-name ecsTaskRole --policy-arn arn:aws:iam::$AW
 check_success "IAM roles configured"
 
 # Step 6: Create Application Load Balancer (if needed)
-echo -e "${BLUE}⚖️ Step 6: Setting up Load Balancer${NC}"
+echo -e "${BLUE}Step 6: Setting up Load Balancer${NC}"
 # Get default VPC
 VPC_ID=$(aws ec2 describe-vpcs --filters "Name=is-default,Values=true" --query 'Vpcs[0].VpcId' --output text --region $AWS_REGION)
 SUBNET_IDS=$(aws ec2 describe-subnets --filters "Name=vpc-id,Values=$VPC_ID" --query 'Subnets[*].SubnetId' --output text --region $AWS_REGION)
@@ -166,7 +166,7 @@ aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port
 check_success "Security groups configured"
 
 # Step 7: Create CloudFront Distribution
-echo -e "${BLUE}🌐 Step 7: Creating CloudFront Distribution${NC}"
+echo -e "${BLUE}Step 7: Creating CloudFront Distribution${NC}"
 cat > cloudfront-config.json << EOF
 {
     "CallerReference": "$PROJECT_NAME-$(date +%s)",
@@ -212,22 +212,22 @@ check_success "CloudFront distribution configured"
 rm -f bucket-policy.json ecs-task-execution-role.json ecs-task-role.json bedrock-policy.json cloudfront-config.json
 
 echo ""
-echo -e "${GREEN}🎉 AWS INFRASTRUCTURE SETUP COMPLETE!${NC}"
+echo -e "${GREEN}AWS INFRASTRUCTURE SETUP COMPLETE!${NC}"
 echo "=============================================================================="
-echo -e "${CYAN}📊 Infrastructure Summary:${NC}"
+echo -e "${CYAN}Infrastructure Summary:${NC}"
 echo "   S3 Bucket: $S3_BUCKET"
 echo "   ECR Repository: $ECR_REPO"
 echo "   ECS Cluster: $ECS_CLUSTER"
 echo "   CloudWatch Log Group: /ecs/$PROJECT_NAME"
 echo "   CloudFront Distribution ID: $CLOUDFRONT_ID"
 echo ""
-echo -e "${CYAN}🚀 Next Steps:${NC}"
+echo -e "${CYAN}Next Steps:${NC}"
 echo "   1. Run the deployment script: ./deploy_banking_professional.sh"
 echo "   2. Configure custom domain (optional)"
 echo "   3. Set up monitoring and alerts"
 echo "   4. Configure SSL certificates"
 echo ""
-echo -e "${GREEN}🏆 Infrastructure is ready for VPBank K-MULT deployment!${NC}"
+echo -e "${GREEN}Infrastructure is ready for VPBank K-MULT deployment!${NC}"
 
 echo ""
-echo -e "${BLUE}📋 Infrastructure setup completed at: $(date)${NC}"
+echo -e "${BLUE}Infrastructure setup completed at: $(date)${NC}"

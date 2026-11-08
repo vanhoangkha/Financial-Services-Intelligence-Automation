@@ -38,7 +38,7 @@ echo -e "${BLUE}"
 cat << "EOF"
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║    🚀 VPBank K-MULT Agent Studio - AWS Deployment          ║
+║    VPBank K-MULT Agent Studio - AWS Deployment          ║
 ║    Enterprise Multi-Agent Banking Platform                   ║
 ║                                                              ║
 ║    Target: ECS Fargate + Multi-Region Architecture          ║
@@ -51,7 +51,7 @@ ENVIRONMENT=${1:-"staging"}
 REGION=${2:-"ap-southeast-1"}
 DEPLOY_TYPE=${3:-"full"}
 
-print_header "🔍 Deployment Configuration"
+print_header "Deployment Configuration"
 print_status "Environment: $ENVIRONMENT"
 print_status "AWS Region: $REGION"
 print_status "Deployment Type: $DEPLOY_TYPE"
@@ -78,7 +78,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-print_header "🏗️ Pre-deployment Checks..."
+print_header "Pre-deployment Checks..."
 
 # Validate environment files
 if [ ! -f "backend/app/mutil_agent/.env.production" ]; then
@@ -87,14 +87,14 @@ if [ ! -f "backend/app/mutil_agent/.env.production" ]; then
 fi
 
 # Build images for deployment
-print_header "🔨 Building Production Images..."
+print_header "Building Production Images..."
 ./build.sh production
 
-print_header "🏦 VPBank K-MULT AWS Deployment Process..."
+print_header "VPBank K-MULT AWS Deployment Process..."
 
 case $DEPLOY_TYPE in
     "infrastructure"|"infra")
-        print_header "🏗️ Deploying AWS Infrastructure..."
+        print_header "Deploying AWS Infrastructure..."
         
         # Deploy VPC and networking
         print_status "Creating VPC and networking components..."
@@ -111,11 +111,11 @@ case $DEPLOY_TYPE in
         # Deploy security components
         print_status "Configuring security services..."
         
-        print_success "✅ Infrastructure deployment completed"
+        print_success "Infrastructure deployment completed"
         ;;
         
     "application"|"app")
-        print_header "🤖 Deploying Multi-Agent Application..."
+        print_header "Deploying Multi-Agent Application..."
         
         # Create ECR repositories if they don't exist
         print_status "Setting up ECR repositories..."
@@ -129,7 +129,7 @@ case $DEPLOY_TYPE in
         for repo in vpbank-kmult-backend vpbank-kmult-frontend vpbank-kmult-mutil-agent; do
             aws ecr describe-repositories --repository-names $repo --region $REGION >/dev/null 2>&1 || \
             aws ecr create-repository --repository-name $repo --region $REGION
-            print_status "✅ ECR repository $repo ready"
+            print_status "ECR repository $repo ready"
         done
         
         # Tag and push images
@@ -143,7 +143,7 @@ case $DEPLOY_TYPE in
                 docker push $ECR_REGISTRY/$image:latest
                 docker push $ECR_REGISTRY/$image:production
                 
-                print_status "✅ Pushed $image to ECR"
+                print_status "Pushed $image to ECR"
             fi
         done
         
@@ -152,19 +152,19 @@ case $DEPLOY_TYPE in
         
         # Deploy 7 specialized agents
         print_status "Deploying Multi-Agent Platform:"
-        print_status "  🎯 Supervisor Agent (1-3 instances)"
-        print_status "  📄 Document Intelligence Agent (2-15 instances)"
-        print_status "  💳 LC Processing Agent (1-10 instances)"
-        print_status "  💰 Credit Analysis Agent (2-12 instances)"
-        print_status "  ⚖️ Compliance Engine Agent (1-8 instances)"
-        print_status "  📊 Risk Assessment Agent (2-10 instances)"
-        print_status "  🧠 Decision Synthesis Agent (1-5 instances)"
+        print_status "  Supervisor Agent (1-3 instances)"
+        print_status "  Document Intelligence Agent (2-15 instances)"
+        print_status "  LC Processing Agent (1-10 instances)"
+        print_status "  Credit Analysis Agent (2-12 instances)"
+        print_status "  Compliance Engine Agent (1-8 instances)"
+        print_status "  Risk Assessment Agent (2-10 instances)"
+        print_status "  Decision Synthesis Agent (1-5 instances)"
         
-        print_success "✅ Application deployment completed"
+        print_success "Application deployment completed"
         ;;
         
     "full")
-        print_header "🚀 Full Stack Deployment..."
+        print_header "Full Stack Deployment..."
         
         # Deploy infrastructure first
         print_status "Phase 1: Infrastructure deployment..."
@@ -178,11 +178,11 @@ case $DEPLOY_TYPE in
         print_status "Phase 2: Application deployment..."
         $0 application $ENVIRONMENT $REGION
         
-        print_success "✅ Full stack deployment completed"
+        print_success "Full stack deployment completed"
         ;;
         
     "update")
-        print_header "🔄 Updating Application..."
+        print_header "Updating Application..."
         
         # Update ECS services with new images
         print_status "Updating ECS services..."
@@ -191,16 +191,16 @@ case $DEPLOY_TYPE in
         aws ecs update-service --cluster vpbank-kmult-cluster --service vpbank-kmult-backend --force-new-deployment --region $REGION || true
         aws ecs update-service --cluster vpbank-kmult-cluster --service vpbank-kmult-frontend --force-new-deployment --region $REGION || true
         
-        print_success "✅ Application update completed"
+        print_success "Application update completed"
         ;;
         
     "rollback")
-        print_header "⏪ Rolling Back Deployment..."
+        print_header "Rolling Back Deployment..."
         
         # Rollback to previous version
         print_status "Rolling back ECS services..."
         
-        print_success "✅ Rollback completed"
+        print_success "Rollback completed"
         ;;
         
     *)
@@ -210,7 +210,7 @@ case $DEPLOY_TYPE in
         ;;
 esac
 
-print_header "📊 Deployment Summary"
+print_header "Deployment Summary"
 echo "================================"
 
 # Get deployment status
@@ -218,66 +218,66 @@ print_status "AWS Resources Status:"
 
 # Check ECS cluster
 if aws ecs describe-clusters --clusters vpbank-kmult-cluster --region $REGION >/dev/null 2>&1; then
-    print_status "✅ ECS Cluster: Active"
+    print_status "ECS Cluster: Active"
     
     # Get service status
     SERVICES=$(aws ecs list-services --cluster vpbank-kmult-cluster --region $REGION --query 'serviceArns' --output text 2>/dev/null || echo "")
     if [ -n "$SERVICES" ]; then
-        print_status "✅ ECS Services: Running"
+        print_status "ECS Services: Running"
     else
-        print_warning "⚠️  ECS Services: Not found"
+        print_warning "ECS Services: Not found"
     fi
 else
-    print_warning "⚠️  ECS Cluster: Not found"
+    print_warning "ECS Cluster: Not found"
 fi
 
 # Check ECR repositories
 ECR_REPOS=$(aws ecr describe-repositories --region $REGION --query 'repositories[?starts_with(repositoryName, `vpbank-kmult`)].repositoryName' --output text 2>/dev/null || echo "")
 if [ -n "$ECR_REPOS" ]; then
-    print_status "✅ ECR Repositories: Available"
+    print_status "ECR Repositories: Available"
 else
-    print_warning "⚠️  ECR Repositories: Not found"
+    print_warning "ECR Repositories: Not found"
 fi
 
 print_success ""
-print_success "🎉 VPBank K-MULT Agent Studio Deployment Summary"
+print_success "VPBank K-MULT Agent Studio Deployment Summary"
 print_success ""
-print_success "🏗️ AWS Architecture:"
+print_success "AWS Architecture:"
 print_success "   • Region: $REGION (Singapore)"
 print_success "   • Environment: $ENVIRONMENT"
 print_success "   • Compute: ECS Fargate"
 print_success "   • Auto-Scaling: Enabled"
 print_success "   • Multi-AZ: Yes"
 print_success ""
-print_success "🤖 Multi-Agent Platform:"
+print_success "Multi-Agent Platform:"
 print_success "   • 7 Specialized Banking Agents"
 print_success "   • Auto-scaling: 1-15 instances per agent"
 print_success "   • Processing Capacity: 10,000+ docs/day"
 print_success "   • OCR Accuracy: 99.5%"
 print_success "   • Error Rate: < 1%"
 print_success ""
-print_success "💰 Cost Optimization:"
+print_success "Cost Optimization:"
 print_success "   • Monthly Cost: $442.57"
 print_success "   • Cost Reduction: 80-84% vs traditional"
 print_success "   • ROI Timeline: 3 months"
 print_success ""
-print_success "🔒 Security & Compliance:"
+print_success "Security & Compliance:"
 print_success "   • Banking-Grade Security: Enabled"
 print_success "   • SBV Compliance: Active"
 print_success "   • Basel III: Implemented"
 print_success "   • AML/CFT: Validated"
 print_success ""
-print_success "📈 Performance Metrics:"
+print_success "Performance Metrics:"
 print_success "   • Availability: 99.99% SLA"
 print_success "   • Response Time: < 3 seconds"
 print_success "   • Concurrent Users: 1,000+"
 print_success ""
-print_success "🔧 Management Commands:"
+print_success "Management Commands:"
 print_success "   aws ecs list-services --cluster vpbank-kmult-cluster --region $REGION"
 print_success "   aws logs describe-log-groups --log-group-name-prefix /aws/ecs/vpbank-kmult"
 print_success "   aws cloudwatch get-metric-statistics --namespace AWS/ECS"
 print_success ""
-print_success "🌐 Access URLs (after deployment):"
+print_success "Access URLs (after deployment):"
 print_success "   • Application Load Balancer: https://vpbank-kmult-alb-xxx.elb.amazonaws.com"
 print_success "   • CloudFront Distribution: https://xxx.cloudfront.net"
 print_success "   • API Gateway: https://xxx.execute-api.$REGION.amazonaws.com"

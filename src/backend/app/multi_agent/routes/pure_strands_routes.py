@@ -31,7 +31,7 @@ async def process_request(
     context: Optional[str] = Form(default=None, description="Optional context as JSON string")
 ):
     """
-    🏦 **VPBank K-MULT Agent Studio - Unified Processing Endpoint**
+    **VPBank K-MULT Agent Studio - Unified Processing Endpoint**
     
     **Handles both scenarios:**
     1. **Text-only**: `message="hello, bạn là ai?"` (no file)
@@ -73,7 +73,7 @@ async def process_request(
                     }
                     
                     # Add file context to message
-                    enhanced_message += f"\n\n[📎 File: {file.filename} ({len(file_bytes)} bytes)]"
+                    enhanced_message += f"\n\n[File: {file.filename} ({len(file_bytes)} bytes)]"
                     file_info = f"File: {file.filename} ({len(file_bytes)} bytes)"
                     
                     logger.info(f"[UNIFIED_ENDPOINT] File processed successfully: {file_info}")
@@ -82,7 +82,7 @@ async def process_request(
                 logger.error(f"[UNIFIED_ENDPOINT] File processing error: {file_error}")
                 return {
                     "status": "error",
-                    "response": f"❌ **Lỗi xử lý file**: {str(file_error)}",
+                    "response": f"**Lỗi xử lý file**: {str(file_error)}",
                     "agent_used": "error_handler",
                     "file_processed": file.filename if file else None,
                     "processing_time": 0,
@@ -135,7 +135,7 @@ async def process_request(
         
         return {
             "status": "error",
-            "response": f"❌ **Lỗi xử lý yêu cầu**: {str(e)}",
+            "response": f"**Lỗi xử lý yêu cầu**: {str(e)}",
             "agent_used": "error_handler",
             "file_processed": file.filename if file and hasattr(file, 'filename') else None,
             "processing_time": round(processing_time, 2),

@@ -117,7 +117,7 @@ const LCProcessingPage: React.FC<LCProcessingPageProps> = ({ onShowSnackbar }) =
             </SpaceBetween>
           }
         >
-          📄 Letter of Credit Processing
+          Letter of Credit Processing
         </Header>
 
         <Tabs
@@ -229,7 +229,7 @@ const LCProcessingPage: React.FC<LCProcessingPageProps> = ({ onShowSnackbar }) =
                           loading={loading}
                           disabled={lcDocuments.length === 0}
                         >
-                          🚀 Process Letter of Credit
+                          Process Letter of Credit
                         </Button>
                       </Box>
                     </SpaceBetween>

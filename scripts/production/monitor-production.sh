@@ -11,7 +11,7 @@ echo "╚═══════════════════════�
 echo ""
 
 # Service Status
-echo "📊 Service Status:"
+echo "Service Status:"
 aws ecs describe-services \
   --cluster $CLUSTER_NAME \
   --services $SERVICE_NAME \
@@ -22,7 +22,7 @@ aws ecs describe-services \
 echo ""
 
 # Task Health
-echo "🏥 Task Health:"
+echo "Task Health:"
 TASK_ARNS=$(aws ecs list-tasks \
   --cluster $CLUSTER_NAME \
   --service-name $SERVICE_NAME \
@@ -44,7 +44,7 @@ fi
 echo ""
 
 # CPU Utilization (last hour)
-echo "💻 CPU Utilization (Last Hour):"
+echo "CPU Utilization (Last Hour):"
 aws cloudwatch get-metric-statistics \
   --namespace AWS/ECS \
   --metric-name CPUUtilization \
@@ -60,7 +60,7 @@ aws cloudwatch get-metric-statistics \
 echo ""
 
 # Memory Utilization
-echo "🧠 Memory Utilization (Last Hour):"
+echo "Memory Utilization (Last Hour):"
 aws cloudwatch get-metric-statistics \
   --namespace AWS/ECS \
   --metric-name MemoryUtilization \
@@ -76,7 +76,7 @@ aws cloudwatch get-metric-statistics \
 echo ""
 
 # Recent Events
-echo "📝 Recent Service Events:"
+echo "Recent Service Events:"
 aws ecs describe-services \
   --cluster $CLUSTER_NAME \
   --services $SERVICE_NAME \
@@ -87,7 +87,7 @@ aws ecs describe-services \
 echo ""
 
 # ALB Health
-echo "🔗 Load Balancer Target Health:"
+echo "Load Balancer Target Health:"
 TARGET_GROUP_ARN=$(aws elbv2 describe-target-groups \
   --region $AWS_REGION \
   --query "TargetGroups[?contains(TargetGroupName, 'backend')].TargetGroupArn" \
@@ -104,6 +104,6 @@ else
 fi
 
 echo ""
-echo "🔄 Auto-refresh in 30 seconds... (Ctrl+C to exit)"
+echo "Auto-refresh in 30 seconds... (Ctrl+C to exit)"
 sleep 30
 exec $0

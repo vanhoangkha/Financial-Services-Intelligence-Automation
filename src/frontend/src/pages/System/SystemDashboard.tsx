@@ -284,7 +284,7 @@ const SystemDashboard: React.FC<SystemDashboardProps> = ({ onShowSnackbar }) => 
             </SpaceBetween>
           }
         >
-          🖥️ System Monitoring Dashboard
+          System Monitoring Dashboard
         </Header>
       }
     >

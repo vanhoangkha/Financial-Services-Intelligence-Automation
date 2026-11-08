@@ -10,16 +10,16 @@ FAIL=0
 
 check() {
     if [ $? -eq 0 ]; then
-        echo "✅ $1"
+        echo "$1"
         ((PASS++))
     else
-        echo "❌ $1"
+        echo "$1"
         ((FAIL++))
     fi
 }
 
 # 1. Check files exist
-echo "📁 Checking Production Files..."
+echo "Checking Production Files..."
 [ -f "src/backend/Dockerfile.prod" ]; check "Backend Dockerfile.prod"
 [ -f "src/frontend/Dockerfile.prod" ]; check "Frontend Dockerfile.prod"
 [ -f "src/frontend/nginx.prod.conf" ]; check "Nginx production config"
@@ -33,7 +33,7 @@ echo "📁 Checking Production Files..."
 [ -f "OPTIMIZATION_SUMMARY.md" ]; check "Optimization summary"
 
 echo ""
-echo "🔍 Validating Configurations..."
+echo "Validating Configurations..."
 
 # 2. Validate JSON
 python3 -m json.tool ecs-task-definition-prod.json > /dev/null 2>&1
@@ -56,7 +56,7 @@ check "CloudFormation template syntax"
 [ -d "src/frontend/src" ]; check "Frontend src directory"
 
 echo ""
-echo "🔐 Security Checks..."
+echo "Security Checks..."
 
 # 5. Check security configurations
 grep -q "USER appuser" src/backend/Dockerfile.prod
@@ -72,7 +72,7 @@ grep -q "gzip on" src/frontend/nginx.prod.conf
 check "Gzip compression enabled"
 
 echo ""
-echo "⚙️  Resource Configuration..."
+echo "Resource Configuration..."
 
 # 6. Check resource limits
 grep -q '"cpu": "2048"' ecs-task-definition-prod.json
@@ -85,7 +85,7 @@ grep -q "healthCheck" ecs-task-definition-prod.json
 check "Health checks configured"
 
 echo ""
-echo "📊 Infrastructure Components..."
+echo "Infrastructure Components..."
 
 # 7. Check infrastructure components
 grep -q "AWS::EC2::VPC" infrastructure-prod.yml
@@ -104,7 +104,7 @@ grep -q "AvailabilityZone" infrastructure-prod.yml
 check "Multi-AZ deployment"
 
 echo ""
-echo "🚀 Deployment Scripts..."
+echo "Deployment Scripts..."
 
 # 8. Check deployment scripts
 grep -q "docker build" deploy-production.sh
@@ -121,12 +121,12 @@ check "Auto-scaling configuration"
 
 echo ""
 echo "════════════════════════════════════════════════════════════"
-echo "📈 Results: $PASS passed, $FAIL failed"
+echo "Results: $PASS passed, $FAIL failed"
 echo "════════════════════════════════════════════════════════════"
 
 if [ $FAIL -eq 0 ]; then
     echo ""
-    echo "🎉 Production Ready! All checks passed."
+    echo "Production Ready! All checks passed."
     echo ""
     echo "Next Steps:"
     echo "  1. Review .env.production and set secrets"
@@ -137,6 +137,6 @@ if [ $FAIL -eq 0 ]; then
     exit 0
 else
     echo ""
-    echo "⚠️  Some checks failed. Please review and fix issues."
+    echo "Some checks failed. Please review and fix issues."
     exit 1
 fi

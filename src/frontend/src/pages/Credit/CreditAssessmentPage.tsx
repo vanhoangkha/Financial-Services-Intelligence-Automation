@@ -171,7 +171,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
             </SpaceBetween>
           }
         >
-          💰 Credit Proposal Assessment
+          Credit Proposal Assessment
         </Header>
 
         <Tabs
@@ -318,7 +318,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
                             !consentCIC
                           }
                         >
-                          🔍 Start Credit Assessment
+                          Start Credit Assessment
                         </Button>
                       </Box>
                     </SpaceBetween>
@@ -484,7 +484,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
                                       <td key={i} style={{ height: 18, background: 'transparent', border: 'none', padding: 0, position: 'relative' }}>
                                         {i === arrowIdx && (
                                           <div style={{ position: 'absolute', left: '50%', top: 0, transform: 'translateX(-50%)' }}>
-                                            <span role="img" aria-label="arrow" style={{ fontSize: 22 }}>⬆️</span>
+                                            <span role="img" aria-label="arrow" style={{ fontSize: 22 }}></span>
                                           </div>
                                         )}
                                       </td>
@@ -531,7 +531,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
                       
                       {/* Phần tóm tắt hồ sơ khách hàng */}
                       {assessmentResult.summary && (
-                        <ExpandableSection headerText="📝 Tóm tắt hồ sơ khách hàng" defaultExpanded={true}>
+                        <ExpandableSection headerText="Tóm tắt hồ sơ khách hàng" defaultExpanded={true}>
                           <div style={{ whiteSpace: 'pre-wrap', fontSize: '14px', color: '#333', borderRadius: '8px', padding: '16px', background: '#f8f9fa' }}>
                             {assessmentResult.summary}
                           </div>
@@ -540,21 +540,21 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
 
                       {/* Phân tích lịch sử tín dụng */}
                       {assessmentResult.creditHistory && (
-                        <ExpandableSection headerText="📊 Phân tích lịch sử tín dụng" defaultExpanded={true}>
+                        <ExpandableSection headerText="Phân tích lịch sử tín dụng" defaultExpanded={true}>
                           <div style={{ whiteSpace: 'pre-wrap', fontSize: '14px', color: '#333', borderRadius: '8px', padding: '16px', background: '#f8f9fa' }}>{assessmentResult.creditHistory}</div>
                         </ExpandableSection>
                       )}
 
                       {/* Phân tích tài chính & khả năng trả nợ */}
                       {assessmentResult.financialAnalysis && (
-                        <ExpandableSection headerText="💰 Phân tích tài chính & khả năng trả nợ" defaultExpanded={true}>
+                        <ExpandableSection headerText="Phân tích tài chính & khả năng trả nợ" defaultExpanded={true}>
                           <div style={{ whiteSpace: 'pre-wrap', fontSize: '14px', color: '#333', borderRadius: '8px', padding: '16px', background: '#f8f9fa' }}>{assessmentResult.financialAnalysis}</div>
                         </ExpandableSection>
                       )}
 
                       {/* Phân tích rủi ro tổng thể */}
                       {assessmentResult.riskAnalysis && (
-                        <ExpandableSection headerText="⚠️ Phân tích rủi ro tổng thể" defaultExpanded={true}>
+                        <ExpandableSection headerText="Phân tích rủi ro tổng thể" defaultExpanded={true}>
                           <div style={{ whiteSpace: 'pre-wrap', fontSize: '14px', color: '#333', borderRadius: '8px', padding: '16px', background: '#f8f9fa' }}>{assessmentResult.riskAnalysis}</div>
                         </ExpandableSection>
                       )}
@@ -598,7 +598,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
 
                       {/* Khuyến nghị & lưu ý cho ngân hàng */}
                       {assessmentResult.notes && (
-                        <ExpandableSection headerText="💡 Khuyến nghị & lưu ý cho ngân hàng" defaultExpanded={true}>
+                        <ExpandableSection headerText="Khuyến nghị & lưu ý cho ngân hàng" defaultExpanded={true}>
                           <div style={{ whiteSpace: 'pre-wrap', fontSize: '14px', color: '#b26a00', background: '#fffbe6', borderRadius: '8px', padding: '16px' }}>
                             {assessmentResult.notes}
                           </div>
@@ -607,7 +607,7 @@ const CreditAssessmentPage: React.FC<CreditAssessmentPageProps> = ({ onShowSnack
 
                       {/* AI Report Section - styled giống TextSummaryPage */}
                       {assessmentResult.ai_report && (
-                        <ExpandableSection headerText="🤖 AI Report - Nội dung phân tích chi tiết từ AI" defaultExpanded={true}>
+                        <ExpandableSection headerText="AI Report - Nội dung phân tích chi tiết từ AI" defaultExpanded={true}>
                           <div style={{ background: '#f5f6fa', borderRadius: '8px', padding: '16px' }}>
                             <ReactMarkdown>{fixMarkdown(assessmentResult.ai_report)}</ReactMarkdown>
                           </div>

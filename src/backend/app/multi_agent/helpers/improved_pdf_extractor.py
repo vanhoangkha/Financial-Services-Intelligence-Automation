@@ -50,7 +50,7 @@ class ImprovedPDFExtractor:
         # Try PyPDF2 methods first (faster and more accurate for text-based PDFs)
         pypdf_result = self._try_pypdf_methods(file_content)
         if pypdf_result and self._is_valid_text(pypdf_result):
-            logger.info(f"✅ PyPDF2 extraction successful: {len(pypdf_result)} characters")
+            logger.info(f"PyPDF2 extraction successful: {len(pypdf_result)} characters")
             return {
                 'text': pypdf_result,
                 'source': 'pypdf2',
@@ -77,12 +77,12 @@ class ImprovedPDFExtractor:
     def _try_ocr_extraction(self, file_content: bytes) -> str:
         """Try OCR extraction for scanned PDFs with optimized flow"""
         max_pages_info = f" (max {self.max_pages} pages)" if self.max_pages else " (all pages)"
-        logger.info(f"🔍 Trying OCR extraction{max_pages_info}")
+        logger.info(f"Trying OCR extraction{max_pages_info}")
         
         try:
             ocr_text = self._extract_with_basic_ocr_fallback(file_content)
             if self._is_valid_text(ocr_text):
-                logger.info(f"✅ OCR successful: {len(ocr_text)} characters")
+                logger.info(f"OCR successful: {len(ocr_text)} characters")
                 return self._clean_extracted_text(ocr_text)
             else:
                 logger.warning("OCR returned insufficient text")
@@ -100,11 +100,11 @@ class ImprovedPDFExtractor:
                 text = method(file_content)
                 
                 if self._is_valid_text(text):
-                    logger.info(f"✅ Method {i} successful: {len(text)} characters")
+                    logger.info(f"Method {i} successful: {len(text)} characters")
                     return self._clean_extracted_text(text)
                 else:
                     text_length = len(text.strip()) if text else 0
-                    logger.debug(f"❌ Method {i} insufficient text: {text_length} characters")
+                    logger.debug(f"Method {i} insufficient text: {text_length} characters")
                     
             except Exception as e:
                 logger.debug(f"Method {i} failed: {str(e)}")
@@ -298,7 +298,7 @@ Gợi ý giải pháp:
             
             if ocr_result['success'] and ocr_result['text'].strip():
                 pages_info = f"from {ocr_result['total_pages']} pages" if max_pages is None else f"from {ocr_result['total_pages']} pages (max {max_pages})"
-                logger.info(f"✅ Lightweight OCR successful with {ocr_result['engine_used']}: {len(ocr_result['text'])} characters {pages_info}")
+                logger.info(f"Lightweight OCR successful with {ocr_result['engine_used']}: {len(ocr_result['text'])} characters {pages_info}")
                 return ocr_result['text']
             else:
                 logger.warning(f"Lightweight OCR failed: {ocr_result.get('error', 'Unknown error')}")

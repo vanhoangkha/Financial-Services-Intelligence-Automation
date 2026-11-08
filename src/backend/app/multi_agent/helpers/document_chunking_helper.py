@@ -78,7 +78,7 @@ class DocumentChunkingHelper:
             )
             return ChunkingResult([chunk], 1, len(text), len(text), "single_chunk")
         
-        logger.info(f"📚 Chunking document: {len(text):,} chars")
+        logger.info(f"Chunking document: {len(text):,} chars")
         
         # Choose chunking strategy
         if preserve_structure and self._has_structure(text):
@@ -96,7 +96,7 @@ class DocumentChunkingHelper:
             processing_strategy=strategy
         )
         
-        logger.info(f"✅ Created {len(chunks)} chunks, avg: {result.avg_chunk_size:,} chars")
+        logger.info(f"Created {len(chunks)} chunks, avg: {result.avg_chunk_size:,} chars")
         return result
     
     def _has_structure(self, text: str) -> bool:
@@ -180,7 +180,7 @@ class DocumentChunkingHelper:
         if not chunks:
             return []
         
-        logger.info(f"🔄 Processing {len(chunks)} chunks")
+        logger.info(f"Processing {len(chunks)} chunks")
         
         # Choose processing strategy
         if len(chunks) <= self.PARALLEL_THRESHOLD:
@@ -190,7 +190,7 @@ class DocumentChunkingHelper:
     
     async def _process_parallel(self, chunks, bedrock_service, summary_type, language, max_parallel):
         """Parallel processing with semaphore"""
-        logger.info("⚡ Parallel processing")
+        logger.info("Parallel processing")
         semaphore = asyncio.Semaphore(max_parallel)
         
         async def process_chunk(chunk):
@@ -200,7 +200,7 @@ class DocumentChunkingHelper:
                     response = await bedrock_service.ai_ainvoke(prompt)
                     return self._extract_response_text(response)
                 except Exception as e:
-                    logger.error(f"❌ Chunk {chunk.chunk_id} failed: {e}")
+                    logger.error(f"Chunk {chunk.chunk_id} failed: {e}")
                     return f"[Lỗi chunk {chunk.chunk_id}: {str(e)}]"
         
         tasks = [process_chunk(chunk) for chunk in chunks]
@@ -208,7 +208,7 @@ class DocumentChunkingHelper:
     
     async def _process_sequential(self, chunks, bedrock_service, summary_type, language):
         """Sequential processing with rate limiting"""
-        logger.info("🔄 Sequential processing")
+        logger.info("Sequential processing")
         results = []
         
         for i, chunk in enumerate(chunks):
@@ -222,7 +222,7 @@ class DocumentChunkingHelper:
                     await asyncio.sleep(self.RATE_LIMIT_DELAY)
                     
             except Exception as e:
-                logger.error(f"❌ Chunk {i} failed: {e}")
+                logger.error(f"Chunk {i} failed: {e}")
                 results.append(f"[Lỗi chunk {i}: {str(e)}]")
         
         return results
@@ -237,7 +237,7 @@ class DocumentChunkingHelper:
         original_text_length: int
     ) -> str:
         """Create final consolidated summary"""
-        logger.info("📝 Creating final summary")
+        logger.info("Creating final summary")
         
         # Filter valid summaries
         valid_summaries = [s for s in chunk_summaries if s and not s.startswith("[Lỗi")]
@@ -254,10 +254,10 @@ class DocumentChunkingHelper:
         try:
             response = await bedrock_service.ai_ainvoke(prompt)
             final_summary = self._extract_response_text(response)
-            logger.info(f"✅ Final summary: {len(final_summary)} chars")
+            logger.info(f"Final summary: {len(final_summary)} chars")
             return final_summary
         except Exception as e:
-            logger.error(f"❌ Final summary failed: {e}")
+            logger.error(f"Final summary failed: {e}")
             # Fallback to combined summaries
             max_chars = max_length * 5
             return combined[:max_chars] + "..." if len(combined) > max_chars else combined

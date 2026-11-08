@@ -37,10 +37,10 @@ from app.multi_agent.config import AWS_REGION, DEFAULT_MODEL_NAME
 try:
     from app.multi_agent.routes.v1.strands_agent_routes import router as strands_router
     STRANDS_AGENTS_AVAILABLE = True
-    print("[STARTUP] ✅ Strands Agents system loaded successfully")
+    print("[STARTUP] Strands Agents system loaded successfully")
 except ImportError as e:
     STRANDS_AGENTS_AVAILABLE = False
-    print(f"[STARTUP] ⚠️  Strands Agents not available: {e}")
+    print(f"[STARTUP] Strands Agents not available: {e}")
 
 # Import Pure Strands Agents router
 try:
@@ -65,32 +65,32 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """Application lifespan manager for startup and shutdown events"""
     # Startup
-    logger.info("🚀 Starting VPBank K-MULT Agent Studio...")
+    logger.info("Starting VPBank K-MULT Agent Studio...")
     
     try:
         # Initialize DynamoDB
         await initiate_dynamodb()
-        logger.info("✅ DynamoDB connection initialized")
+        logger.info("DynamoDB connection initialized")
         
         # Create DynamoDB tables if they don't exist
         await MessageDynamoDB.create_table_if_not_exists()
-        logger.info("✅ DynamoDB tables verified/created")
+        logger.info("DynamoDB tables verified/created")
         
         # Initialize other services
         await initialize_services()
-        logger.info("✅ All services initialized successfully")
+        logger.info("All services initialized successfully")
         
     except Exception as e:
-        logger.error(f"❌ Startup error: {e}")
+        logger.error(f"Startup error: {e}")
         # Don't fail startup for non-critical services
-        logger.warning("⚠️  Some services may not be available")
+        logger.warning("Some services may not be available")
     
     yield
     
     # Shutdown
-    logger.info("🛑 Shutting down VPBank K-MULT Agent Studio...")
+    logger.info("Shutting down VPBank K-MULT Agent Studio...")
     await cleanup_services()
-    logger.info("✅ Shutdown complete")
+    logger.info("Shutdown complete")
 
 async def initialize_services():
     """Initialize all application services"""
@@ -107,13 +107,13 @@ async def cleanup_services():
 app = FastAPI(
     title="VPBank K-MULT Agent Studio",
     description="""
-    🏦 **Multi-Agent AI for Banking Process Automation**
+    **Multi-Agent AI for Banking Process Automation**
     
     A comprehensive multi-agent system designed to transform banking operations through intelligent automation.
     
-    ## 🚀 Key Features
+    ## Key Features
     
-    ### 🤖 Multi-Agent Architecture
+    ### Multi-Agent Architecture
     - **Supervisor Agent**: Orchestrates workflow and coordinates other agents
     - **Document Intelligence Agent**: Advanced OCR with Vietnamese NLP capabilities
     - **Risk Assessment Agent**: Automated financial analysis and predictive modeling
@@ -121,19 +121,19 @@ app = FastAPI(
     - **Decision Synthesis Agent**: Generates evidence-based recommendations
     - **Process Automation Agent**: End-to-end workflow automation
     
-    ### 📄 Core Use Cases
+    ### Core Use Cases
     - **Letter of Credit (LC) Processing**: 8-12 hours → under 30 minutes
     - **Credit Proposal Assessment**: Automated risk analysis and scoring
     - **Document Intelligence**: 99.5% OCR accuracy for Vietnamese documents
     - **Compliance Validation**: UCP 600, ISBP 821, SBV regulations
     
-    ### 📊 Performance Metrics
+    ### Performance Metrics
     - **60-80% reduction** in processing time
     - **Error rates reduced to < 1%**
     - **99.5% OCR accuracy** for Vietnamese documents
     - **Real-time multi-agent coordination**
     
-    ## 🔗 API Endpoints
+    ## API Endpoints
     
     All endpoints are organized under `/mutil_agent/api/v1/` for private APIs and `/mutil_agent/public/api/v1/` for public APIs.
     """,
@@ -247,12 +247,12 @@ if STRANDS_AGENTS_AVAILABLE:
         prefix="/mutil_agent/api/v1/strands", 
         tags=["Strands Agents"]
     )
-    print("[STARTUP] ✅ Strands Agents API endpoints registered")
-    print("[STARTUP] 🔍 Compliance Agent: /mutil_agent/api/v1/strands/compliance/validate")
-    print("[STARTUP] 📊 Risk Agent: /mutil_agent/api/v1/strands/risk/assess")
-    print("[STARTUP] 📄 Document Agent: /mutil_agent/api/v1/strands/document/analyze")
-    print("[STARTUP] 🎯 Supervisor Agent: /mutil_agent/api/v1/strands/supervisor/process")
-    print("[STARTUP] 🔧 Management: /mutil_agent/api/v1/strands/agents/status")
+    print("[STARTUP] Strands Agents API endpoints registered")
+    print("[STARTUP] Compliance Agent: /mutil_agent/api/v1/strands/compliance/validate")
+    print("[STARTUP] Risk Agent: /mutil_agent/api/v1/strands/risk/assess")
+    print("[STARTUP] Document Agent: /mutil_agent/api/v1/strands/document/analyze")
+    print("[STARTUP] Supervisor Agent: /mutil_agent/api/v1/strands/supervisor/process")
+    print("[STARTUP] Management: /mutil_agent/api/v1/strands/agents/status")
 
 # Include VPBank Pure Strands Agents router
 if PURE_STRANDS_AVAILABLE:

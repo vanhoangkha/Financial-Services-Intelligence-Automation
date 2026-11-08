@@ -296,7 +296,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onShowSnackbar }) => {
               content: (
                 <SpaceBetween direction="vertical" size="l">
                   <Box>
-                    <Header variant="h2">🤖 Multi-Agent AI Risk Assessment System</Header>
+                    <Header variant="h2">Multi-Agent AI Risk Assessment System</Header>
                     <TextContent>
                       <p>
                         AI-powered risk assessment system with document summarization, 

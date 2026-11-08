@@ -45,58 +45,58 @@ check_container_status() {
 
 # Restart services if needed
 restart_services() {
-    log "🔄 Restarting VPBank K-MULT Agent Studio services..."
+    log "Restarting VPBank K-MULT Agent Studio services..."
     cd "$PROJECT_DIR"
     ./deployment/scripts/manage.sh restart >> "$LOG_FILE" 2>&1
     
     if [ $? -eq 0 ]; then
-        log "✅ Services restarted successfully"
+        log "Services restarted successfully"
         return 0
     else
-        log "❌ Failed to restart services"
+        log "Failed to restart services"
         return 1
     fi
 }
 
 # Main monitoring loop
 monitor_services() {
-    log "🚀 Starting VPBank K-MULT Background Monitor"
-    log "📍 Project Directory: $PROJECT_DIR"
-    log "📝 Log File: $LOG_FILE"
+    log "Starting VPBank K-MULT Background Monitor"
+    log "Project Directory: $PROJECT_DIR"
+    log "Log File: $LOG_FILE"
     
     while true; do
         local restart_needed=false
         
         # Check backend container
         if ! check_container_status "vpbank-kmult-backend"; then
-            log "⚠️  Backend container not running"
+            log "Backend container not running"
             restart_needed=true
         elif ! check_service_health "backend" "http://localhost:8080/mutil_agent/public/api/v1/health-check/health"; then
-            log "⚠️  Backend service unhealthy"
+            log "Backend service unhealthy"
             restart_needed=true
         fi
         
         # Check frontend container
         if ! check_container_status "vpbank-kmult-frontend"; then
-            log "⚠️  Frontend container not running"
+            log "Frontend container not running"
             restart_needed=true
         elif ! check_service_health "frontend" "http://localhost:3000"; then
-            log "⚠️  Frontend service unhealthy"
+            log "Frontend service unhealthy"
             restart_needed=true
         fi
         
         # Restart if needed
         if [ "$restart_needed" = true ]; then
-            log "🔧 Services need restart - attempting recovery..."
+            log "Services need restart - attempting recovery..."
             if restart_services; then
-                log "✅ Recovery successful"
+                log "Recovery successful"
                 # Wait a bit longer after restart
                 sleep 30
             else
-                log "❌ Recovery failed - will retry in next cycle"
+                log "Recovery failed - will retry in next cycle"
             fi
         else
-            log "✅ All services healthy"
+            log "All services healthy"
         fi
         
         # Wait before next check (5 minutes)
@@ -106,7 +106,7 @@ monitor_services() {
 
 # Handle script termination
 cleanup() {
-    log "🛑 Background monitor stopping..."
+    log "Background monitor stopping..."
     exit 0
 }
 

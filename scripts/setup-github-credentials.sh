@@ -10,10 +10,10 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}🔐 Setting up GitHub credentials for CodeBuild${NC}"
+echo -e "${BLUE}Setting up GitHub credentials for CodeBuild${NC}"
 echo "=================================================="
 
-echo -e "${YELLOW}⚠️  IMPORTANT: You need a GitHub Personal Access Token${NC}"
+echo -e "${YELLOW}IMPORTANT: You need a GitHub Personal Access Token${NC}"
 echo ""
 echo "To create a GitHub Personal Access Token:"
 echo "1. Go to https://github.com/settings/tokens"
@@ -26,11 +26,11 @@ read -p "Enter your GitHub Personal Access Token: " -s GITHUB_TOKEN
 echo ""
 
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo -e "${RED}❌ No token provided. Exiting.${NC}"
+    echo -e "${RED}No token provided. Exiting.${NC}"
     exit 1
 fi
 
-echo -e "${BLUE}📝 Importing GitHub credentials to CodeBuild...${NC}"
+echo -e "${BLUE}Importing GitHub credentials to CodeBuild...${NC}"
 
 # Import source credentials
 aws codebuild import-source-credentials \
@@ -40,20 +40,20 @@ aws codebuild import-source-credentials \
     --region us-east-1
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ GitHub credentials imported successfully!${NC}"
+    echo -e "${GREEN}GitHub credentials imported successfully!${NC}"
     
     echo ""
-    echo -e "${BLUE}🔍 Verifying credentials...${NC}"
+    echo -e "${BLUE}Verifying credentials...${NC}"
     aws codebuild list-source-credentials --region us-east-1
     
     echo ""
-    echo -e "${GREEN}🎉 Setup complete! You can now run builds.${NC}"
+    echo -e "${GREEN}Setup complete! You can now run builds.${NC}"
     echo ""
-    echo -e "${BLUE}🚀 To deploy:${NC}"
+    echo -e "${BLUE}To deploy:${NC}"
     echo "  ./scripts/deploy-with-codebuild.sh"
     
 else
-    echo -e "${RED}❌ Failed to import GitHub credentials${NC}"
+    echo -e "${RED}Failed to import GitHub credentials${NC}"
     exit 1
 fi
 

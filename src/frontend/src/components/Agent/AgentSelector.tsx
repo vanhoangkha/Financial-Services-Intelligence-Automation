@@ -91,7 +91,7 @@ const AgentSelector: React.FC<AgentSelectorProps> = ({
               >
                 <SpaceBetween direction="vertical" size="s">
                   <SpaceBetween direction="horizontal" size="s" alignItems="center">
-                    <Header variant="h3">🤖 {agent.name}</Header>
+                    <Header variant="h3">{agent.name}</Header>
                     <Badge color={agent.status === 'active' ? 'green' : 'grey'}>
                       {agent.status}
                     </Badge>

@@ -10,25 +10,25 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}📦 Creating S3-based CodeBuild project${NC}"
+echo -e "${BLUE}Creating S3-based CodeBuild project${NC}"
 
 # Create S3 bucket for source code
 BUCKET_NAME="vpbank-kmult-source-$(date +%s)"
-echo -e "${BLUE}🪣 Creating S3 bucket: $BUCKET_NAME${NC}"
+echo -e "${BLUE}Creating S3 bucket: $BUCKET_NAME${NC}"
 
 aws s3 mb s3://$BUCKET_NAME --region us-east-1
 
 # Create source archive
-echo -e "${BLUE}📁 Creating source archive...${NC}"
+echo -e "${BLUE}Creating source archive...${NC}"
 cd /home/ubuntu/multi-agent-hackathon
 tar -czf source.tar.gz --exclude='.git' --exclude='node_modules' --exclude='__pycache__' .
 
 # Upload to S3
-echo -e "${BLUE}⬆️  Uploading source to S3...${NC}"
+echo -e "${BLUE}Uploading source to S3...${NC}"
 aws s3 cp source.tar.gz s3://$BUCKET_NAME/source.tar.gz
 
 # Create new CodeBuild project with S3 source
-echo -e "${BLUE}🔨 Creating CodeBuild project with S3 source...${NC}"
+echo -e "${BLUE}Creating CodeBuild project with S3 source...${NC}"
 
 cat > /tmp/codebuild-s3-project.json << EOF
 {
@@ -72,17 +72,17 @@ EOF
 aws codebuild create-project --cli-input-json file:///tmp/codebuild-s3-project.json --region us-east-1
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ S3-based CodeBuild project created successfully!${NC}"
+    echo -e "${GREEN}S3-based CodeBuild project created successfully!${NC}"
     echo ""
-    echo "📋 Project details:"
+    echo "Project details:"
     echo "• Name: VPBankKMult-S3-Build"
     echo "• Source: S3 bucket ($BUCKET_NAME)"
     echo "• Build environment: Amazon Linux 2"
     echo ""
-    echo -e "${BLUE}🚀 To deploy:${NC}"
+    echo -e "${BLUE}To deploy:${NC}"
     echo "  aws codebuild start-build --project-name VPBankKMult-S3-Build --region us-east-1"
 else
-    echo -e "${RED}❌ Failed to create CodeBuild project${NC}"
+    echo -e "${RED}Failed to create CodeBuild project${NC}"
     exit 1
 fi
 

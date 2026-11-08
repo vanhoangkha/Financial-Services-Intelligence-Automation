@@ -85,7 +85,7 @@ async def strands_supervisor_orchestration(request: StrandsSupervisorRequest = B
         Orchestrated multi-agent response
     """
     try:
-        logger.info(f"🎯 Strands Supervisor Agent: Processing request - {request.user_request[:100]}...")
+        logger.info(f"Strands Supervisor Agent: Processing request - {request.user_request[:100]}...")
         
         # Validate input
         if not request.user_request or len(request.user_request.strip()) < 5:
@@ -121,7 +121,7 @@ async def strands_supervisor_orchestration(request: StrandsSupervisorRequest = B
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Strands Supervisor Agent error: {str(e)}")
+        logger.error(f"Strands Supervisor Agent error: {str(e)}")
         return JSONResponse(
             status_code=500,
             content={
@@ -162,7 +162,7 @@ async def strands_supervisor_with_file_upload(
         Orchestrated multi-agent response with file processing results
     """
     try:
-        logger.info(f"🎯 Strands Supervisor Agent (File Upload): Processing request - {user_request[:100]}...")
+        logger.info(f"Strands Supervisor Agent (File Upload): Processing request - {user_request[:100]}...")
         
         # Validate input
         if not user_request or len(user_request.strip()) < 5:
@@ -226,10 +226,10 @@ async def strands_supervisor_with_file_upload(
                     "processing_status": "success" if file_content else "failed"
                 }
                 
-                logger.info(f"📄 File processed: {file.filename} - {len(file_content)} characters extracted")
+                logger.info(f"File processed: {file.filename} - {len(file_content)} characters extracted")
                 
             except Exception as e:
-                logger.error(f"❌ File processing error: {str(e)}")
+                logger.error(f"File processing error: {str(e)}")
                 file_info = {
                     "filename": file.filename if file else "unknown",
                     "processing_status": "error",
@@ -282,7 +282,7 @@ async def strands_supervisor_with_file_upload(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Strands Supervisor Agent (File Upload) error: {str(e)}")
+        logger.error(f"Strands Supervisor Agent (File Upload) error: {str(e)}")
         return JSONResponse(
             status_code=500,
             content={
@@ -317,7 +317,7 @@ async def get_strands_agents_status():
         )
         
     except Exception as e:
-        logger.error(f"❌ Strands Agents status error: {str(e)}")
+        logger.error(f"Strands Agents status error: {str(e)}")
         return JSONResponse(
             status_code=500,
             content={
@@ -348,7 +348,7 @@ async def list_strands_agent_tools():
         )
         
     except Exception as e:
-        logger.error(f"❌ Strands Agent tools list error: {str(e)}")
+        logger.error(f"Strands Agent tools list error: {str(e)}")
         return JSONResponse(
             status_code=500,
             content={

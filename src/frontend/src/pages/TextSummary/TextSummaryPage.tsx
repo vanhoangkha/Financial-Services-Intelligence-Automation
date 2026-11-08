@@ -135,7 +135,7 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
           variant="h1"
           description="Sử dụng AI để tóm tắt văn bản và tài liệu với nhiều định dạng khác nhau"
         >
-          📄 Tóm tắt văn bản & Tài liệu
+          Tóm tắt văn bản & Tài liệu
         </Header>
 
         <Tabs
@@ -208,7 +208,7 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
                           loading={loading}
                           disabled={!textForm.text.trim()}
                         >
-                          🤖 Tóm tắt văn bản
+                          Tóm tắt văn bản
                         </Button>
                       </Box>
                     </SpaceBetween>
@@ -286,7 +286,7 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
                           loading={loading}
                           disabled={!documentForm.file}
                         >
-                          📄 Tóm tắt tài liệu
+                          Tóm tắt tài liệu
                         </Button>
                       </Box>
                     </SpaceBetween>
@@ -320,14 +320,14 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
                 </Button>
               }
             >
-              ✨ Kết quả tóm tắt
+              Kết quả tóm tắt
             </Header>
 
             <SpaceBetween direction="vertical" size="m">
               {/* Summary Content */}
               <div style={{ border: '1px solid #e9ebed', borderRadius: '8px', backgroundColor: '#fafbfc' }}>
                 <Box padding="l">
-                  <Header variant="h3">📝 Nội dung tóm tắt</Header>
+                  <Header variant="h3">Nội dung tóm tắt</Header>
                   <div style={{
                     whiteSpace: 'pre-wrap',
                     lineHeight: '1.6',
@@ -359,7 +359,7 @@ const TextSummaryPage: React.FC<TextSummaryPageProps> = ({ onShowSnackbar }) => 
               </ColumnLayout>
 
               {/* Detailed Analysis */}
-              <ExpandableSection headerText="📊 Phân tích chi tiết">
+              <ExpandableSection headerText="Phân tích chi tiết">
                 <SpaceBetween direction="vertical" size="m">
                   <ColumnLayout columns={2}>
                     <div>

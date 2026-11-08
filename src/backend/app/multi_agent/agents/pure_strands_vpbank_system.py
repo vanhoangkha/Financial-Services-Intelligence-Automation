@@ -186,11 +186,11 @@ def text_summary_agent(query: str, file_data: Optional[Dict[str, Any]] = None) -
                     logger.info(f"[TEXT_SUMMARY_AGENT] Extracted text content: {len(text_to_summarize)} chars")
                     
                 else:
-                    return f"❌ **Lỗi định dạng file**\n\nFile type {content_type} chưa được hỗ trợ."
+                    return f"**Lỗi định dạng file**\n\nFile type {content_type} chưa được hỗ trợ."
                     
             except Exception as extract_error:
                 logger.error(f"[TEXT_SUMMARY_AGENT] Content extraction error: {extract_error}")
-                return f"❌ **Lỗi trích xuất nội dung**\n\nKhông thể đọc file {filename}: {str(extract_error)}"
+                return f"**Lỗi trích xuất nội dung**\n\nKhông thể đọc file {filename}: {str(extract_error)}"
         else:
             # Use EXACT node logic for text extraction
             text_to_summarize = _extract_text_from_message(query)
@@ -213,13 +213,13 @@ def text_summary_agent(query: str, file_data: Optional[Dict[str, Any]] = None) -
             summary_result = _run_async_safely(summarize_with_service)
             
             # Format response EXACT giống node
-            response = f"📄 **Tóm tắt văn bản:**\n\n{summary_result['summary']}\n\n"
-            response += f"📊 **Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
+            response = f"**Tóm tắt văn bản:**\n\n{summary_result['summary']}\n\n"
+            response += f"**Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
             response += f"(tỷ lệ nén: {summary_result['compression_ratio']})"
             
             if filename != "unknown":
-                response = f"📄 **Tóm tắt tài liệu: {filename}**\n\n{summary_result['summary']}\n\n"
-                response += f"📊 **Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
+                response = f"**Tóm tắt tài liệu: {filename}**\n\n{summary_result['summary']}\n\n"
+                response += f"**Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
                 response += f"(tỷ lệ nén: {summary_result['compression_ratio']})"
             
             logger.info("[TEXT_SUMMARY_AGENT] Successfully processed with DIRECT node logic")
@@ -231,7 +231,7 @@ def text_summary_agent(query: str, file_data: Optional[Dict[str, Any]] = None) -
         
     except Exception as e:
         logger.error(f"[TEXT_SUMMARY_AGENT] Error: {str(e)}")
-        return f"❌ **Lỗi xử lý tóm tắt**: {str(e)}"
+        return f"**Lỗi xử lý tóm tắt**: {str(e)}"
 
 
 @tool
@@ -241,15 +241,15 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
     Enhanced with better error handling and validation
     """
     try:
-        logger.info(f"🔧 [COMPLIANCE_AGENT] TOOL CALLED with query: {query[:100]}...")
+        logger.info(f"[COMPLIANCE_AGENT] TOOL CALLED with query: {query[:100]}...")
         
         # If file data is provided, use compliance/document endpoint DIRECTLY
         if file_data and file_data.get('raw_bytes'):
-            logger.info(f"🔧 [COMPLIANCE_AGENT] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
+            logger.info(f"[COMPLIANCE_AGENT] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
             
             # Validate file data
             if len(file_data.get('raw_bytes', b'')) == 0:
-                return "❌ **Lỗi kiểm tra tuân thủ**: File rỗng hoặc không hợp lệ"
+                return "**Lỗi kiểm tra tuân thủ**: File rỗng hoặc không hợp lệ"
             
             # Import the EXACT service instead of endpoint
             from app.multi_agent.services.compliance_service import ComplianceValidationService
@@ -270,7 +270,7 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                 file_extension = os.path.splitext(filename)[1].lower()
                 file_size = len(raw_bytes)
                 
-                logger.info(f"🔧 [COMPLIANCE_AGENT] Processing file: {filename} ({file_size/1024:.1f}KB)")
+                logger.info(f"[COMPLIANCE_AGENT] Processing file: {filename} ({file_size/1024:.1f}KB)")
                 
                 # Wrap both text extraction and compliance service in async function
                 async def extract_and_validate():
@@ -284,17 +284,17 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                     if not extracted_text or len(extracted_text.strip()) < 50:
                         raise Exception("Không thể trích xuất đủ văn bản từ file để kiểm tra tuân thủ")
                     
-                    logger.info(f"🔧 [COMPLIANCE_AGENT] Extracted {len(extracted_text)} characters from {filename}")
+                    logger.info(f"[COMPLIANCE_AGENT] Extracted {len(extracted_text)} characters from {filename}")
                     
                     # Call compliance service directly (no timeout - same as original)
-                    logger.info(f"🔧 [COMPLIANCE_AGENT] Starting compliance validation")
+                    logger.info(f"[COMPLIANCE_AGENT] Starting compliance validation")
                     
                     result = await compliance_service.validate_document_compliance(
                         ocr_text=extracted_text,
                         document_type=None  # Auto-detect
                     )
                     
-                    logger.info(f"🔧 [COMPLIANCE_AGENT] Compliance validation completed")
+                    logger.info(f"[COMPLIANCE_AGENT] Compliance validation completed")
                     return result
                 
                 # Execute async function with safe wrapper
@@ -302,10 +302,10 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                 
                 # Validate data exists
                 if not data or not isinstance(data, dict):
-                    logger.error(f"🔧 [COMPLIANCE_AGENT] Invalid or empty data: {type(data)}")
-                    return "❌ **Lỗi kiểm tra tuân thủ**: Không thể xử lý tài liệu - dữ liệu không hợp lệ"
+                    logger.error(f"[COMPLIANCE_AGENT] Invalid or empty data: {type(data)}")
+                    return "**Lỗi kiểm tra tuân thủ**: Không thể xử lý tài liệu - dữ liệu không hợp lệ"
                 
-                logger.info(f"🔧 [COMPLIANCE_AGENT] Successfully got compliance data: {list(data.keys())}")
+                logger.info(f"[COMPLIANCE_AGENT] Successfully got compliance data: {list(data.keys())}")
                 
                 # Return raw JSON data instead of formatted text
                 import json
@@ -320,18 +320,18 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                     # Return as formatted JSON string for better readability
                     json_response = json.dumps(response_data, ensure_ascii=False, indent=2)
                     
-                    logger.info("🔧 [COMPLIANCE_AGENT] Successfully processed with DIRECT service call - returning JSON")
+                    logger.info("[COMPLIANCE_AGENT] Successfully processed with DIRECT service call - returning JSON")
                     return json_response
                     
                 except Exception as json_error:
-                    logger.error(f"🔧 [COMPLIANCE_AGENT] JSON serialization error: {json_error}")
-                    return f"❌ **Lỗi JSON serialization**: {str(json_error)}"
+                    logger.error(f"[COMPLIANCE_AGENT] JSON serialization error: {json_error}")
+                    return f"**Lỗi JSON serialization**: {str(json_error)}"
                 
                 # NOTE: Removed formatted response fallback - we only want JSON response
                     
             except Exception as service_error:
-                logger.error(f"🔧 [COMPLIANCE_AGENT] Direct service call error: {service_error}")
-                return f"❌ **Lỗi kiểm tra tuân thủ**: {str(service_error)}"
+                logger.error(f"[COMPLIANCE_AGENT] Direct service call error: {service_error}")
+                return f"**Lỗi kiểm tra tuân thủ**: {str(service_error)}"
         
         else:
             # Handle text-based compliance queries using DIRECT node logic
@@ -348,7 +348,7 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                 
                 # Use EXACT node logic for query type determination
                 query_type = _determine_query_type(query)
-                logger.info(f"🔧 [COMPLIANCE_AGENT] Query type determined: {query_type}")
+                logger.info(f"[COMPLIANCE_AGENT] Query type determined: {query_type}")
                 
                 async def handle_compliance_query():
                     if query_type == "regulation_query":
@@ -361,16 +361,16 @@ def compliance_knowledge_agent(query: str, file_data: Optional[Dict[str, Any]] =
                 # Execute async function with safe wrapper
                 response = _run_async_safely(handle_compliance_query)
                 
-                logger.info("🔧 [COMPLIANCE_AGENT] Successfully processed with DIRECT node logic")
+                logger.info("[COMPLIANCE_AGENT] Successfully processed with DIRECT node logic")
                 return response
                 
             except Exception as node_error:
-                logger.error(f"🔧 [COMPLIANCE_AGENT] Node logic error: {node_error}")
-                return f"❌ **Lỗi xử lý tuân thủ**: {str(node_error)}"
+                logger.error(f"[COMPLIANCE_AGENT] Node logic error: {node_error}")
+                return f"**Lỗi xử lý tuân thủ**: {str(node_error)}"
 
     except Exception as e:
-        logger.error(f"🔧 [COMPLIANCE_AGENT] Tool error: {str(e)}")
-        return f"❌ **Lỗi kiểm tra tuân thủ**: {str(e)}"
+        logger.error(f"[COMPLIANCE_AGENT] Tool error: {str(e)}")
+        return f"**Lỗi kiểm tra tuân thủ**: {str(e)}"
 
 async def _handle_general_compliance_chat(message: str, compliance_service) -> str:
     """Handle general compliance chat (giống node logic)"""
@@ -397,7 +397,7 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
     Risk analysis using DIRECT CALL to existing risk API endpoint
     """
     try:
-        logger.info(f"🔧 [RISK_AGENT] TOOL CALLED with query: {query[:100]}...")
+        logger.info(f"[RISK_AGENT] TOOL CALLED with query: {query[:100]}...")
 
         # Import required models and services
         from app.multi_agent.models.risk import RiskAssessmentRequest
@@ -410,7 +410,7 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
         
         # Extract text from file if provided
         if file_data and file_data.get('raw_bytes'):
-            logger.info(f"🔧 [RISK_AGENT] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
+            logger.info(f"[RISK_AGENT] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
             
             try:
                 # Extract text from file using the same logic as endpoint wrapper
@@ -432,14 +432,14 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
                     file_text = raw_bytes.decode('utf-8')
                 
                 financial_data['financial_documents'] = file_text
-                logger.info(f"🔧 [RISK_AGENT] Extracted {len(file_text)} characters from file")
+                logger.info(f"[RISK_AGENT] Extracted {len(file_text)} characters from file")
                 
                 if not file_text.strip():
-                    logger.warning("🔧 [RISK_AGENT] No text extracted from file, proceeding with basic data")
+                    logger.warning("[RISK_AGENT] No text extracted from file, proceeding with basic data")
                 
             except Exception as file_error:
-                logger.error(f"🔧 [RISK_AGENT] File processing error: {file_error}")
-                return f"❌ **Lỗi xử lý file**: {str(file_error)}"
+                logger.error(f"[RISK_AGENT] File processing error: {file_error}")
+                return f"**Lỗi xử lý file**: {str(file_error)}"
         
         # Call risk assessment with file content
         async def call_risk_api():
@@ -455,7 +455,7 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
                 loan_purpose=financial_data.get('loan_purpose', 'Kinh doanh'),
                 assessment_type="comprehensive",
                 collateral_type=financial_data.get('collateral_type', 'Không tài sản đảm bảo'),
-                financial_documents=financial_data.get('financial_documents', '')  # ✅ Thêm file content
+                financial_documents=financial_data.get('financial_documents', '')  # Thêm file content
             )
             
             return await assess_risk(risk_request)
@@ -463,12 +463,12 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
         # Execute async function with safe wrapper
         risk_result = _run_async_safely(call_risk_api)
         
-        logger.info("🔧 [RISK_AGENT] Successfully processed with DIRECT service call")
+        logger.info("[RISK_AGENT] Successfully processed with DIRECT service call")
         
         # Format response using EXACT existing API result
         if risk_result and hasattr(risk_result, 'data'):
             data = risk_result.data
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Thông tin đánh giá:**
 • Tên khách hàng: {financial_data.get('applicant_name', 'Chưa xác định')}
@@ -485,11 +485,11 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         else:
             # Fallback response
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Yêu cầu:** {query[:200]}...
 
@@ -506,15 +506,15 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         
         return response
         
         # Format response using EXACT existing API result
         if risk_result and hasattr(risk_result, 'data'):
             data = risk_result.data
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Thông tin đánh giá:**
 • Tên khách hàng: {financial_data.get('applicant_name', 'Chưa xác định')}
@@ -531,11 +531,11 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         else:
             # Fallback response
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Yêu cầu:** {query[:200]}...
 
@@ -552,14 +552,14 @@ def risk_analysis_agent(query: str, file_data: Optional[Dict[str, Any]] = None) 
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         
         return response
         
     except Exception as e:
-        logger.error(f"🔧 [RISK_AGENT] Tool error: {str(e)}")
-        return f"❌ **Lỗi phân tích rủi ro**: {str(e)}"
+        logger.error(f"[RISK_AGENT] Tool error: {str(e)}")
+        return f"**Lỗi phân tích rủi ro**: {str(e)}"
 
 
 def _extract_basic_risk_data_from_query(query: str) -> Dict[str, Any]:
@@ -892,21 +892,21 @@ class PureStrandsVPBankSystem:
             # Generic response for unrecognized topics
             topic_response = f"Tôi thấy bạn hỏi về '{query[:50]}...'. Tuy nhiên, tôi chuyên hỗ trợ các vấn đề ngân hàng và tài chính."
         
-        return f"""💬 **{topic_response}**
+        return f"""**{topic_response}**
 
-🏦 **Tôi có thể giúp bạn với:**
-• 📄 **Tóm tắt tài liệu** - Phân tích báo cáo, hợp đồng, văn bản
-• ⚖️ **Kiểm tra tuân thủ** - UCP 600, quy định SBV, ISBP 821  
-• 📊 **Phân tích rủi ro** - Đánh giá tín dụng, Basel III
-• 💳 **Letter of Credit** - Xử lý thư tín dụng, tài liệu thương mại
+**Tôi có thể giúp bạn với:**
+• **Tóm tắt tài liệu** - Phân tích báo cáo, hợp đồng, văn bản
+• **Kiểm tra tuân thủ** - UCP 600, quy định SBV, ISBP 821  
+• **Phân tích rủi ro** - Đánh giá tín dụng, Basel III
+• **Letter of Credit** - Xử lý thư tín dụng, tài liệu thương mại
 
-💡 **Thử hỏi tôi:**
+**Thử hỏi tôi:**
 - "Tóm tắt báo cáo này"
 - "Kiểm tra tuân thủ tài liệu LC"  
 - "Phân tích rủi ro khoản vay 10 tỷ"
 - "UCP 600 quy định gì về vận đơn?"
 
-Bạn có câu hỏi nào về ngân hàng không? 😊"""
+Bạn có câu hỏi nào về ngân hàng không?"""
     
     async def process_request(
         self, 
@@ -1085,12 +1085,12 @@ Bạn có câu hỏi nào về ngân hàng không? 😊"""
                     # Validate Strands response
                     if not response or len(str(response).strip()) < 10:
                         logger.error("[PURE_STRANDS] Empty response from Strands supervisor")
-                        response = "❌ **Lỗi hệ thống**: Không thể xử lý yêu cầu. Vui lòng thử lại."
+                        response = "**Lỗi hệ thống**: Không thể xử lý yêu cầu. Vui lòng thử lại."
                         agent_used = "error_fallback"
                         
                 except Exception as strands_error:
                     logger.error(f"[PURE_STRANDS] Strands supervisor failed: {strands_error}")
-                    response = "❌ **Lỗi hệ thống**: Không thể xử lý yêu cầu. Vui lòng thử lại."
+                    response = "**Lỗi hệ thống**: Không thể xử lý yêu cầu. Vui lòng thử lại."
                     agent_used = "error_fallback"
             
             processing_time = (datetime.now() - start_time).total_seconds()

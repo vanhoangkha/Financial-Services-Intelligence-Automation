@@ -203,7 +203,7 @@ const AgentsPage: React.FC<AgentsPageProps> = ({ agents, setAgents, onShowSnackb
               header: 'Name',
               cell: item => (
                 <SpaceBetween direction="horizontal" size="s">
-                  <span>🤖</span>
+                  <span></span>
                   <strong>{item.name}</strong>
                 </SpaceBetween>
               ),
