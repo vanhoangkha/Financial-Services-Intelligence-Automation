@@ -234,7 +234,7 @@ const AgentResult: React.FC<AgentResultProps> = ({ data, message, agentType }) =
 
       {/* Expanded Details */}
       {expanded && keyValueItems.length > 0 && (
-        <Container header={<Header variant="h3">📋 Dữ liệu chi tiết</Header>}>
+        <Container header={<Header variant="h3">Dữ liệu chi tiết</Header>}>
           <KeyValuePairs
             columns={1}
             items={keyValueItems}
@@ -244,7 +244,7 @@ const AgentResult: React.FC<AgentResultProps> = ({ data, message, agentType }) =
 
       {/* Raw Data (for debugging) */}
       {expanded && (
-        <ExpandableSection headerText="🔧 Dữ liệu thô (Debug)">
+        <ExpandableSection headerText="Dữ liệu thô (Debug)">
           <div style={{ padding: '16px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e1e4e8' }}>
             <TextContent>
               <pre style={{ 

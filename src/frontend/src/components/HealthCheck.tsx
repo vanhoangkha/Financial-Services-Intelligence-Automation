@@ -156,7 +156,7 @@ const HealthCheck: React.FC = () => {
               <Box padding="l">
                 <SpaceBetween direction="vertical" size="s">
                   <SpaceBetween direction="horizontal" size="s" alignItems="center">
-                    <Header variant="h3">🔧 Backend API</Header>
+                    <Header variant="h3">Backend API</Header>
                     <StatusIndicator type={getStatusType(systemHealth.backend.status)}>
                       {systemHealth.backend.status === 'checking' ? 'Checking...' : systemHealth.backend.status}
                     </StatusIndicator>
@@ -182,7 +182,7 @@ const HealthCheck: React.FC = () => {
               <Box padding="l">
                 <SpaceBetween direction="vertical" size="s">
                   <SpaceBetween direction="horizontal" size="s" alignItems="center">
-                    <Header variant="h3">🗄️ Database</Header>
+                    <Header variant="h3">Database</Header>
                     <StatusIndicator type={getStatusType(systemHealth.database.status)}>
                       {systemHealth.database.status === 'checking' ? 'Checking...' : systemHealth.database.status}
                     </StatusIndicator>
@@ -208,7 +208,7 @@ const HealthCheck: React.FC = () => {
               <Box padding="l">
                 <SpaceBetween direction="vertical" size="s">
                   <SpaceBetween direction="horizontal" size="s" alignItems="center">
-                    <Header variant="h3">☁️ AWS Services</Header>
+                    <Header variant="h3">AWS Services</Header>
                     <StatusIndicator type={getStatusType(systemHealth.aws.status)}>
                       {systemHealth.aws.status === 'checking' ? 'Checking...' : systemHealth.aws.status}
                     </StatusIndicator>
@@ -234,7 +234,7 @@ const HealthCheck: React.FC = () => {
               <Box padding="l">
                 <SpaceBetween direction="vertical" size="s">
                   <SpaceBetween direction="horizontal" size="s" alignItems="center">
-                    <Header variant="h3">🤖 AWS Bedrock</Header>
+                    <Header variant="h3">AWS Bedrock</Header>
                     <StatusIndicator type={getStatusType(systemHealth.bedrock.status)}>
                       {systemHealth.bedrock.status === 'checking' ? 'Checking...' : systemHealth.bedrock.status}
                     </StatusIndicator>

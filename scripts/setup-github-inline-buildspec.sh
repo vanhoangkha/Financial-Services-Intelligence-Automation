@@ -10,21 +10,21 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}🔗 GitHub Integration with Inline Buildspec${NC}"
+echo -e "${BLUE}GitHub Integration with Inline Buildspec${NC}"
 echo "=============================================="
 
 PROJECT_NAME="VPBankKMult-GitHub-Inline"
 GITHUB_REPO="https://github.com/ngcuyen/multi-agent-hackathon.git"
 AWS_REGION="us-east-1"
 
-echo -e "${BLUE}📋 Configuration:${NC}"
+echo -e "${BLUE}Configuration:${NC}"
 echo "• Project: $PROJECT_NAME"
 echo "• Repository: $GITHUB_REPO"
 echo "• Buildspec: Inline (no external file needed)"
 echo ""
 
 # Create CodeBuild project with inline buildspec
-echo -e "${BLUE}🔨 Creating GitHub project with inline buildspec...${NC}"
+echo -e "${BLUE}Creating GitHub project with inline buildspec...${NC}"
 
 cat > /tmp/github-inline-project.json << 'EOF'
 {
@@ -73,30 +73,30 @@ EOF
 PROJECT_EXISTS=$(aws codebuild batch-get-projects --names $PROJECT_NAME --query 'projects[0].name' --output text --region $AWS_REGION 2>/dev/null || echo "NOT_FOUND")
 
 if [ "$PROJECT_EXISTS" != "NOT_FOUND" ] && [ "$PROJECT_EXISTS" != "None" ]; then
-    echo -e "${YELLOW}⚠️  Updating existing project...${NC}"
+    echo -e "${YELLOW}Updating existing project...${NC}"
     aws codebuild update-project --cli-input-json file:///tmp/github-inline-project.json --region $AWS_REGION
 else
-    echo -e "${BLUE}🆕 Creating new project...${NC}"
+    echo -e "${BLUE}Creating new project...${NC}"
     aws codebuild create-project --cli-input-json file:///tmp/github-inline-project.json --region $AWS_REGION
 fi
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ GitHub inline buildspec project created successfully${NC}"
+    echo -e "${GREEN}GitHub inline buildspec project created successfully${NC}"
 else
-    echo -e "${RED}❌ Failed to create project${NC}"
+    echo -e "${RED}Failed to create project${NC}"
     exit 1
 fi
 
 # Start build
-echo -e "${BLUE}🚀 Starting build...${NC}"
+echo -e "${BLUE}Starting build...${NC}"
 BUILD_ID=$(aws codebuild start-build --project-name $PROJECT_NAME --region $AWS_REGION --query 'build.id' --output text)
 
-echo -e "${GREEN}✅ Build started: $BUILD_ID${NC}"
+echo -e "${GREEN}Build started: $BUILD_ID${NC}"
 BUILD_URL="https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME/build/$BUILD_ID"
-echo -e "${BLUE}🔗 Build URL: $BUILD_URL${NC}"
+echo -e "${BLUE}Build URL: $BUILD_URL${NC}"
 
 # Monitor build
-echo -e "${BLUE}📊 Monitoring build progress...${NC}"
+echo -e "${BLUE}Monitoring build progress...${NC}"
 for i in {1..20}; do
     BUILD_STATUS=$(aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].buildStatus' --output text --region $AWS_REGION)
     CURRENT_PHASE=$(aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].currentPhase' --output text --region $AWS_REGION)
@@ -105,32 +105,32 @@ for i in {1..20}; do
     
     case $BUILD_STATUS in
         "IN_PROGRESS")
-            echo -e "${BLUE}⏳ Build in progress...${NC}"
+            echo -e "${BLUE}Build in progress...${NC}"
             ;;
         "SUCCEEDED")
-            echo -e "${GREEN}✅ Build completed successfully!${NC}"
+            echo -e "${GREEN}Build completed successfully!${NC}"
             
             # Show build summary
-            echo -e "${BLUE}📋 Build Summary:${NC}"
+            echo -e "${BLUE}Build Summary:${NC}"
             aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].[startTime,endTime,buildStatus]' --output table --region $AWS_REGION
             
             # Check ECR images
-            echo -e "${BLUE}🐳 Latest ECR Images:${NC}"
+            echo -e "${BLUE}Latest ECR Images:${NC}"
             aws ecr describe-images --repository-name vpbank-kmult-backend --query 'imageDetails[0:3].[imageTags[0],imagePushedAt,imageSizeInBytes]' --output table --region $AWS_REGION
             
             break
             ;;
         "FAILED")
-            echo -e "${RED}❌ Build failed!${NC}"
+            echo -e "${RED}Build failed!${NC}"
             
             # Get failure details
-            echo -e "${BLUE}📋 Failure Details:${NC}"
+            echo -e "${BLUE}Failure Details:${NC}"
             aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].phases[?phaseStatus==`FAILED`].[phaseType,contexts[0].message]' --output table --region $AWS_REGION
             
             break
             ;;
         *)
-            echo -e "${YELLOW}⚠️  Build status: $BUILD_STATUS${NC}"
+            echo -e "${YELLOW}Build status: $BUILD_STATUS${NC}"
             ;;
     esac
     
@@ -141,18 +141,18 @@ done
 rm -f /tmp/github-inline-project.json
 
 echo ""
-echo -e "${GREEN}🎉 GitHub Inline Buildspec Setup Complete!${NC}"
+echo -e "${GREEN}GitHub Inline Buildspec Setup Complete!${NC}"
 echo ""
-echo "📋 Summary:"
+echo "Summary:"
 echo "• Project: $PROJECT_NAME"
 echo "• GitHub Repo: $GITHUB_REPO (PUBLIC)"
 echo "• Build ID: $BUILD_ID"
 echo "• Buildspec: Inline (no external file dependency)"
 echo ""
-echo "🔗 Links:"
+echo "Links:"
 echo "• CodeBuild Project: https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME"
 echo "• Build Details: $BUILD_URL"
 echo "• ECR Repository: https://console.aws.amazon.com/ecr/repositories/private/536697254280/vpbank-kmult-backend"
 echo ""
-echo -e "${BLUE}🚀 This setup works with public GitHub repository!${NC}"
-echo -e "${GREEN}✅ No GitHub token required!${NC}"
+echo -e "${BLUE}This setup works with public GitHub repository!${NC}"
+echo -e "${GREEN}No GitHub token required!${NC}"

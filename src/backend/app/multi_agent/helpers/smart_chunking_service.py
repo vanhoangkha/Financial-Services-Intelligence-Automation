@@ -74,10 +74,10 @@ class SmartChunkingService:
                 has_tables=self._detect_tables(text)
             )]
         
-        logger.info(f"🔄 Chunking document: {len(text):,} characters")
+        logger.info(f"Chunking document: {len(text):,} characters")
         
         if len(text) <= self.MAX_CHARS_PER_CHUNK:
-            logger.info("📄 Document fits in single chunk")
+            logger.info("Document fits in single chunk")
             return [ChunkInfo(
                 content=text,
                 start_pos=0,
@@ -97,13 +97,13 @@ class SmartChunkingService:
         
         # Apply max_chunks limit if specified
         if max_chunks and len(chunks) > max_chunks:
-            logger.warning(f"⚠️ Limiting chunks from {len(chunks)} to {max_chunks}")
+            logger.warning(f"Limiting chunks from {len(chunks)} to {max_chunks}")
             chunks = self._merge_chunks_to_limit(chunks, max_chunks)
         
         # Add context overlap
         chunks = self._add_context_overlap(chunks, text)
         
-        logger.info(f"✅ Created {len(chunks)} chunks")
+        logger.info(f"Created {len(chunks)} chunks")
         for i, chunk in enumerate(chunks):
             logger.debug(f"   Chunk {i}: {chunk.char_count:,} chars, {chunk.word_count} words")
         

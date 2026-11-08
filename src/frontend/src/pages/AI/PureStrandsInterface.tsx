@@ -92,7 +92,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
     const welcomeMessage: ChatMessage = {
       id: 'welcome',
       type: 'system',
-      content: '🤖 Chào mừng bạn đến với VPBank K-MULT Pure Strands AI Assistant!\n\nTôi có thể giúp bạn:\n• Tóm tắt tài liệu (PDF, DOCX, TXT)\n• Trả lời câu hỏi về quy định ngân hàng (UCP 600, SBV)\n• Phân tích rủi ro tín dụng\n• Xử lý thông tin đa dạng với AI thông minh\n\nHãy nhập câu hỏi hoặc upload file để bắt đầu!',
+      content: 'Chào mừng bạn đến với VPBank K-MULT Pure Strands AI Assistant!\n\nTôi có thể giúp bạn:\n• Tóm tắt tài liệu (PDF, DOCX, TXT)\n• Trả lời câu hỏi về quy định ngân hàng (UCP 600, SBV)\n• Phân tích rủi ro tín dụng\n• Xử lý thông tin đa dạng với AI thông minh\n\nHãy nhập câu hỏi hoặc upload file để bắt đầu!',
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
@@ -171,7 +171,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
           const parsed = JSON.parse(messageContent);
           if (parsed.status === 'success' && parsed.data && parsed.data.compliance_status) {
             // This is a compliance response - keep it as JSON string for MessageBubble to handle
-            // console.log('✅ Detected compliance response in PureStrandsInterface');
+            // console.log('Detected compliance response in PureStrandsInterface');
             messageContent = JSON.stringify(parsed);
           }
         } catch (e) {
@@ -199,7 +199,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
       const errorMessage: ChatMessage = {
         id: `error-${Date.now()}`,
         type: 'system',
-        content: `❌ Lỗi xử lý: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        content: `Lỗi xử lý: ${error instanceof Error ? error.message : 'Unknown error'}`,
         timestamp: new Date()
       };
 
@@ -280,7 +280,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
             </SpaceBetween>
           }
         >
-          ⚡ Pure Strands AI Interface
+          Pure Strands AI Interface
         </Header>
       }
     >
@@ -347,8 +347,8 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
                                 message.type === 'user' ? 'blue' :
                                   message.type === 'assistant' ? 'green' : 'grey'
                               }>
-                                {message.type === 'user' ? '👤 Bạn' :
-                                  message.type === 'assistant' ? '🤖 AI Assistant' : '🔧 Hệ thống'}
+                                {message.type === 'user' ? 'Bạn' :
+                                  message.type === 'assistant' ? 'AI Assistant' : 'Hệ thống'}
                               </Badge>
                               {message.agent_used && (
                                 <Badge color={getAgentBadgeColor(message.agent_used)}>
@@ -374,7 +374,7 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
                               borderRadius: '4px',
                               fontSize: '0.9em'
                             }}>
-                              📎 <strong>{message.file_info.filename}</strong>
+                              <strong>{message.file_info.filename}</strong>
                               ({(message.file_info.size / 1024).toFixed(1)} KB)
                             </div>
                           )}
@@ -516,32 +516,32 @@ const PureStrandsInterface: React.FC<PureStrandsInterfaceProps> = ({ onShowSnack
                       cardsPerRow={[{ cards: 1 }, { minWidth: 500, cards: 2 }]}
                       items={[
                         {
-                          title: '📄 Tóm tắt tài liệu',
+                          title: 'Tóm tắt tài liệu',
                           description: 'Upload file PDF, DOCX hoặc TXT để AI tóm tắt nội dung chính',
                           example: 'Tóm tắt file này giúp tôi'
                         },
                         {
-                          title: '⚖️ Tra cứu quy định',
+                          title: 'Tra cứu quy định',
                           description: 'Hỏi về các quy định ngân hàng như UCP 600, SBV, Basel III',
                           example: 'UCP 600 là gì? Các điều khoản chính?'
                         },
                         {
-                          title: '📊 Phân tích rủi ro',
+                          title: 'Phân tích rủi ro',
                           description: 'Phân tích rủi ro tín dụng cho doanh nghiệp hoặc cá nhân',
                           example: 'Phân tích rủi ro tín dụng cho công ty ABC với doanh thu 10 tỷ'
                         },
                         {
-                          title: '💳 Xử lý Letter of Credit',
+                          title: 'Xử lý Letter of Credit',
                           description: 'Kiểm tra và xử lý các tài liệu Letter of Credit',
                           example: 'Kiểm tra tính hợp lệ của L/C số LC-2024-001'
                         },
                         {
-                          title: '🔍 Tìm kiếm thông tin',
+                          title: 'Tìm kiếm thông tin',
                           description: 'Tìm kiếm thông tin trong cơ sở tri thức ngân hàng',
                           example: 'Tìm thông tin về quy trình mở tài khoản doanh nghiệp'
                         },
                         {
-                          title: '💬 Hỗ trợ tổng quát',
+                          title: 'Hỗ trợ tổng quát',
                           description: 'Trả lời các câu hỏi chung về ngân hàng và tài chính',
                           example: 'Giải thích về lãi suất và các loại lãi suất trong ngân hàng'
                         }

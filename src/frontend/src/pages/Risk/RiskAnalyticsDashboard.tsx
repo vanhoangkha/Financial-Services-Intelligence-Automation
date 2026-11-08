@@ -401,7 +401,7 @@ const RiskAnalyticsDashboard: React.FC<RiskAnalyticsDashboardProps> = ({ onShowS
             </SpaceBetween>
           }
         >
-          📊 Risk Analytics Dashboard
+          Risk Analytics Dashboard
         </Header>
       }
     >

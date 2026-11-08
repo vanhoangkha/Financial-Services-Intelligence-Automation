@@ -10,7 +10,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}📦 S3 Source with Inline Buildspec (No GitHub Token)${NC}"
+echo -e "${BLUE}S3 Source with Inline Buildspec (No GitHub Token)${NC}"
 echo "======================================================="
 
 # Configuration
@@ -18,18 +18,18 @@ BUCKET_NAME="vpbank-kmult-inline-$(date +%s)"
 PROJECT_NAME="VPBankKMult-Inline-Build"
 AWS_REGION="us-east-1"
 
-echo -e "${BLUE}📋 Configuration:${NC}"
+echo -e "${BLUE}Configuration:${NC}"
 echo "• S3 Bucket: $BUCKET_NAME"
 echo "• CodeBuild Project: $PROJECT_NAME"
 echo "• Region: $AWS_REGION"
 echo ""
 
 # Step 1: Create S3 bucket
-echo -e "${BLUE}🪣 Creating S3 bucket...${NC}"
+echo -e "${BLUE}Creating S3 bucket...${NC}"
 aws s3 mb s3://$BUCKET_NAME --region $AWS_REGION
 
 # Step 2: Create and upload source
-echo -e "${BLUE}📁 Creating source archive...${NC}"
+echo -e "${BLUE}Creating source archive...${NC}"
 cd /home/ubuntu/multi-agent-hackathon
 
 tar -czf /tmp/source.tar.gz \
@@ -44,10 +44,10 @@ tar -czf /tmp/source.tar.gz \
     .
 
 aws s3 cp /tmp/source.tar.gz s3://$BUCKET_NAME/source.tar.gz
-echo -e "${GREEN}✅ Source uploaded to S3${NC}"
+echo -e "${GREEN}Source uploaded to S3${NC}"
 
 # Step 3: Create CodeBuild project with inline buildspec
-echo -e "${BLUE}🔨 Creating CodeBuild project with inline buildspec...${NC}"
+echo -e "${BLUE}Creating CodeBuild project with inline buildspec...${NC}"
 
 cat > /tmp/inline-buildspec-project.json << 'EOF'
 {
@@ -96,37 +96,37 @@ sed -i "s/BUCKET_PLACEHOLDER/$BUCKET_NAME/g" /tmp/inline-buildspec-project.json
 aws codebuild create-project --cli-input-json file:///tmp/inline-buildspec-project.json --region $AWS_REGION
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ CodeBuild project created successfully${NC}"
+    echo -e "${GREEN}CodeBuild project created successfully${NC}"
 else
-    echo -e "${RED}❌ Failed to create CodeBuild project${NC}"
+    echo -e "${RED}Failed to create CodeBuild project${NC}"
     exit 1
 fi
 
 # Step 4: Start build
-echo -e "${BLUE}🚀 Starting build...${NC}"
+echo -e "${BLUE}Starting build...${NC}"
 BUILD_ID=$(aws codebuild start-build --project-name $PROJECT_NAME --region $AWS_REGION --query 'build.id' --output text)
 
-echo -e "${GREEN}✅ Build started: $BUILD_ID${NC}"
+echo -e "${GREEN}Build started: $BUILD_ID${NC}"
 
 # Monitor build
-echo -e "${BLUE}📊 Monitoring build...${NC}"
+echo -e "${BLUE}Monitoring build...${NC}"
 for i in {1..20}; do
     BUILD_STATUS=$(aws codebuild batch-get-builds --ids $BUILD_ID --query 'builds[0].buildStatus' --output text --region $AWS_REGION)
     
     case $BUILD_STATUS in
         "IN_PROGRESS")
-            echo -e "${BLUE}⏳ Build in progress... ($i/20)${NC}"
+            echo -e "${BLUE}Build in progress... ($i/20)${NC}"
             ;;
         "SUCCEEDED")
-            echo -e "${GREEN}✅ Build completed successfully!${NC}"
+            echo -e "${GREEN}Build completed successfully!${NC}"
             break
             ;;
         "FAILED")
-            echo -e "${RED}❌ Build failed!${NC}"
+            echo -e "${RED}Build failed!${NC}"
             break
             ;;
         *)
-            echo -e "${YELLOW}⚠️  Build status: $BUILD_STATUS${NC}"
+            echo -e "${YELLOW}Build status: $BUILD_STATUS${NC}"
             break
             ;;
     esac
@@ -138,14 +138,14 @@ done
 rm -f /tmp/source.tar.gz /tmp/inline-buildspec-project.json
 
 echo ""
-echo -e "${GREEN}🎉 S3 Inline Buildspec Setup Complete!${NC}"
+echo -e "${GREEN}S3 Inline Buildspec Setup Complete!${NC}"
 echo ""
-echo "📋 Summary:"
+echo "Summary:"
 echo "• S3 Bucket: $BUCKET_NAME"
 echo "• CodeBuild Project: $PROJECT_NAME"
 echo "• Build ID: $BUILD_ID"
 echo "• Uses inline buildspec (no external file dependency)"
 echo ""
-echo "🔗 Links:"
+echo "Links:"
 echo "• CodeBuild: https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME"
 echo "• Build Details: https://console.aws.amazon.com/codesuite/codebuild/projects/$PROJECT_NAME/build/$BUILD_ID"

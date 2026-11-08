@@ -399,7 +399,7 @@ const AgentDashboardPage: React.FC<AgentDashboardPageProps> = ({ onShowSnackbar 
             </SpaceBetween>
           }
         >
-          🤖 Agent Management Dashboard
+          Agent Management Dashboard
         </Header>
       }
     >

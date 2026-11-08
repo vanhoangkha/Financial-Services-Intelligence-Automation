@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🏦 VPBank K-MULT Agent Studio - Project Setup"
+echo "VPBank K-MULT Agent Studio - Project Setup"
 echo "=============================================="
 
 # Colors for output
@@ -38,7 +38,7 @@ if [[ $EUID -eq 0 ]]; then
    exit 1
 fi
 
-print_header "🔍 Checking System Requirements..."
+print_header "Checking System Requirements..."
 
 # Check Docker
 if ! command -v docker &> /dev/null; then
@@ -68,7 +68,7 @@ else
     print_status "Python3 found: $(python3 --version)"
 fi
 
-print_header "📁 Setting up Project Structure..."
+print_header "Setting up Project Structure..."
 
 # Create necessary directories
 mkdir -p logs/{backend,frontend,deployment}
@@ -78,7 +78,7 @@ mkdir -p tools/{scripts,monitoring,ci-cd}
 
 print_status "Project directories created"
 
-print_header "🔧 Setting up Environment Files..."
+print_header "Setting up Environment Files..."
 
 # Backend environment setup
 if [ ! -f "backend/app/mutil_agent/.env" ]; then
@@ -104,7 +104,7 @@ else
     print_status "Frontend .env file already exists"
 fi
 
-print_header "🐳 Setting up Docker Environment..."
+print_header "Setting up Docker Environment..."
 
 # Create Docker network if it doesn't exist
 if ! docker network ls | grep -q "vpbank-kmult-network"; then
@@ -114,7 +114,7 @@ else
     print_status "Docker network 'vpbank-kmult-network' already exists"
 fi
 
-print_header "📦 Installing Dependencies..."
+print_header "Installing Dependencies..."
 
 # Backend dependencies
 if [ -f "backend/requirements.txt" ]; then
@@ -134,7 +134,7 @@ else
     print_warning "Frontend package.json not found"
 fi
 
-print_header "🔒 Setting up Security..."
+print_header "Setting up Security..."
 
 # Set proper permissions
 chmod +x scripts/*.sh 2>/dev/null || true
@@ -143,17 +143,17 @@ chmod 600 frontend/.env 2>/dev/null || true
 
 print_status "File permissions set"
 
-print_header "📊 Project Setup Summary"
+print_header "Project Setup Summary"
 echo "================================"
-print_status "✅ System requirements checked"
-print_status "✅ Project structure created"
-print_status "✅ Environment files configured"
-print_status "✅ Docker environment prepared"
-print_status "✅ Dependencies identified"
-print_status "✅ Security permissions set"
+print_status "System requirements checked"
+print_status "Project structure created"
+print_status "Environment files configured"
+print_status "Docker environment prepared"
+print_status "Dependencies identified"
+print_status "Security permissions set"
 
 echo ""
-print_header "🚀 Next Steps:"
+print_header "Next Steps:"
 echo "1. Configure your .env files with actual values"
 echo "2. Run './run.sh' to start the application"
 echo "3. Access the application at:"
@@ -162,7 +162,7 @@ echo "   - Backend API: http://localhost:8080"
 echo "   - API Docs: http://localhost:8080/docs"
 
 echo ""
-print_header "📋 Available Commands:"
+print_header "Available Commands:"
 echo "- ./setup.sh     - Run this setup script"
 echo "- ./run.sh       - Start the application"
 echo "- ./build.sh     - Build Docker images"
@@ -170,5 +170,5 @@ echo "- ./test.sh      - Run tests"
 echo "- ./deploy.sh    - Deploy to AWS"
 
 echo ""
-print_status "🎯 VPBank K-MULT Agent Studio setup completed successfully!"
+print_status "VPBank K-MULT Agent Studio setup completed successfully!"
 print_status "Multi-Agent Banking Platform ready for deployment"

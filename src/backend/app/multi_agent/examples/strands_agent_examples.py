@@ -28,7 +28,7 @@ async def example_compliance_validation():
     Example: Compliance validation for Letter of Credit document
     """
     print("\n" + "="*80)
-    print("🔍 EXAMPLE 1: COMPLIANCE VALIDATION AGENT")
+    print("EXAMPLE 1: COMPLIANCE VALIDATION AGENT")
     print("="*80)
     
     # Sample LC document text
@@ -75,14 +75,14 @@ async def example_compliance_validation():
         result_json = compliance_validation_agent(lc_document, "letter_of_credit")
         result = json.loads(result_json)
         
-        print(f"✅ Compliance Status: {result.get('compliance_validation', {}).get('compliance_status', 'Unknown')}")
-        print(f"📊 Confidence Score: {result.get('processing_info', {}).get('confidence_score', 'Unknown')}")
-        print(f"🔍 Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
+        print(f"Compliance Status: {result.get('compliance_validation', {}).get('compliance_status', 'Unknown')}")
+        print(f"Confidence Score: {result.get('processing_info', {}).get('confidence_score', 'Unknown')}")
+        print(f"Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
         
         return result
         
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return None
 
 
@@ -91,7 +91,7 @@ async def example_risk_assessment():
     Example: Risk assessment for loan application
     """
     print("\n" + "="*80)
-    print("📊 EXAMPLE 2: RISK ASSESSMENT AGENT")
+    print("EXAMPLE 2: RISK ASSESSMENT AGENT")
     print("="*80)
     
     # Sample loan application data
@@ -134,15 +134,15 @@ async def example_risk_assessment():
         )
         result = json.loads(result_json)
         
-        print(f"✅ Risk Score: {result.get('risk_assessment', {}).get('risk_score', 'Unknown')}")
-        print(f"📈 Risk Category: {result.get('risk_assessment', {}).get('risk_category', 'Unknown')}")
-        print(f"💰 Requested Amount: {result.get('processing_info', {}).get('requested_amount', 'Unknown'):,.0f} {result.get('processing_info', {}).get('currency', '')}")
-        print(f"🔍 Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
+        print(f"Risk Score: {result.get('risk_assessment', {}).get('risk_score', 'Unknown')}")
+        print(f"Risk Category: {result.get('risk_assessment', {}).get('risk_category', 'Unknown')}")
+        print(f"Requested Amount: {result.get('processing_info', {}).get('requested_amount', 'Unknown'):,.0f} {result.get('processing_info', {}).get('currency', '')}")
+        print(f"Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
         
         return result
         
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return None
 
 
@@ -151,7 +151,7 @@ async def example_document_intelligence():
     Example: Document intelligence for Vietnamese banking document
     """
     print("\n" + "="*80)
-    print("📄 EXAMPLE 3: DOCUMENT INTELLIGENCE AGENT")
+    print("EXAMPLE 3: DOCUMENT INTELLIGENCE AGENT")
     print("="*80)
     
     # Sample Vietnamese banking document
@@ -192,15 +192,15 @@ async def example_document_intelligence():
         result_json = document_intelligence_agent(vietnamese_doc, "account_confirmation")
         result = json.loads(result_json)
         
-        print(f"✅ Document Type: {result.get('processing_info', {}).get('document_type', 'Unknown')}")
-        print(f"📊 Content Length: {result.get('processing_info', {}).get('content_length', 'Unknown')} characters")
-        print(f"🎯 Confidence Score: {result.get('processing_info', {}).get('confidence_score', 'Unknown')}")
-        print(f"🔍 Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
+        print(f"Document Type: {result.get('processing_info', {}).get('document_type', 'Unknown')}")
+        print(f"Content Length: {result.get('processing_info', {}).get('content_length', 'Unknown')} characters")
+        print(f"Confidence Score: {result.get('processing_info', {}).get('confidence_score', 'Unknown')}")
+        print(f"Agent Analysis: {result.get('agent_analysis', 'No analysis available')[:200]}...")
         
         return result
         
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return None
 
 
@@ -209,7 +209,7 @@ async def example_supervisor_orchestration():
     Example: Supervisor agent orchestrating multiple agents
     """
     print("\n" + "="*80)
-    print("🎯 EXAMPLE 4: SUPERVISOR AGENT ORCHESTRATION")
+    print("EXAMPLE 4: SUPERVISOR AGENT ORCHESTRATION")
     print("="*80)
     
     # Complex banking request requiring multiple agents
@@ -241,15 +241,15 @@ async def example_supervisor_orchestration():
         result_json = vpbank_supervisor_agent(complex_request, context)
         result = json.loads(result_json)
         
-        print(f"✅ Processing Status: {result.get('status', 'Unknown')}")
-        print(f"📋 Request Length: {result.get('processing_info', {}).get('request_length', 'Unknown')} characters")
-        print(f"🤖 Available Agents: {', '.join(result.get('processing_info', {}).get('agents_available', []))}")
-        print(f"🎯 Supervisor Response: {result.get('supervisor_response', 'No response available')[:300]}...")
+        print(f"Processing Status: {result.get('status', 'Unknown')}")
+        print(f"Request Length: {result.get('processing_info', {}).get('request_length', 'Unknown')} characters")
+        print(f"Available Agents: {', '.join(result.get('processing_info', {}).get('agents_available', []))}")
+        print(f"Supervisor Response: {result.get('supervisor_response', 'No response available')[:300]}...")
         
         return result
         
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         return None
 
 
@@ -274,30 +274,30 @@ async def run_all_examples():
     
     for name, example_func in examples:
         try:
-            print(f"\n🚀 Running {name} example...")
+            print(f"\nRunning {name} example...")
             result = await example_func()
             results[name] = result
-            print(f"✅ {name} completed successfully")
+            print(f"{name} completed successfully")
         except Exception as e:
-            print(f"❌ {name} failed: {str(e)}")
+            print(f"{name} failed: {str(e)}")
             results[name] = None
     
     # Summary
     print("\n" + "="*80)
-    print("📊 EXAMPLES SUMMARY")
+    print("EXAMPLES SUMMARY")
     print("="*80)
     
     successful = sum(1 for result in results.values() if result is not None)
     total = len(results)
     
-    print(f"✅ Successful: {successful}/{total}")
-    print(f"❌ Failed: {total - successful}/{total}")
+    print(f"Successful: {successful}/{total}")
+    print(f"Failed: {total - successful}/{total}")
     
     for name, result in results.items():
-        status = "✅ SUCCESS" if result is not None else "❌ FAILED"
+        status = "SUCCESS" if result is not None else "FAILED"
         print(f"  {name}: {status}")
     
-    print("\n🎉 All examples completed!")
+    print("\nAll examples completed!")
     return results
 
 

@@ -99,16 +99,16 @@ status() {
     
     # Backend health
     if curl -s -f http://localhost:8080/mutil_agent/public/api/v1/health-check/health > /dev/null 2>&1; then
-        echo -e "  Backend API: ${GREEN}✅ Healthy${NC}"
+        echo -e "  Backend API: ${GREEN}Healthy${NC}"
     else
-        echo -e "  Backend API: ${RED}❌ Unhealthy${NC}"
+        echo -e "  Backend API: ${RED}Unhealthy${NC}"
     fi
     
     # Frontend health
     if curl -s -f http://localhost:3000 > /dev/null 2>&1; then
-        echo -e "  Frontend Web: ${GREEN}✅ Healthy${NC}"
+        echo -e "  Frontend Web: ${GREEN}Healthy${NC}"
     else
-        echo -e "  Frontend Web: ${RED}❌ Unhealthy${NC}"
+        echo -e "  Frontend Web: ${RED}Unhealthy${NC}"
     fi
     echo ""
 }

@@ -55,13 +55,13 @@ def create_bedrock_model(temperature: float = 0.3) -> BedrockModel:
             boto_client_config=boto_config,
         )
         
-        logger.info("✅ Bedrock model configured successfully")
+        logger.info("Bedrock model configured successfully")
         return bedrock_model
         
     except Exception as e:
-        logger.error(f"❌ Failed to configure Bedrock model: {str(e)}")
+        logger.error(f"Failed to configure Bedrock model: {str(e)}")
         # Fallback to default model if Bedrock fails
-        logger.warning("⚠️  Using fallback model configuration")
+        logger.warning("Using fallback model configuration")
         return None
 logger = logging.getLogger(__name__)
 
@@ -88,7 +88,7 @@ def compliance_validation_agent(document_text: str, document_type: Optional[str]
         Detailed compliance validation results with recommendations
     """
     try:
-        logger.info(f"🔍 Compliance Agent: Validating document (type: {document_type or 'auto-detect'})")
+        logger.info(f"Compliance Agent: Validating document (type: {document_type or 'auto-detect'})")
         
         # Validate input
         if not document_text or len(document_text.strip()) < 50:
@@ -175,7 +175,7 @@ def compliance_validation_agent(document_text: str, document_type: Optional[str]
                 )
                 
         except Exception as service_error:
-            logger.warning(f"⚠️  Compliance service error: {str(service_error)}")
+            logger.warning(f"Compliance service error: {str(service_error)}")
             # Use agent-only analysis if service fails
             validation_result = {
                 "compliance_status": "requires_review",
@@ -223,11 +223,11 @@ def compliance_validation_agent(document_text: str, document_type: Optional[str]
             }
         }
         
-        logger.info(f"✅ Compliance Agent: Validation completed - {validation_result.get('compliance_status')}")
+        logger.info(f"Compliance Agent: Validation completed - {validation_result.get('compliance_status')}")
         return json.dumps(final_result, ensure_ascii=False, indent=2)
         
     except Exception as e:
-        logger.error(f"❌ Compliance Agent Error: {str(e)}")
+        logger.error(f"Compliance Agent Error: {str(e)}")
         return json.dumps({
             "status": "error",
             "message": f"Compliance validation failed: {str(e)}",
@@ -276,7 +276,7 @@ def risk_assessment_agent(
         Detailed risk assessment with scoring and recommendations
     """
     try:
-        logger.info(f"📊 Risk Assessment Agent: Analyzing {applicant_name} - {requested_amount:,.0f} {currency}")
+        logger.info(f"Risk Assessment Agent: Analyzing {applicant_name} - {requested_amount:,.0f} {currency}")
         
         # Create Strands Agent for risk assessment
         risk_agent = Agent(
@@ -358,11 +358,11 @@ def risk_assessment_agent(
             }
         }
         
-        logger.info(f"✅ Risk Assessment Agent: Analysis completed - Risk Score: {risk_result.get('risk_score')}")
+        logger.info(f"Risk Assessment Agent: Analysis completed - Risk Score: {risk_result.get('risk_score')}")
         return json.dumps(final_result, ensure_ascii=False, indent=2)
         
     except Exception as e:
-        logger.error(f"❌ Risk Assessment Agent Error: {str(e)}")
+        logger.error(f"Risk Assessment Agent Error: {str(e)}")
         return json.dumps({
             "status": "error",
             "message": f"Risk assessment failed: {str(e)}",
@@ -394,7 +394,7 @@ def document_intelligence_agent(document_content: str, document_type: Optional[s
         Structured document analysis with extracted information
     """
     try:
-        logger.info(f"📄 Document Intelligence Agent: Processing document (type: {document_type or 'auto-detect'})")
+        logger.info(f"Document Intelligence Agent: Processing document (type: {document_type or 'auto-detect'})")
         
         # Create Strands Agent for document intelligence
         doc_agent = Agent(
@@ -473,11 +473,11 @@ def document_intelligence_agent(document_content: str, document_type: Optional[s
             }
         }
         
-        logger.info(f"✅ Document Intelligence Agent: Processing completed - Type: {document_type}")
+        logger.info(f"Document Intelligence Agent: Processing completed - Type: {document_type}")
         return json.dumps(final_result, ensure_ascii=False, indent=2)
         
     except Exception as e:
-        logger.error(f"❌ Document Intelligence Agent Error: {str(e)}")
+        logger.error(f"Document Intelligence Agent Error: {str(e)}")
         return json.dumps({
             "status": "error",
             "message": f"Document processing failed: {str(e)}",
@@ -495,17 +495,17 @@ You are the VPBank K-MULT Supervisor Agent - the master orchestrator for banking
 
 Your role is to coordinate specialized banking agents:
 
-🔍 COMPLIANCE VALIDATION AGENT
+COMPLIANCE VALIDATION AGENT
 - Use for: UCP 600 compliance, regulatory validation, AML/CFT checks
 - Expertise: Trade finance, Vietnamese banking regulations
 - Tool: compliance_validation_agent(document_text, document_type)
 
-📊 RISK ASSESSMENT AGENT  
+RISK ASSESSMENT AGENT  
 - Use for: Credit scoring, Basel III analysis, fraud detection
 - Expertise: Financial analysis, risk modeling, loan assessment
 - Tool: risk_assessment_agent(applicant_name, business_type, requested_amount, ...)
 
-📄 DOCUMENT INTELLIGENCE AGENT
+DOCUMENT INTELLIGENCE AGENT
 - Use for: OCR processing, document analysis, information extraction
 - Expertise: Vietnamese NLP, document classification, data extraction
 - Tool: document_intelligence_agent(document_content, document_type)
@@ -553,7 +553,7 @@ def create_supervisor_agent():
                 ]
             )
     except Exception as e:
-        logger.error(f"❌ Failed to create supervisor agent: {str(e)}")
+        logger.error(f"Failed to create supervisor agent: {str(e)}")
         # Return basic agent as fallback
         return Agent(
             system_prompt="You are a banking supervisor agent. Coordinate tasks and provide analysis.",
@@ -591,7 +591,7 @@ def vpbank_supervisor_agent(user_request: str, context: Optional[Dict[str, Any]]
         Comprehensive response with agent coordination results
     """
     try:
-        logger.info(f"🎯 Supervisor Agent: Processing request - {user_request[:100]}...")
+        logger.info(f"Supervisor Agent: Processing request - {user_request[:100]}...")
         
         # Add context to the request if provided
         enhanced_request = user_request
@@ -619,15 +619,15 @@ def vpbank_supervisor_agent(user_request: str, context: Optional[Dict[str, Any]]
             }
         }
         
-        logger.info("✅ Supervisor Agent: Request processed successfully")
+        logger.info("Supervisor Agent: Request processed successfully")
         return json.dumps(final_result, ensure_ascii=False, indent=2)
         
     except Exception as e:
-        logger.error(f"❌ Supervisor Agent Error: {str(e)}")
+        logger.error(f"Supervisor Agent Error: {str(e)}")
         
         # Try fallback processing without Bedrock
         try:
-            logger.info("🔄 Attempting enhanced fallback processing with agent routing...")
+            logger.info("Attempting enhanced fallback processing with agent routing...")
             
             # Extract document content from enhanced request
             document_content = ""
@@ -667,7 +667,7 @@ def vpbank_supervisor_agent(user_request: str, context: Optional[Dict[str, Any]]
             return json.dumps(fallback_result, ensure_ascii=False, indent=2)
             
         except Exception as fallback_error:
-            logger.error(f"❌ Fallback processing also failed: {str(fallback_error)}")
+            logger.error(f"Fallback processing also failed: {str(fallback_error)}")
             
             return json.dumps({
                 "status": "error",
@@ -694,7 +694,7 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
         Dictionary with routing decisions and agent results
     """
     try:
-        logger.info("🎯 Performing intelligent agent routing...")
+        logger.info("Performing intelligent agent routing...")
         
         routing_decisions = {}
         agent_results = {}
@@ -706,7 +706,7 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
         
         # 1. Document Intelligence Agent - Always call if there's document content
         if document_content:
-            logger.info("📄 Routing to Document Intelligence Agent")
+            logger.info("Routing to Document Intelligence Agent")
             routing_decisions["document_intelligence"] = {
                 "reason": "Document content detected",
                 "confidence": 0.9,
@@ -717,9 +717,9 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
                 doc_result = document_intelligence_agent(document_content, context.get("document_type"))
                 agent_results["document_intelligence"] = json.loads(doc_result)
                 agents_used.append("document_intelligence")
-                logger.info("✅ Document Intelligence Agent completed")
+                logger.info("Document Intelligence Agent completed")
             except Exception as e:
-                logger.error(f"❌ Document Intelligence Agent failed: {str(e)}")
+                logger.error(f"Document Intelligence Agent failed: {str(e)}")
                 agent_results["document_intelligence"] = {"status": "error", "message": str(e)}
         
         # 2. Compliance Validation Agent - For banking/LC documents
@@ -734,7 +734,7 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
         )
         
         if should_check_compliance and document_content:
-            logger.info("🔍 Routing to Compliance Validation Agent")
+            logger.info("Routing to Compliance Validation Agent")
             routing_decisions["compliance_validation"] = {
                 "reason": "Compliance validation required",
                 "confidence": 0.85,
@@ -745,9 +745,9 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
                 compliance_result = compliance_validation_agent(document_content, context.get("document_type"))
                 agent_results["compliance_validation"] = json.loads(compliance_result)
                 agents_used.append("compliance_validation")
-                logger.info("✅ Compliance Validation Agent completed")
+                logger.info("Compliance Validation Agent completed")
             except Exception as e:
-                logger.error(f"❌ Compliance Validation Agent failed: {str(e)}")
+                logger.error(f"Compliance Validation Agent failed: {str(e)}")
                 agent_results["compliance_validation"] = {"status": "error", "message": str(e)}
         
         # 3. Risk Assessment Agent - For credit/loan/financial analysis
@@ -765,7 +765,7 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
         )
         
         if should_assess_risk:
-            logger.info("📊 Routing to Risk Assessment Agent")
+            logger.info("Routing to Risk Assessment Agent")
             routing_decisions["risk_assessment"] = {
                 "reason": "Risk assessment required",
                 "confidence": 0.8,
@@ -788,9 +788,9 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
                 )
                 agent_results["risk_assessment"] = json.loads(risk_result)
                 agents_used.append("risk_assessment")
-                logger.info("✅ Risk Assessment Agent completed")
+                logger.info("Risk Assessment Agent completed")
             except Exception as e:
-                logger.error(f"❌ Risk Assessment Agent failed: {str(e)}")
+                logger.error(f"Risk Assessment Agent failed: {str(e)}")
                 agent_results["risk_assessment"] = {"status": "error", "message": str(e)}
         
         # Return routing results
@@ -802,7 +802,7 @@ def perform_intelligent_routing(user_request: str, document_content: str, contex
         }
         
     except Exception as e:
-        logger.error(f"❌ Intelligent routing failed: {str(e)}")
+        logger.error(f"Intelligent routing failed: {str(e)}")
         return {
             "routing_decisions": {},
             "agent_results": {},
@@ -825,16 +825,16 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
         Synthesized comprehensive analysis
     """
     try:
-        logger.info("🧠 Synthesizing multi-agent results...")
+        logger.info("Synthesizing multi-agent results...")
         
         agent_results = routing_results.get("agent_results", {})
         agents_used = routing_results.get("agents_used", [])
         routing_decisions = routing_results.get("routing_decisions", {})
         
         # Start building comprehensive response
-        synthesis = f"""# 🎯 VPBank K-MULT Multi-Agent Analysis
+        synthesis = f"""# VPBank K-MULT Multi-Agent Analysis
 
-## 📋 Request Summary:
+## Request Summary:
 **User Request**: {user_request}
 **Agents Coordinated**: {len(agents_used)} agents
 **Processing Mode**: Intelligent Multi-Agent Routing
@@ -844,7 +844,7 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
         # Add document overview if available
         if document_content:
             doc_type = context.get("document_type", "Unknown")
-            synthesis += f"""## 📄 Document Overview:
+            synthesis += f"""## Document Overview:
 - **Type**: {doc_type}
 - **Size**: {len(document_content)} characters
 - **Language**: Vietnamese
@@ -854,22 +854,22 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
         
         # Add results from each agent
         if "document_intelligence" in agent_results:
-            synthesis += """## 📄 Document Intelligence Analysis:
+            synthesis += """## Document Intelligence Analysis:
 """
             doc_result = agent_results["document_intelligence"]
             if doc_result.get("status") == "success":
-                synthesis += f"""✅ **Document Processing**: Successful
-📊 **Key Information**: Extracted and analyzed
-🎯 **Analysis**: {doc_result.get("agent_analysis", "Document processed successfully")[:200]}...
+                synthesis += f"""**Document Processing**: Successful
+**Key Information**: Extracted and analyzed
+**Analysis**: {doc_result.get("agent_analysis", "Document processed successfully")[:200]}...
 
 """
             else:
-                synthesis += f"""❌ **Document Processing**: {doc_result.get("message", "Failed")}
+                synthesis += f"""**Document Processing**: {doc_result.get("message", "Failed")}
 
 """
         
         if "compliance_validation" in agent_results:
-            synthesis += """## 🔍 Compliance Validation Analysis:
+            synthesis += """## Compliance Validation Analysis:
 """
             compliance_result = agent_results["compliance_validation"]
             if compliance_result.get("status") == "success":
@@ -877,19 +877,19 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
                 compliance_status = validation_data.get("compliance_status", "Unknown")
                 confidence = validation_data.get("confidence_score", 0)
                 
-                synthesis += f"""✅ **Compliance Status**: {compliance_status}
-📊 **Confidence Score**: {confidence:.2f}
-🔍 **Regulations**: UCP 600, SBV, AML/CFT checked
-📋 **Analysis**: {compliance_result.get("agent_analysis", "Compliance validated")[:200]}...
+                synthesis += f"""**Compliance Status**: {compliance_status}
+**Confidence Score**: {confidence:.2f}
+**Regulations**: UCP 600, SBV, AML/CFT checked
+**Analysis**: {compliance_result.get("agent_analysis", "Compliance validated")[:200]}...
 
 """
             else:
-                synthesis += f"""❌ **Compliance Validation**: {compliance_result.get("message", "Failed")}
+                synthesis += f"""**Compliance Validation**: {compliance_result.get("message", "Failed")}
 
 """
         
         if "risk_assessment" in agent_results:
-            synthesis += """## 📊 Risk Assessment Analysis:
+            synthesis += """## Risk Assessment Analysis:
 """
             risk_result = agent_results["risk_assessment"]
             if risk_result.get("status") == "success":
@@ -897,28 +897,28 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
                 risk_score = risk_data.get("risk_score", "Unknown")
                 risk_category = risk_data.get("risk_category", "Unknown")
                 
-                synthesis += f"""✅ **Risk Score**: {risk_score}
-📈 **Risk Category**: {risk_category}
-🎯 **Basel III**: Compliance assessed
-📋 **Analysis**: {risk_result.get("agent_analysis", "Risk assessed")[:200]}...
+                synthesis += f"""**Risk Score**: {risk_score}
+**Risk Category**: {risk_category}
+**Basel III**: Compliance assessed
+**Analysis**: {risk_result.get("agent_analysis", "Risk assessed")[:200]}...
 
 """
             else:
-                synthesis += f"""❌ **Risk Assessment**: {risk_result.get("message", "Failed")}
+                synthesis += f"""**Risk Assessment**: {risk_result.get("message", "Failed")}
 
 """
         
         # Add routing summary
-        synthesis += f"""## 🤖 Agent Coordination Summary:
+        synthesis += f"""## Agent Coordination Summary:
 
-### 🎯 Routing Decisions:
+### Routing Decisions:
 """
         for agent, decision in routing_decisions.items():
             synthesis += f"""- **{agent.replace('_', ' ').title()}**: {decision.get('reason', 'N/A')} (Confidence: {decision.get('confidence', 0):.2f})
 """
         
         synthesis += f"""
-### 📊 Processing Results:
+### Processing Results:
 - **Total Agents Used**: {len(agents_used)}
 - **Successful Agents**: {len([a for a in agent_results.values() if a.get('status') == 'success'])}
 - **Processing Mode**: Multi-Agent Coordination
@@ -926,13 +926,13 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
 """
         
         # Add recommendations based on results
-        synthesis += """## 📋 Comprehensive Recommendations:
+        synthesis += """## Comprehensive Recommendations:
 
 """
         
         if document_content:
             if "chuyến bay" in document_content.lower() or "bamboo airways" in document_content.lower():
-                synthesis += """### ✈️ Flight Booking Recommendations:
+                synthesis += """### Flight Booking Recommendations:
 1. **Verify Information**: Check passenger details and flight times
 2. **Prepare Documents**: Ensure ID/passport validity
 3. **Check-in**: Complete online check-in 24 hours before
@@ -940,7 +940,7 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
 
 """
             elif "tài khoản" in document_content.lower():
-                synthesis += """### 🏦 Banking Document Recommendations:
+                synthesis += """### Banking Document Recommendations:
 1. **Verify Authenticity**: Confirm document legitimacy
 2. **Financial Analysis**: Review account status and balance
 3. **Compliance Check**: Ensure regulatory compliance
@@ -948,7 +948,7 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
 
 """
             elif "letter of credit" in document_content.lower():
-                synthesis += """### 💳 Letter of Credit Recommendations:
+                synthesis += """### Letter of Credit Recommendations:
 1. **UCP 600 Compliance**: Verify against international standards
 2. **Document Review**: Check all required documents
 3. **Risk Evaluation**: Assess credit and operational risks
@@ -956,10 +956,10 @@ def synthesize_agent_results(routing_results: Dict[str, Any], user_request: str,
 
 """
         
-        synthesis += f"""## 🎉 Conclusion:
+        synthesis += f"""## Conclusion:
 Multi-agent analysis completed successfully with {len(agents_used)} specialized agents coordinated by the Supervisor Agent. Each agent provided domain-specific expertise for comprehensive analysis.
 
-**Status**: ✅ Multi-Agent Coordination Successful
+**Status**: Multi-Agent Coordination Successful
 **Quality**: Professional banking-grade analysis
 **Next Steps**: Review recommendations and proceed with appropriate actions
 """
@@ -967,7 +967,7 @@ Multi-agent analysis completed successfully with {len(agents_used)} specialized 
         return synthesis.strip()
         
     except Exception as e:
-        logger.error(f"❌ Result synthesis failed: {str(e)}")
+        logger.error(f"Result synthesis failed: {str(e)}")
         return f"Error synthesizing agent results: {str(e)}"
 
 def analyze_flight_booking(document_content: str, user_request: str, context: Dict[str, Any]) -> str:
@@ -993,36 +993,36 @@ def analyze_flight_booking(document_content: str, user_request: str, context: Di
                 passengers.append(line)
         
         analysis = f"""
-# 📄 Tóm tắt Xác nhận Đặt chỗ Chuyến bay
+# Tóm tắt Xác nhận Đặt chỗ Chuyến bay
 
-## 🎯 Thông tin chính:
+## Thông tin chính:
 - **Mã đặt chỗ**: {booking_code if booking_code else "DRFOG3"}
 - **Tổng giá**: {total_price if total_price else "9.462.000 VND"}
 - **Hãng bay**: Bamboo Airways
 - **Tuyến bay**: TP. Hồ Chí Minh (SGN) → Hà Nội (HAN)
 
-## ✈️ Chi tiết chuyến bay:
+## Chi tiết chuyến bay:
 - **Ngày bay**: Thứ Tư, 30/07/2025
 - **Chuyến bay**: QH 284
 - **Thời gian**: 21:30 - 23:40 (2h10p)
 - **Hạng vé**: Economy Smart
 
-## 👥 Hành khách:
+## Hành khách:
 - **Số lượng**: 6 người lớn
 - **Danh sách**: {len(passengers)} hành khách đã xác nhận
 
-## 💼 Dịch vụ:
+## Dịch vụ:
 - **Hành lý xách tay**: 6 kiện (đã bao gồm)
 - **Hành lý ký gửi**: Không bao gồm (có thể mua thêm)
 - **Dịch vụ bổ sung**: Suất ăn, chọn chỗ ngồi, phòng chờ
 
-## 📋 Khuyến nghị:
+## Khuyến nghị:
 1. **Xác nhận thông tin**: Kiểm tra lại thông tin hành khách
 2. **Hành lý**: Cân nhắc mua thêm hành lý ký gửi nếu cần
 3. **Check-in**: Thực hiện check-in online trước 24h
 4. **Đến sân bay**: Có mặt trước 2 tiếng cho chuyến nội địa
 
-**Trạng thái**: ✅ Đã xác nhận và thanh toán thành công
+**Trạng thái**: Đã xác nhận và thanh toán thành công
         """
         
         return analysis.strip()
@@ -1035,24 +1035,24 @@ def analyze_letter_of_credit(document_content: str, user_request: str, context: 
     """Analyze Letter of Credit document"""
     try:
         analysis = f"""
-# 📄 Phân tích Letter of Credit (L/C)
+# Phân tích Letter of Credit (L/C)
 
-## 🎯 Thông tin cơ bản:
+## Thông tin cơ bản:
 - **Loại tài liệu**: Letter of Credit
 - **Mục đích**: Tài trợ thương mại quốc tế
 - **Quy định áp dụng**: UCP 600
 
-## 🔍 Kiểm tra tuân thủ:
+## Kiểm tra tuân thủ:
 - **UCP 600**: Cần kiểm tra các điều khoản
 - **ISBP 821**: Thực hành ngân hàng quốc tế
 - **SBV**: Quy định Ngân hàng Nhà nước Việt Nam
 
-## 📊 Đánh giá rủi ro:
+## Đánh giá rủi ro:
 - **Rủi ro tín dụng**: Cần đánh giá khả năng thanh toán
 - **Rủi ro vận chuyển**: Kiểm tra điều kiện giao hàng
 - **Rủi ro tài liệu**: Xác minh tính hợp lệ
 
-## 📋 Khuyến nghị xử lý:
+## Khuyến nghị xử lý:
 1. **Kiểm tra compliance**: Đối chiếu với UCP 600
 2. **Đánh giá rủi ro**: Phân tích khả năng thanh toán
 3. **Xác minh tài liệu**: Kiểm tra tính hợp lệ
@@ -1086,24 +1086,24 @@ def analyze_banking_document(document_content: str, user_request: str, context: 
                 account_holder = line
         
         analysis = f"""
-# 📄 Phân tích Tài liệu Ngân hàng
+# Phân tích Tài liệu Ngân hàng
 
-## 🎯 Thông tin tài khoản:
+## Thông tin tài khoản:
 - **{account_number if account_number else "Số tài khoản: Đã xác định"}**
 - **{account_holder if account_holder else "Chủ tài khoản: Đã xác định"}**
 - **{balance if balance else "Số dư: Đã xác định"}**
 
-## 🏦 Thông tin ngân hàng:
+## Thông tin ngân hàng:
 - **Ngân hàng**: Vietcombank
 - **Chi nhánh**: TP. Hồ Chí Minh
 - **Loại tài khoản**: Tài khoản thanh toán
 
-## 📊 Đánh giá tài chính:
+## Đánh giá tài chính:
 - **Tình trạng**: Hoạt động bình thường
 - **Lịch sử**: Tài khoản dài hạn (từ 2020)
 - **Khả năng thanh toán**: Tốt
 
-## 📋 Khuyến nghị:
+## Khuyến nghị:
 1. **Xác minh**: Kiểm tra tính hợp lệ của tài liệu
 2. **Đánh giá**: Phân tích khả năng tài chính
 3. **Compliance**: Kiểm tra tuân thủ quy định
@@ -1135,17 +1135,17 @@ def analyze_generic_document(document_content: str, user_request: str, context: 
             doc_type = "Đơn từ"
         
         analysis = f"""
-# 📄 Phân tích Tài liệu
+# Phân tích Tài liệu
 
-## 🎯 Thông tin cơ bản:
+## Thông tin cơ bản:
 - **Loại tài liệu**: {doc_type}
 - **Độ dài**: {word_count} từ, {char_count} ký tự
 - **Ngôn ngữ**: Tiếng Việt
 
-## 📊 Nội dung chính:
+## Nội dung chính:
 {document_content[:300]}...
 
-## 📋 Khuyến nghị xử lý:
+## Khuyến nghị xử lý:
 1. **Phân loại**: Xác định loại tài liệu cụ thể
 2. **Trích xuất**: Lấy thông tin quan trọng
 3. **Phân tích**: Đánh giá nội dung và mục đích
@@ -1164,20 +1164,20 @@ def analyze_text_request(user_request: str, context: Dict[str, Any]) -> str:
     """Analyze text-only request"""
     try:
         analysis = f"""
-# 🎯 Phân tích Yêu cầu
+# Phân tích Yêu cầu
 
-## 📝 Yêu cầu của khách hàng:
+## Yêu cầu của khách hàng:
 "{user_request}"
 
-## 🔍 Phân tích:
+## Phân tích:
 - **Loại yêu cầu**: {"Tóm tắt tài liệu" if "tóm tắt" in user_request.lower() else "Yêu cầu chung"}
 - **Ngôn ngữ**: Tiếng Việt
 - **Độ phức tạp**: {"Đơn giản" if len(user_request) < 50 else "Phức tạp"}
 
-## 📊 Context:
+## Context:
 {json.dumps(context, ensure_ascii=False, indent=2) if context else "Không có context"}
 
-## 📋 Khuyến nghị xử lý:
+## Khuyến nghị xử lý:
 1. **Phân tích yêu cầu**: Hiểu rõ mục đích
 2. **Xác định agent**: Chọn agent phù hợp
 3. **Xử lý**: Thực hiện theo quy trình

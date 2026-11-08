@@ -14,7 +14,7 @@ NC='\033[0m'
 
 API_BASE="http://VPBank-Backe-YzuYPJrF9vGD-169276357.us-east-1.elb.amazonaws.com"
 
-echo -e "${BLUE}🧪 VPBank K-MULT Agent Studio - API Testing${NC}"
+echo -e "${BLUE}VPBank K-MULT Agent Studio - API Testing${NC}"
 echo "=============================================="
 echo "API Base: $API_BASE"
 echo ""
@@ -30,10 +30,10 @@ test_endpoint() {
     status=$(curl -s -o /dev/null -w "%{http_code}" "$API_BASE$endpoint")
     
     if [ "$status" = "$expected_status" ]; then
-        echo -e "${GREEN}✅ $status${NC}"
+        echo -e "${GREEN}$status${NC}"
         return 0
     else
-        echo -e "${RED}❌ $status (expected $expected_status)${NC}"
+        echo -e "${RED}$status (expected $expected_status)${NC}"
         return 1
     fi
 }
@@ -48,16 +48,16 @@ test_json_endpoint() {
     status=$(curl -s -o /dev/null -w "%{http_code}" "$API_BASE$endpoint")
     
     if [ "$status" = "200" ]; then
-        echo -e "${GREEN}✅ Status: $status${NC}"
+        echo -e "${GREEN}Status: $status${NC}"
         echo "$response" | jq . 2>/dev/null || echo "$response"
     else
-        echo -e "${RED}❌ Status: $status${NC}"
+        echo -e "${RED}Status: $status${NC}"
         echo "$response"
     fi
     echo ""
 }
 
-echo -e "${BLUE}📋 1. Core API Endpoints${NC}"
+echo -e "${BLUE}1. Core API Endpoints${NC}"
 echo "========================"
 
 test_endpoint "/docs" "API Documentation (Swagger)"
@@ -66,18 +66,18 @@ test_endpoint "/" "Root Endpoint"
 test_endpoint "/health" "Root Health Check"
 
 echo ""
-echo -e "${BLUE}📋 2. Public API Endpoints${NC}"
+echo -e "${BLUE}2. Public API Endpoints${NC}"
 echo "=========================="
 
 test_json_endpoint "/mutil_agent/public/api/v1/health-check/health" "Public Health Check"
 
-echo -e "${BLUE}📋 3. Private API Endpoints${NC}"
+echo -e "${BLUE}3. Private API Endpoints${NC}"
 echo "==========================="
 
 test_endpoint "/mutil_agent/api/v1/info" "API Information"
 
 echo ""
-echo -e "${BLUE}📋 4. Health Check Endpoints${NC}"
+echo -e "${BLUE}4. Health Check Endpoints${NC}"
 echo "============================"
 
 test_endpoint "/mutil_agent/api/v1/health/health" "Comprehensive Health"
@@ -90,7 +90,7 @@ test_endpoint "/mutil_agent/api/v1/health/health/agents" "Agents Service Health"
 test_endpoint "/mutil_agent/api/v1/health/health/knowledge" "Knowledge Service Health"
 
 echo ""
-echo -e "${BLUE}📋 5. Service-Specific Health Endpoints${NC}"
+echo -e "${BLUE}5. Service-Specific Health Endpoints${NC}"
 echo "======================================="
 
 test_endpoint "/mutil_agent/api/v1/risk/health" "Risk Assessment Health"
@@ -100,43 +100,43 @@ test_endpoint "/mutil_agent/api/v1/text/summary/health" "Text Processing Health"
 test_endpoint "/mutil_agent/api/v1/compliance/health" "Compliance Health"
 
 echo ""
-echo -e "${BLUE}📋 6. Agent Coordination Endpoints${NC}"
+echo -e "${BLUE}6. Agent Coordination Endpoints${NC}"
 echo "=================================="
 
 test_endpoint "/mutil_agent/api/v1/agents/status" "Agent Status"
 test_endpoint "/mutil_agent/api/v1/agents/list" "Agent List"
 
 echo ""
-echo -e "${BLUE}📋 7. Knowledge Base Endpoints${NC}"
+echo -e "${BLUE}7. Knowledge Base Endpoints${NC}"
 echo "=============================="
 
 test_endpoint "/mutil_agent/api/v1/knowledge/categories" "Knowledge Categories"
 test_endpoint "/mutil_agent/api/v1/knowledge/stats" "Knowledge Statistics"
 
 echo ""
-echo -e "${BLUE}📋 8. Risk Assessment Endpoints${NC}"
+echo -e "${BLUE}8. Risk Assessment Endpoints${NC}"
 echo "==============================="
 
 test_endpoint "/mutil_agent/api/v1/risk/market-data" "Market Data"
 
 echo ""
-echo -e "${BLUE}📋 9. Text Processing Endpoints${NC}"
+echo -e "${BLUE}9. Text Processing Endpoints${NC}"
 echo "==============================="
 
 test_endpoint "/mutil_agent/api/v1/text/summary/health" "Text Summary Health"
 
 echo ""
-echo -e "${BLUE}📋 10. Compliance Endpoints${NC}"
+echo -e "${BLUE}10. Compliance Endpoints${NC}"
 echo "=========================="
 
 test_endpoint "/mutil_agent/api/v1/compliance/health" "Compliance Health"
 
 echo ""
-echo -e "${BLUE}📊 Testing Summary${NC}"
+echo -e "${BLUE}Testing Summary${NC}"
 echo "=================="
 
 # Test some key JSON endpoints for detailed responses
-echo -e "${YELLOW}🔍 Detailed Response Testing:${NC}"
+echo -e "${YELLOW}Detailed Response Testing:${NC}"
 
 echo ""
 echo "1. API Information:"
@@ -155,13 +155,13 @@ echo "4. Risk Assessment Health:"
 curl -s "$API_BASE/mutil_agent/api/v1/risk/health" | jq . 2>/dev/null || echo "Endpoint not available"
 
 echo ""
-echo -e "${GREEN}🎉 API Testing Complete!${NC}"
+echo -e "${GREEN}API Testing Complete!${NC}"
 echo ""
-echo -e "${BLUE}📋 Access Points Summary:${NC}"
-echo "   🌐 Frontend (CloudFront): https://d2bwc7cu1vx0pc.cloudfront.net"
-echo "   🔗 Backend API: $API_BASE"
-echo "   📚 API Docs: $API_BASE/docs"
-echo "   📖 ReDoc: $API_BASE/redoc"
+echo -e "${BLUE}Access Points Summary:${NC}"
+echo "   Frontend (CloudFront): https://d2bwc7cu1vx0pc.cloudfront.net"
+echo "   Backend API: $API_BASE"
+echo "   API Docs: $API_BASE/docs"
+echo "   ReDoc: $API_BASE/redoc"
 echo ""
-echo -e "${YELLOW}💡 Note: Some endpoints may return 404 if the refactored routes haven't fully loaded yet.${NC}"
+echo -e "${YELLOW}Note: Some endpoints may return 404 if the refactored routes haven't fully loaded yet.${NC}"
 echo -e "${YELLOW}    Wait a few more minutes and test again if needed.${NC}"

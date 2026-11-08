@@ -10,15 +10,15 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${BLUE}🔧 FIXING AWS PRODUCTION APIs${NC}"
+echo -e "${BLUE}FIXING AWS PRODUCTION APIs${NC}"
 echo "=================================="
 
 # Step 1: Get current task definition
-echo -e "${BLUE}📋 Getting current task definition...${NC}"
+echo -e "${BLUE}Getting current task definition...${NC}"
 CURRENT_TASK_DEF=$(aws ecs describe-task-definition --task-definition VPBankKMultStackBackendServiceTaskDef5AD716F9:3 --region us-east-1)
 
 # Step 2: Create new task definition with proper environment variables
-echo -e "${BLUE}🔨 Creating new task definition with AI service configuration...${NC}"
+echo -e "${BLUE}Creating new task definition with AI service configuration...${NC}"
 
 cat > /tmp/new-task-definition.json << 'EOF'
 {
@@ -134,18 +134,18 @@ cat > /tmp/new-task-definition.json << 'EOF'
 EOF
 
 # Step 3: Register new task definition
-echo -e "${BLUE}📝 Registering new task definition...${NC}"
+echo -e "${BLUE}Registering new task definition...${NC}"
 NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file:///tmp/new-task-definition.json --region us-east-1 --query 'taskDefinition.taskDefinitionArn' --output text)
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ New task definition registered: $NEW_TASK_DEF_ARN${NC}"
+    echo -e "${GREEN}New task definition registered: $NEW_TASK_DEF_ARN${NC}"
 else
-    echo -e "${RED}❌ Failed to register new task definition${NC}"
+    echo -e "${RED}Failed to register new task definition${NC}"
     exit 1
 fi
 
 # Step 4: Update ECS service with new task definition
-echo -e "${BLUE}🔄 Updating ECS service with new task definition...${NC}"
+echo -e "${BLUE}Updating ECS service with new task definition...${NC}"
 aws ecs update-service \
     --cluster vpbank-kmult-cluster \
     --service vpbank-kmult-backend \
@@ -153,14 +153,14 @@ aws ecs update-service \
     --region us-east-1
 
 if [ $? -eq 0 ]; then
-    echo -e "${GREEN}✅ ECS service update initiated${NC}"
+    echo -e "${GREEN}ECS service update initiated${NC}"
 else
-    echo -e "${RED}❌ Failed to update ECS service${NC}"
+    echo -e "${RED}Failed to update ECS service${NC}"
     exit 1
 fi
 
 # Step 5: Wait for deployment to complete
-echo -e "${BLUE}⏳ Waiting for deployment to complete...${NC}"
+echo -e "${BLUE}Waiting for deployment to complete...${NC}"
 echo "This may take 3-5 minutes..."
 
 for i in {1..20}; do
@@ -170,7 +170,7 @@ for i in {1..20}; do
     echo -e "${BLUE}[$i/20] Deployment Status: $DEPLOYMENT_STATUS | Running Tasks: $RUNNING_COUNT${NC}"
     
     if [ "$DEPLOYMENT_STATUS" = "PRIMARY" ] && [ "$RUNNING_COUNT" = "1" ]; then
-        echo -e "${GREEN}✅ Deployment completed successfully!${NC}"
+        echo -e "${GREEN}Deployment completed successfully!${NC}"
         break
     fi
     
@@ -178,43 +178,43 @@ for i in {1..20}; do
 done
 
 # Step 6: Test APIs after deployment
-echo -e "${BLUE}🧪 Testing APIs after deployment...${NC}"
+echo -e "${BLUE}Testing APIs after deployment...${NC}"
 sleep 60  # Wait for service to be fully ready
 
 echo -e "${BLUE}Testing health check...${NC}"
 HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://VPBank-Backe-YzuYPJrF9vGD-169276357.us-east-1.elb.amazonaws.com/mutil_agent/public/api/v1/health-check/health)
 
 if [ "$HEALTH_STATUS" = "200" ]; then
-    echo -e "${GREEN}✅ Health check: OK${NC}"
+    echo -e "${GREEN}Health check: OK${NC}"
     
     echo -e "${BLUE}Testing document summary API...${NC}"
     SUMMARY_RESPONSE=$(curl -s -X POST -F "file=@/home/ubuntu/multi-agent-hackathon/data/test_document.txt" -F "summary_type=general" -F "language=vietnamese" http://VPBank-Backe-YzuYPJrF9vGD-169276357.us-east-1.elb.amazonaws.com/mutil_agent/api/v1/text/summary/document)
     
     if echo "$SUMMARY_RESPONSE" | grep -q '"status":"success"'; then
-        echo -e "${GREEN}✅ Document summary API: WORKING${NC}"
+        echo -e "${GREEN}Document summary API: WORKING${NC}"
         echo -e "${BLUE}Sample response:${NC}"
         echo "$SUMMARY_RESPONSE" | jq '.data.summary' | head -3
     else
-        echo -e "${RED}❌ Document summary API still has issues${NC}"
+        echo -e "${RED}Document summary API still has issues${NC}"
         echo "Response: $SUMMARY_RESPONSE"
     fi
 else
-    echo -e "${RED}❌ Health check failed: $HEALTH_STATUS${NC}"
+    echo -e "${RED}Health check failed: $HEALTH_STATUS${NC}"
 fi
 
 # Cleanup
 rm -f /tmp/new-task-definition.json
 
 echo ""
-echo -e "${GREEN}🎉 AWS API Fix Process Complete!${NC}"
+echo -e "${GREEN}AWS API Fix Process Complete!${NC}"
 echo ""
-echo "📋 Summary:"
+echo "Summary:"
 echo "• New task definition registered with AI service configuration"
 echo "• ECS service updated with proper environment variables"
 echo "• Secrets manager integration configured"
 echo "• Health checks and API testing completed"
 echo ""
-echo "🔗 Links:"
+echo "Links:"
 echo "• Application: http://VPBank-Backe-YzuYPJrF9vGD-169276357.us-east-1.elb.amazonaws.com"
 echo "• Health Check: http://VPBank-Backe-YzuYPJrF9vGD-169276357.us-east-1.elb.amazonaws.com/mutil_agent/public/api/v1/health-check/health"
 echo "• ECS Service: https://console.aws.amazon.com/ecs/home?region=us-east-1#/clusters/vpbank-kmult-cluster/services/vpbank-kmult-backend"

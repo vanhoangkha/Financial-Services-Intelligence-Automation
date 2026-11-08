@@ -18,9 +18,9 @@ class LightweightOCR:
     def __init__(self):
         self.available = self._check_tesseract_available()
         if self.available:
-            logger.info("✅ Tesseract OCR available")
+            logger.info("Tesseract OCR available")
         else:
-            logger.warning("❌ Tesseract OCR not available")
+            logger.warning("Tesseract OCR not available")
     
     def _check_tesseract_available(self) -> bool:
         """Check if Tesseract is available"""
@@ -166,7 +166,7 @@ class LightweightOCR:
             
             # Return results
             if successful_pages > 0:
-                logger.info(f"✅ Tesseract OCR successful: {successful_pages}/{len(images)} pages, {len(all_text)} characters")
+                logger.info(f"Tesseract OCR successful: {successful_pages}/{len(images)} pages, {len(all_text)} characters")
                 return {
                     'success': True,
                     'text': all_text.strip(),
@@ -250,7 +250,7 @@ class LightweightOCR:
                 f.write(f"Total pages processed: {len(pages_data)}\n")
                 f.write("="*80 + "\n")
             
-            logger.info(f"📁 OCR extracted text saved to: {file_path}")
+            logger.info(f"OCR extracted text saved to: {file_path}")
             
         except Exception as e:
             logger.warning(f"Failed to save OCR text to file: {e}")
@@ -328,10 +328,10 @@ def test_lightweight_ocr(pdf_path: str):
     """Test lightweight OCR with a PDF file"""
     
     if not os.path.exists(pdf_path):
-        print(f"❌ File not found: {pdf_path}")
+        print(f"File not found: {pdf_path}")
         return
     
-    print(f"🔍 Testing Lightweight OCR with: {pdf_path}")
+    print(f"Testing Lightweight OCR with: {pdf_path}")
     
     try:
         with open(pdf_path, 'rb') as f:
@@ -341,15 +341,15 @@ def test_lightweight_ocr(pdf_path: str):
         result = ocr.extract_text_from_pdf(pdf_bytes)
         
         if result['success']:
-            print(f"✅ OCR successful!")
-            print(f"📊 Engine: {result['engine_used']}")
-            print(f"📊 Total pages: {result['total_pages']}")
-            print(f"📊 Successful pages: {result['successful_pages']}")
-            print(f"📊 Text length: {len(result['text']):,} characters")
-            print(f"📊 Word count: {len(result['text'].split()):,}")
+            print(f"OCR successful!")
+            print(f"Engine: {result['engine_used']}")
+            print(f"Total pages: {result['total_pages']}")
+            print(f"Successful pages: {result['successful_pages']}")
+            print(f"Text length: {len(result['text']):,} characters")
+            print(f"Word count: {len(result['text'].split()):,}")
             
             # Show first 300 characters
-            print(f"\n📄 First 300 characters:")
+            print(f"\nFirst 300 characters:")
             print("-" * 50)
             print(result['text'][:300])
             if len(result['text']) > 300:
@@ -357,10 +357,10 @@ def test_lightweight_ocr(pdf_path: str):
             print("-" * 50)
             
         else:
-            print(f"❌ OCR failed: {result['error']}")
+            print(f"OCR failed: {result['error']}")
             
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f"Test failed: {e}")
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
     Preserves EXACT logic from compliance_routes.py
     """
     try:
-        logger.info(f"🔧 [COMPLIANCE_TOOL] Processing: {query[:100]}...")
+        logger.info(f"[COMPLIANCE_TOOL] Processing: {query[:100]}...")
 
         if file_data and file_data.get('raw_bytes'):
             # Use services directly instead of routes (better architecture)
@@ -82,14 +82,14 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
                 if data and isinstance(data, dict):
                     # Use data directly (already has the validation result)
                     
-                    response = f"""⚖️ **Kiểm tra tuân thủ - VPBank K-MULT**
+                    response = f"""**Kiểm tra tuân thủ - VPBank K-MULT**
 
-**📄 Tài liệu:** {file_data.get('filename', 'Unknown')}
-**📊 Loại tài liệu:** {data.get('document_type', 'Unknown')}
-**✅ Trạng thái:** {data.get('compliance_status', 'UNKNOWN')}
-**🎯 Độ tin cậy:** {data.get('confidence_score', 0):.1%}
+**Tài liệu:** {file_data.get('filename', 'Unknown')}
+**Loại tài liệu:** {data.get('document_type', 'Unknown')}
+**Trạng thái:** {data.get('compliance_status', 'UNKNOWN')}
+**Độ tin cậy:** {data.get('confidence_score', 0):.1%}
 
-**📋 Phân tích:**"""
+**Phân tích:**"""
                     
                     # Add document analysis
                     doc_analysis = data.get('document_analysis', {})
@@ -99,33 +99,33 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
                             response += f"\n• **Mục đích:** {category['business_purpose']}"
                     
                     # Add violations
-                    response += "\n\n**⚠️ Vi phạm:**"
+                    response += "\n\n**Vi phạm:**"
                     violations = data.get('violations', [])
                     if violations:
                         for i, v in enumerate(violations[:5], 1):
                             response += f"\n{i}. **{v.get('type', 'Unknown')}**: {v.get('description', 'N/A')}"
                     else:
-                        response += "\n✅ Không phát hiện vi phạm"
+                        response += "\nKhông phát hiện vi phạm"
                     
                     # Add recommendations
-                    response += "\n\n**💡 Khuyến nghị:**"
+                    response += "\n\n**Khuyến nghị:**"
                     recommendations = data.get('recommendations', [])
                     if recommendations:
                         for i, r in enumerate(recommendations[:3], 1):
                             response += f"\n{i}. {r.get('description', 'N/A')}"
                     else:
-                        response += "\n✅ Tài liệu tuân thủ tốt"
+                        response += "\nTài liệu tuân thủ tốt"
                     
-                    response += f"\n\n**⏱️ Thời gian:** {data.get('processing_time', 0):.1f}s"
-                    response += f"\n*🤖 VPBank K-MULT Compliance Engine*"
+                    response += f"\n\n**Thời gian:** {data.get('processing_time', 0):.1f}s"
+                    response += f"\n*VPBank K-MULT Compliance Engine*"
                     
                     return response
                 else:
-                    return "❌ **Lỗi**: Không thể xử lý tài liệu"
+                    return "**Lỗi**: Không thể xử lý tài liệu"
                     
             except Exception as e:
-                logger.error(f"🔧 [COMPLIANCE_TOOL] Error: {e}")
-                return f"❌ **Lỗi kiểm tra tuân thủ**: {str(e)}"
+                logger.error(f"[COMPLIANCE_TOOL] Error: {e}")
+                return f"**Lỗi kiểm tra tuân thủ**: {str(e)}"
         else:
             # Handle text-based queries using compliance node logic
             try:
@@ -162,12 +162,12 @@ def compliance_document_tool(query: str, file_data: Optional[Dict[str, Any]] = N
                 return response
                 
             except Exception as e:
-                logger.error(f"🔧 [COMPLIANCE_TOOL] Node error: {e}")
-                return f"❌ **Lỗi xử lý tuân thủ**: {str(e)}"
+                logger.error(f"[COMPLIANCE_TOOL] Node error: {e}")
+                return f"**Lỗi xử lý tuân thủ**: {str(e)}"
 
     except Exception as e:
-        logger.error(f"🔧 [COMPLIANCE_TOOL] Tool error: {e}")
-        return f"❌ **Lỗi kiểm tra tuân thủ**: {str(e)}"
+        logger.error(f"[COMPLIANCE_TOOL] Tool error: {e}")
+        return f"**Lỗi kiểm tra tuân thủ**: {str(e)}"
 
 
 @tool
@@ -177,7 +177,7 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
     Preserves EXACT logic from text_routes.py
     """
     try:
-        logger.info(f"📄 [TEXT_SUMMARY_TOOL] Processing: {query[:100]}...")
+        logger.info(f"[TEXT_SUMMARY_TOOL] Processing: {query[:100]}...")
 
         if file_data and file_data.get('raw_bytes'):
             # Use service directly instead of route (better architecture)
@@ -240,12 +240,12 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
                 # Format response using EXACT endpoint result structure
                 if data and isinstance(data, dict):
                     
-                    response = f"""📄 **Tóm tắt tài liệu: {file_data.get('filename', 'Unknown')}**
+                    response = f"""**Tóm tắt tài liệu: {file_data.get('filename', 'Unknown')}**
 
-**📝 Nội dung tóm tắt:**
+**Nội dung tóm tắt:**
 {data.get('summary', 'Không thể tóm tắt')}
 
-**📊 Thống kê:**"""
+**Thống kê:**"""
                     
                     # Add statistics from endpoint response
                     if 'word_count' in data:
@@ -265,15 +265,15 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
                             response += f"\n• **Kích thước:** {doc_info['file_size']:,} bytes"
                     
                     response += f"\n• **Thời gian:** {data.get('processing_time', 0):.1f}s"
-                    response += f"\n\n*🤖 VPBank K-MULT Text Intelligence*"
+                    response += f"\n\n*VPBank K-MULT Text Intelligence*"
                     
                     return response
                 else:
-                    return f"❌ **Lỗi**: Không thể tóm tắt file {file_data.get('filename', 'Unknown')}"
+                    return f"**Lỗi**: Không thể tóm tắt file {file_data.get('filename', 'Unknown')}"
                     
             except Exception as e:
-                logger.error(f"📄 [TEXT_SUMMARY_TOOL] Error: {e}")
-                return f"❌ **Lỗi tóm tắt tài liệu**: {str(e)}"
+                logger.error(f"[TEXT_SUMMARY_TOOL] Error: {e}")
+                return f"**Lỗi tóm tắt tài liệu**: {str(e)}"
         else:
             # Handle text-based queries using text summary node logic
             try:
@@ -284,7 +284,7 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
                 text_to_summarize = _extract_text_from_message(query)
                 
                 if not text_to_summarize or len(text_to_summarize.strip()) < 10:
-                    return """❌ **Không tìm thấy văn bản để tóm tắt**
+                    return """**Không tìm thấy văn bản để tóm tắt**
 
 **Hướng dẫn:**
 • Gửi văn bản: "Tóm tắt: [nội dung]"
@@ -317,12 +317,12 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
                 
                 # Format response
                 if result and 'summary' in result:
-                    response = f"""📄 **Tóm tắt văn bản:**
+                    response = f"""**Tóm tắt văn bản:**
 
-**📝 Nội dung:**
+**Nội dung:**
 {result['summary']}
 
-**📊 Thống kê:**"""
+**Thống kê:**"""
                     
                     if 'word_count' in result:
                         word_count = result['word_count']
@@ -332,18 +332,18 @@ def text_summary_document_tool(query: str, file_data: Optional[Dict[str, Any]] =
                     if 'compression_ratio' in result:
                         response += f"\n• **Tỷ lệ nén:** {result['compression_ratio']}"
                     
-                    response += f"\n\n*🤖 VPBank K-MULT Text Intelligence*"
+                    response += f"\n\n*VPBank K-MULT Text Intelligence*"
                     return response
                 else:
-                    return "❌ **Lỗi**: Không thể tạo tóm tắt"
+                    return "**Lỗi**: Không thể tạo tóm tắt"
                 
             except Exception as e:
-                logger.error(f"📄 [TEXT_SUMMARY_TOOL] Node error: {e}")
-                return f"❌ **Lỗi tóm tắt văn bản**: {str(e)}"
+                logger.error(f"[TEXT_SUMMARY_TOOL] Node error: {e}")
+                return f"**Lỗi tóm tắt văn bản**: {str(e)}"
 
     except Exception as e:
-        logger.error(f"📄 [TEXT_SUMMARY_TOOL] Tool error: {e}")
-        return f"❌ **Lỗi xử lý tóm tắt**: {str(e)}"
+        logger.error(f"[TEXT_SUMMARY_TOOL] Tool error: {e}")
+        return f"**Lỗi xử lý tóm tắt**: {str(e)}"
 
 
 @tool
@@ -353,7 +353,7 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
     Preserves EXACT logic from risk_routes.py
     """
     try:
-        logger.info(f"🔧 [RISK_TOOL] Processing: {query[:100]}...")
+        logger.info(f"[RISK_TOOL] Processing: {query[:100]}...")
 
         # Import required models and services
         from app.multi_agent.models.risk import RiskAssessmentRequest
@@ -364,20 +364,20 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
 
         # Extract text from file if provided
         if file_data and file_data.get('raw_bytes'):
-            logger.info(f"🔧 [RISK_TOOL] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
+            logger.info(f"[RISK_TOOL] Processing file: {file_data.get('filename')} ({len(file_data.get('raw_bytes', b''))} bytes)")
 
             try:
                 # Extract text from file
                 file_text = extract_text_from_file(file_data)
                 financial_data['financial_documents'] = file_text
-                logger.info(f"🔧 [RISK_TOOL] Extracted {len(file_text)} characters from file")
+                logger.info(f"[RISK_TOOL] Extracted {len(file_text)} characters from file")
 
                 if not file_text.strip():
-                    logger.warning("🔧 [RISK_TOOL] No text extracted from file, proceeding with basic data")
+                    logger.warning("[RISK_TOOL] No text extracted from file, proceeding with basic data")
 
             except Exception as file_error:
-                logger.error(f"🔧 [RISK_TOOL] File processing error: {file_error}")
-                return f"❌ **Lỗi xử lý file**: {str(file_error)}"
+                logger.error(f"[RISK_TOOL] File processing error: {file_error}")
+                return f"**Lỗi xử lý file**: {str(file_error)}"
 
         # Handle risk assessment with file content - use service directly
         async def call_service():
@@ -416,13 +416,13 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
             else:
                 raise e
 
-        logger.info("🔧 [RISK_TOOL] Successfully processed with service call")
+        logger.info("[RISK_TOOL] Successfully processed with service call")
 
         # Format response using EXACT endpoint result structure
         if result and isinstance(result, dict):
             data = result.get('data', {})
             
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Thông tin đánh giá:**
 • **Tên:** {financial_data.get('applicant_name', 'Chưa xác định')}
@@ -444,10 +444,10 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         else:
-            response = f"""📊 **Phân tích rủi ro - VPBank K-MULT**
+            response = f"""**Phân tích rủi ro - VPBank K-MULT**
 
 **Yêu cầu:** {query[:200]}...
 
@@ -464,15 +464,15 @@ def risk_assessment_tool(query: str, file_data: Optional[Dict[str, Any]] = None)
 
 ---
 
-*🤖 VPBank K-MULT Agent Studio*
-*⏰ {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
+*VPBank K-MULT Agent Studio*
+*{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}*"""
         
-        logger.info("🔧 [RISK_TOOL] Successfully processed with DIRECT endpoint wrapper")
+        logger.info("[RISK_TOOL] Successfully processed with DIRECT endpoint wrapper")
         return response
         
     except Exception as e:
-        logger.error(f"🔧 [RISK_TOOL] Tool error: {str(e)}")
-        return f"❌ **Lỗi phân tích rủi ro**: {str(e)}"
+        logger.error(f"[RISK_TOOL] Tool error: {str(e)}")
+        return f"**Lỗi phân tích rủi ro**: {str(e)}"
 
 
 def extract_text_from_file(file_data: Dict[str, Any]) -> str:

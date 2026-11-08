@@ -65,7 +65,7 @@ class TextSummaryService:
                     top_p=top_p,
                     max_tokens=max_tokens
                 )
-                logger.info(f"✅ Initialized Bedrock service with {model_name}: {bedrock_model_id}")
+                logger.info(f"Initialized Bedrock service with {model_name}: {bedrock_model_id}")
             else:
                 logger.warning(f"Model {model_name} not found in MODEL_MAPPING")
         except Exception as e:
@@ -97,7 +97,7 @@ class TextSummaryService:
             
             if len(cleaned_text) < FAST_PROCESSING_THRESHOLD:
                 # Fast path for small documents (most banking documents)
-                logger.info(f"🚀 Fast processing for small document ({len(cleaned_text):,} chars)")
+                logger.info(f"Fast processing for small document ({len(cleaned_text):,} chars)")
                 return await self._summarize_direct(
                     cleaned_text, summary_type, max_length, language, None
                 )
@@ -124,13 +124,13 @@ class TextSummaryService:
             
             # Smart chunking decision - now with 100K threshold (doubled from 50K)
             if chunking_helper.should_chunk_document(cleaned_text):
-                logger.info(f"📚 Large document detected ({len(cleaned_text):,} chars), using optimized chunking approach")
+                logger.info(f"Large document detected ({len(cleaned_text):,} chars), using optimized chunking approach")
                 return await self._summarize_with_chunking(
                     cleaned_text, summary_type, max_length, language, 
                     document_analysis, chunking_helper
                 )
             else:
-                logger.info(f"📄 Standard document processing ({len(cleaned_text):,} chars) - skipping chunking")
+                logger.info(f"Standard document processing ({len(cleaned_text):,} chars) - skipping chunking")
                 return await self._summarize_direct(
                     cleaned_text, summary_type, max_length, language, document_analysis
                 )
@@ -157,7 +157,7 @@ class TextSummaryService:
         
         # Step 1: Chunk the document
         chunking_result = chunking_helper.chunk_document(text, preserve_structure=True)
-        logger.info(f"📊 Document chunked: {chunking_result.total_chunks} chunks")
+        logger.info(f"Document chunked: {chunking_result.total_chunks} chunks")
         
         # Step 2: Process chunks with Bedrock
         chunk_summaries = await chunking_helper.process_chunks_with_bedrock(
@@ -219,7 +219,7 @@ class TextSummaryService:
         if document_analysis:
             response["document_analysis"] = document_analysis
         
-        logger.info(f"✅ Chunked summarization complete: {processing_time:.2f}s, {len(chunking_result.chunks)} chunks")
+        logger.info(f"Chunked summarization complete: {processing_time:.2f}s, {len(chunking_result.chunks)} chunks")
         return response
 
     async def _summarize_direct(
@@ -248,11 +248,11 @@ class TextSummaryService:
         # Try Bedrock first
         if self.bedrock_service:
             try:
-                logger.info("🤖 Using Bedrock service for summarization")
+                logger.info("Using Bedrock service for summarization")
                 response = await self.bedrock_service.ai_ainvoke(prompt)
                 summary = self._extract_summary_from_response(response)
                 model_used = "bedrock_claude"
-                logger.info(f"✅ Bedrock summarization successful: {len(summary)} characters")
+                logger.info(f"Bedrock summarization successful: {len(summary)} characters")
             except Exception as e:
                 logger.warning(f"Bedrock service failed: {str(e)}")
         
@@ -286,7 +286,7 @@ class TextSummaryService:
         if document_analysis:
             response["document_analysis"] = document_analysis
         
-        logger.info(f"✅ Direct summarization complete: {processing_time:.2f}s using {model_used}")
+        logger.info(f"Direct summarization complete: {processing_time:.2f}s using {model_used}")
         return response
 
     def _extract_summary_from_response(self, response) -> str:
@@ -350,11 +350,11 @@ class TextSummaryService:
             # Save extracted text to file based on source
             if source == 'pypdf2':
                 self._save_extracted_text_to_file(extracted_text, "pdf_extracted_text.txt", method)
-                logger.info(f"✅ PDF extraction successful via {method}: {len(extracted_text)} characters")
+                logger.info(f"PDF extraction successful via {method}: {len(extracted_text)} characters")
             elif source == 'ocr':
                 # OCR already saves its own file, just log the success
-                logger.info(f"✅ PDF extraction successful via {method}: {len(extracted_text)} characters")
-                logger.info("📁 OCR result already saved to ocr_extracted_text.txt")
+                logger.info(f"PDF extraction successful via {method}: {len(extracted_text)} characters")
+                logger.info("OCR result already saved to ocr_extracted_text.txt")
             
             return extracted_text
             
@@ -403,7 +403,7 @@ class TextSummaryService:
                 f.write(f"Extraction method: {method}\n")
                 f.write("="*80 + "\n")
             
-            logger.info(f"📁 Extracted text saved to: {filename_with_timestamp}")
+            logger.info(f"Extracted text saved to: {filename_with_timestamp}")
             
         except Exception as e:
             logger.warning(f"Could not save extracted text to file: {str(e)}")

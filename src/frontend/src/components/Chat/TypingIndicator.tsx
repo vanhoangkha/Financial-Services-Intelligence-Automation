@@ -19,7 +19,7 @@ const TypingIndicator: React.FC<TypingIndicatorProps> = ({ agent }) => {
       }}
     >
       <SpaceBetween direction="horizontal" size="s" alignItems="center">
-        <Badge color="green">🤖 {agent.name}</Badge>
+        <Badge color="green">{agent.name}</Badge>
         <Spinner size="normal" />
         <span style={{ 
           fontSize: '14px', 

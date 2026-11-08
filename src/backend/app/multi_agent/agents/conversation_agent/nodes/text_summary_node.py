@@ -46,8 +46,8 @@ async def text_summary_node(
                     language="vietnamese"
                 )
                 
-                response = f"📄 **Tóm tắt văn bản:**\n\n{summary_result['summary']}\n\n"
-                response += f"📊 **Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
+                response = f"**Tóm tắt văn bản:**\n\n{summary_result['summary']}\n\n"
+                response += f"**Thống kê:** {summary_result['word_count']['original']} từ → {summary_result['word_count']['summary']} từ "
                 response += f"(tỷ lệ nén: {summary_result['compression_ratio']})"
                 
             except Exception as e:

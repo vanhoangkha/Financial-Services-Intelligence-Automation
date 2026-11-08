@@ -5,7 +5,7 @@ AWS_REGION="${AWS_REGION:-ap-southeast-1}"
 CLUSTER_NAME="vpbank-kmult-cluster"
 SERVICE_NAME="vpbank-kmult-service"
 
-echo "🔧 Setting up Auto-scaling for VPBank K-MULT"
+echo "Setting up Auto-scaling for VPBank K-MULT"
 
 # Register scalable target
 aws application-autoscaling register-scalable-target \
@@ -68,7 +68,7 @@ aws application-autoscaling put-scaling-policy \
   }' \
   --region $AWS_REGION
 
-echo "✅ Auto-scaling configured successfully!"
+echo "Auto-scaling configured successfully!"
 echo ""
 echo "Scaling Configuration:"
 echo "  Min Capacity: 2"

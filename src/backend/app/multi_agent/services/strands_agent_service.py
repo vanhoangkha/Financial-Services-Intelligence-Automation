@@ -36,7 +36,7 @@ class StrandsAgentService:
             "document_intelligence": document_intelligence_agent,
             "supervisor": vpbank_supervisor_agent
         }
-        logger.info("🤖 Strands Agent Service initialized with agents: %s", list(self.available_agents.keys()))
+        logger.info("Strands Agent Service initialized with agents: %s", list(self.available_agents.keys()))
     
     async def process_compliance_validation(
         self, 
@@ -54,7 +54,7 @@ class StrandsAgentService:
             Compliance validation results
         """
         try:
-            logger.info("🔍 Processing compliance validation via Strands Agent")
+            logger.info("Processing compliance validation via Strands Agent")
             
             # Call Strands Agent tool
             result_json = compliance_validation_agent(document_text, document_type)
@@ -71,7 +71,7 @@ class StrandsAgentService:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Compliance validation error: {str(e)}")
+            logger.error(f"Compliance validation error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Compliance validation failed: {str(e)}",
@@ -108,7 +108,7 @@ class StrandsAgentService:
             Risk assessment results
         """
         try:
-            logger.info(f"📊 Processing risk assessment via Strands Agent for {applicant_name}")
+            logger.info(f"Processing risk assessment via Strands Agent for {applicant_name}")
             
             # Call Strands Agent tool
             result_json = risk_assessment_agent(
@@ -135,7 +135,7 @@ class StrandsAgentService:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Risk assessment error: {str(e)}")
+            logger.error(f"Risk assessment error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Risk assessment failed: {str(e)}",
@@ -158,7 +158,7 @@ class StrandsAgentService:
             Document intelligence results
         """
         try:
-            logger.info("📄 Processing document intelligence via Strands Agent")
+            logger.info("Processing document intelligence via Strands Agent")
             
             # Call Strands Agent tool
             result_json = document_intelligence_agent(document_content, document_type)
@@ -175,7 +175,7 @@ class StrandsAgentService:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Document intelligence error: {str(e)}")
+            logger.error(f"Document intelligence error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Document intelligence failed: {str(e)}",
@@ -198,7 +198,7 @@ class StrandsAgentService:
             Supervisor agent response
         """
         try:
-            logger.info(f"🎯 Processing supervisor request: {user_request[:100]}...")
+            logger.info(f"Processing supervisor request: {user_request[:100]}...")
             
             # Call Strands Agent tool
             result_json = vpbank_supervisor_agent(user_request, context)
@@ -215,7 +215,7 @@ class StrandsAgentService:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Supervisor request error: {str(e)}")
+            logger.error(f"Supervisor request error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Supervisor request failed: {str(e)}",
@@ -259,7 +259,7 @@ class StrandsAgentService:
             }
             
         except Exception as e:
-            logger.error(f"❌ Agent status check error: {str(e)}")
+            logger.error(f"Agent status check error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Agent status check failed: {str(e)}"
@@ -285,7 +285,7 @@ class StrandsAgentService:
             Enhanced supervisor agent response with file processing
         """
         try:
-            logger.info(f"🎯 Processing supervisor request with file: {user_request[:100]}...")
+            logger.info(f"Processing supervisor request with file: {user_request[:100]}...")
             
             # Enhance request with file content
             enhanced_request = user_request
@@ -313,7 +313,7 @@ class StrandsAgentService:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Supervisor with file processing error: {str(e)}")
+            logger.error(f"Supervisor with file processing error: {str(e)}")
             return {
                 "status": "error",
                 "message": f"Supervisor with file processing failed: {str(e)}",

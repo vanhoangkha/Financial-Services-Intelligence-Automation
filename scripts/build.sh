@@ -38,7 +38,7 @@ echo -e "${BLUE}"
 cat << "EOF"
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║    🔨 VPBank K-MULT Agent Studio - Build System            ║
+║    VPBank K-MULT Agent Studio - Build System            ║
 ║    Enterprise Multi-Agent Banking Platform                   ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -48,7 +48,7 @@ echo -e "${NC}"
 BUILD_TYPE=${1:-"development"}
 PUSH_TO_REGISTRY=${2:-"false"}
 
-print_header "🔍 Build Configuration"
+print_header "Build Configuration"
 print_status "Build Type: $BUILD_TYPE"
 print_status "Push to Registry: $PUSH_TO_REGISTRY"
 
@@ -63,29 +63,29 @@ if ! docker info >/dev/null 2>&1; then
     exit 1
 fi
 
-print_header "🏗️ Building VPBank K-MULT Components..."
+print_header "Building VPBank K-MULT Components..."
 
 # Build Backend
-print_header "🔧 Building Backend Multi-Agent Service..."
+print_header "Building Backend Multi-Agent Service..."
 if [ -f "backend/Dockerfile" ]; then
     docker build -t vpbank-kmult-backend:latest \
                  -t vpbank-kmult-backend:$BUILD_TYPE \
                  -f backend/Dockerfile \
                  backend/
-    print_status "✅ Backend image built successfully"
+    print_status "Backend image built successfully"
 else
     print_error "Backend Dockerfile not found"
     exit 1
 fi
 
 # Build Frontend
-print_header "🎨 Building Frontend React Application..."
+print_header "Building Frontend React Application..."
 if [ -f "frontend/Dockerfile" ]; then
     docker build -t vpbank-kmult-frontend:latest \
                  -t vpbank-kmult-frontend:$BUILD_TYPE \
                  -f frontend/Dockerfile \
                  frontend/
-    print_status "✅ Frontend image built successfully"
+    print_status "Frontend image built successfully"
 else
     print_error "Frontend Dockerfile not found"
     exit 1
@@ -93,30 +93,30 @@ fi
 
 # Build Multi-Agent Service (if separate Dockerfile exists)
 if [ -f "backend/app/mutil_agent/Dockerfile" ]; then
-    print_header "🤖 Building Multi-Agent Service..."
+    print_header "Building Multi-Agent Service..."
     docker build -t vpbank-kmult-mutil-agent:latest \
                  -t vpbank-kmult-mutil-agent:$BUILD_TYPE \
                  -f backend/app/mutil_agent/Dockerfile \
                  backend/app/mutil_agent/
-    print_status "✅ Multi-Agent service image built successfully"
+    print_status "Multi-Agent service image built successfully"
 fi
 
-print_header "📊 Build Summary"
+print_header "Build Summary"
 echo "================================"
 
 # List built images
 print_status "Built Docker Images:"
 docker images | grep vpbank-kmult | while read line; do
-    echo "  📦 $line"
+    echo "  $line"
 done
 
 # Image sizes
-print_header "📏 Image Sizes:"
+print_header "Image Sizes:"
 docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" | grep vpbank-kmult
 
 # Push to registry if requested
 if [ "$PUSH_TO_REGISTRY" = "true" ]; then
-    print_header "📤 Pushing Images to Registry..."
+    print_header "Pushing Images to Registry..."
     
     # Check if registry is configured
     if [ -z "$DOCKER_REGISTRY" ]; then
@@ -132,26 +132,26 @@ if [ "$PUSH_TO_REGISTRY" = "true" ]; then
                 docker push $DOCKER_REGISTRY/$image:latest
                 docker push $DOCKER_REGISTRY/$image:$BUILD_TYPE
                 
-                print_status "✅ Pushed $image to registry"
+                print_status "Pushed $image to registry"
             fi
         done
     fi
 fi
 
 print_success ""
-print_success "🎉 Build completed successfully!"
+print_success "Build completed successfully!"
 print_success ""
-print_success "🚀 Next Steps:"
+print_success "Next Steps:"
 print_success "1. Run './run.sh' to start the application"
 print_success "2. Run './test.sh' to execute tests"
 print_success "3. Run './deploy.sh' to deploy to AWS"
 print_success ""
-print_success "📊 Built Components:"
-print_success "   🔧 Backend Multi-Agent Service (FastAPI + 7 Agents)"
-print_success "   🎨 Frontend React Application (Banking UI)"
-print_success "   🤖 Multi-Agent Platform (ECS Fargate Ready)"
+print_success "Built Components:"
+print_success "   Backend Multi-Agent Service (FastAPI + 7 Agents)"
+print_success "   Frontend React Application (Banking UI)"
+print_success "   Multi-Agent Platform (ECS Fargate Ready)"
 print_success ""
-print_success "🏦 Banking Features Ready:"
+print_success "Banking Features Ready:"
 print_success "   • Document Intelligence (OCR + Vietnamese NLP)"
 print_success "   • Letter of Credit Processing (UCP 600)"
 print_success "   • Credit Risk Analysis (Basel III)"

@@ -74,7 +74,7 @@ def determine_initial_routing(state: ConversationState) -> str:
         return "chat_knowledgebase_node"
         
     except Exception as e:
-        logging.error(f"[WORKFLOW] ❌ EXCEPTION in routing: {str(e)}")
+        logging.error(f"[WORKFLOW] EXCEPTION in routing: {str(e)}")
         logging.error(f"[WORKFLOW] Exception type: {type(e)}")
         import traceback
         logging.error(f"[WORKFLOW] Traceback: {traceback.format_exc()}")
@@ -160,16 +160,16 @@ def route_from_chat_node(state: ConversationState) -> str:
     Returns:
         Target node name
     """
-    print(f"🔥 ROUTE_FROM_CHAT_NODE - next_node: {state.next_node}")
+    print(f"ROUTE_FROM_CHAT_NODE - next_node: {state.next_node}")
     
     # Chat node đã set next_node, sử dụng nó
     if hasattr(state, 'next_node') and state.next_node:
         target_node = state.next_node
-        print(f"🔥 Using chat_node decision: {target_node}")
+        print(f"Using chat_node decision: {target_node}")
         return target_node
     
     # Fallback routing nếu chat_node không set next_node
-    print("🔥 Chat node didn't set next_node, using fallback routing")
+    print("Chat node didn't set next_node, using fallback routing")
     return determine_initial_routing(state)
 
 
@@ -184,21 +184,21 @@ def route_from_start(state: ConversationState) -> str:
         Target node name
     """
     # FORCE LOG - này sẽ luôn xuất hiện
-    print("🚨 ROUTE_FROM_START CALLED!")
-    print(f"🚨 State messages: {state.messages}")
+    print("ROUTE_FROM_START CALLED!")
+    print(f"State messages: {state.messages}")
     
     try:
         # Determine routing
         target_node = determine_initial_routing(state)
         
         # FORCE LOG routing result
-        print(f"🚨 ROUTING RESULT: {target_node}")
+        print(f"ROUTING RESULT: {target_node}")
         
         # Validate transition
         if not validate_state_transition(state, target_node):
             logging.warning("[WORKFLOW] State validation failed, using fallback")
             target_node = "chat_knowledgebase_node"
-            print(f"🚨 VALIDATION FAILED - FALLBACK TO: {target_node}")
+            print(f"VALIDATION FAILED - FALLBACK TO: {target_node}")
         
         # Log routing decision
         logging.info(f"[WORKFLOW] Routing from START to {target_node}")

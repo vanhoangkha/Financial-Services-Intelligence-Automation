@@ -81,7 +81,7 @@ BASE_URL = "http://localhost:8080"
 async def test_supervisor_with_text_only():
     """Test supervisor agent with text message only"""
     print("\n" + "="*80)
-    print("🎯 TEST 1: SUPERVISOR AGENT - TEXT ONLY")
+    print("TEST 1: SUPERVISOR AGENT - TEXT ONLY")
     print("="*80)
     
     url = f"{BASE_URL}/mutil_agent/api/v1/strands/supervisor/process"
@@ -101,26 +101,26 @@ async def test_supervisor_with_text_only():
             async with session.post(url, json=payload) as response:
                 result = await response.json()
                 
-                print(f"✅ Status Code: {response.status}")
-                print(f"📊 Response Status: {result.get('status', 'unknown')}")
-                print(f"🤖 Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
+                print(f"Status Code: {response.status}")
+                print(f"Response Status: {result.get('status', 'unknown')}")
+                print(f"Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
                 
                 if result.get('status') == 'success':
-                    print("✅ Text-only supervisor request successful")
+                    print("Text-only supervisor request successful")
                 else:
-                    print(f"❌ Error: {result.get('message', 'Unknown error')}")
+                    print(f"Error: {result.get('message', 'Unknown error')}")
                 
                 return result
                 
     except Exception as e:
-        print(f"❌ Request failed: {str(e)}")
+        print(f"Request failed: {str(e)}")
         return None
 
 
 async def test_supervisor_with_file_upload():
     """Test supervisor agent with file upload"""
     print("\n" + "="*80)
-    print("🎯 TEST 2: SUPERVISOR AGENT - WITH FILE UPLOAD")
+    print("TEST 2: SUPERVISOR AGENT - WITH FILE UPLOAD")
     print("="*80)
     
     url = f"{BASE_URL}/mutil_agent/api/v1/strands/supervisor/process-with-file"
@@ -150,27 +150,27 @@ async def test_supervisor_with_file_upload():
                 async with session.post(url, data=data) as response:
                     result = await response.json()
                     
-                    print(f"✅ Status Code: {response.status}")
-                    print(f"📊 Response Status: {result.get('status', 'unknown')}")
-                    print(f"🤖 Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
+                    print(f"Status Code: {response.status}")
+                    print(f"Response Status: {result.get('status', 'unknown')}")
+                    print(f"Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
                     
                     # Check file processing info
                     file_processing = result.get('data', {}).get('file_processing', {})
                     if file_processing:
-                        print(f"📄 File: {file_processing.get('filename', 'unknown')}")
-                        print(f"📊 File Size: {file_processing.get('file_size', 0)} bytes")
-                        print(f"📝 Extracted Text: {file_processing.get('extracted_text_length', 0)} characters")
-                        print(f"✅ Processing Status: {file_processing.get('processing_status', 'unknown')}")
+                        print(f"File: {file_processing.get('filename', 'unknown')}")
+                        print(f"File Size: {file_processing.get('file_size', 0)} bytes")
+                        print(f"Extracted Text: {file_processing.get('extracted_text_length', 0)} characters")
+                        print(f"Processing Status: {file_processing.get('processing_status', 'unknown')}")
                     
                     if result.get('status') == 'success':
-                        print("✅ File upload supervisor request successful")
+                        print("File upload supervisor request successful")
                     else:
-                        print(f"❌ Error: {result.get('message', 'Unknown error')}")
+                        print(f"Error: {result.get('message', 'Unknown error')}")
                     
                     return result
                     
     except Exception as e:
-        print(f"❌ Request failed: {str(e)}")
+        print(f"Request failed: {str(e)}")
         return None
     finally:
         # Clean up temporary file
@@ -181,7 +181,7 @@ async def test_supervisor_with_file_upload():
 async def test_supervisor_with_financial_document():
     """Test supervisor agent with financial document upload"""
     print("\n" + "="*80)
-    print("🎯 TEST 3: SUPERVISOR AGENT - FINANCIAL DOCUMENT ANALYSIS")
+    print("TEST 3: SUPERVISOR AGENT - FINANCIAL DOCUMENT ANALYSIS")
     print("="*80)
     
     url = f"{BASE_URL}/mutil_agent/api/v1/strands/supervisor/process-with-file"
@@ -213,32 +213,32 @@ async def test_supervisor_with_financial_document():
                 async with session.post(url, data=data) as response:
                     result = await response.json()
                     
-                    print(f"✅ Status Code: {response.status}")
-                    print(f"📊 Response Status: {result.get('status', 'unknown')}")
-                    print(f"🤖 Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
+                    print(f"Status Code: {response.status}")
+                    print(f"Response Status: {result.get('status', 'unknown')}")
+                    print(f"Agent Type: {result.get('agent_info', {}).get('agent_type', 'unknown')}")
                     
                     # Check file processing info
                     file_processing = result.get('data', {}).get('file_processing', {})
                     if file_processing:
-                        print(f"📄 File: {file_processing.get('filename', 'unknown')}")
-                        print(f"📊 File Size: {file_processing.get('file_size', 0)} bytes")
-                        print(f"📝 Extracted Text: {file_processing.get('extracted_text_length', 0)} characters")
-                        print(f"✅ Processing Status: {file_processing.get('processing_status', 'unknown')}")
+                        print(f"File: {file_processing.get('filename', 'unknown')}")
+                        print(f"File Size: {file_processing.get('file_size', 0)} bytes")
+                        print(f"Extracted Text: {file_processing.get('extracted_text_length', 0)} characters")
+                        print(f"Processing Status: {file_processing.get('processing_status', 'unknown')}")
                     
                     if result.get('status') == 'success':
-                        print("✅ Financial document analysis successful")
+                        print("Financial document analysis successful")
                         
                         # Show supervisor response preview
                         supervisor_response = result.get('data', {}).get('supervisor_response', '')
                         if supervisor_response:
-                            print(f"🎯 Supervisor Analysis Preview: {supervisor_response[:200]}...")
+                            print(f"Supervisor Analysis Preview: {supervisor_response[:200]}...")
                     else:
-                        print(f"❌ Error: {result.get('message', 'Unknown error')}")
+                        print(f"Error: {result.get('message', 'Unknown error')}")
                     
                     return result
                     
     except Exception as e:
-        print(f"❌ Request failed: {str(e)}")
+        print(f"Request failed: {str(e)}")
         return None
     finally:
         # Clean up temporary file
@@ -249,7 +249,7 @@ async def test_supervisor_with_financial_document():
 async def test_supervisor_endpoints_availability():
     """Test supervisor endpoints availability"""
     print("\n" + "="*80)
-    print("🔧 TEST 4: SUPERVISOR ENDPOINTS AVAILABILITY")
+    print("TEST 4: SUPERVISOR ENDPOINTS AVAILABILITY")
     print("="*80)
     
     endpoints = [
@@ -269,19 +269,19 @@ async def test_supervisor_endpoints_availability():
                 
                 if "process" in endpoint:
                     # Skip actual processing tests for availability check
-                    print(f"📍 {name}: {endpoint} - Available (endpoint exists)")
+                    print(f"{name}: {endpoint} - Available (endpoint exists)")
                     results[name] = "available"
                 else:
                     async with session.get(url) as response:
                         if response.status == 200:
-                            print(f"✅ {name}: {endpoint} - OK")
+                            print(f"{name}: {endpoint} - OK")
                             results[name] = "ok"
                         else:
-                            print(f"⚠️  {name}: {endpoint} - Status {response.status}")
+                            print(f"{name}: {endpoint} - Status {response.status}")
                             results[name] = f"status_{response.status}"
                             
             except Exception as e:
-                print(f"❌ {name}: {endpoint} - Error: {str(e)}")
+                print(f"{name}: {endpoint} - Error: {str(e)}")
                 results[name] = "error"
     
     return results
@@ -295,7 +295,7 @@ async def run_all_tests():
     print("🏦" + "="*78 + "🏦")
     
     # Test availability first
-    print("\n🔍 Checking endpoint availability...")
+    print("\nChecking endpoint availability...")
     availability = await test_supervisor_endpoints_availability()
     
     # Run functional tests
@@ -309,25 +309,25 @@ async def run_all_tests():
     
     for name, test_func in tests:
         try:
-            print(f"\n🚀 Running {name} test...")
+            print(f"\nRunning {name} test...")
             result = await test_func()
             results[name] = "success" if result and result.get('status') == 'success' else "failed"
-            print(f"✅ {name} completed")
+            print(f"{name} completed")
         except Exception as e:
-            print(f"❌ {name} failed: {str(e)}")
+            print(f"{name} failed: {str(e)}")
             results[name] = "error"
     
     # Summary
     print("\n" + "="*80)
-    print("📊 TEST SUMMARY")
+    print("TEST SUMMARY")
     print("="*80)
     
-    print("\n🔧 Endpoint Availability:")
+    print("\nEndpoint Availability:")
     for endpoint, status in availability.items():
         status_icon = "✅" if status == "ok" or status == "available" else "❌"
         print(f"  {status_icon} {endpoint}: {status}")
     
-    print("\n🧪 Functional Tests:")
+    print("\nFunctional Tests:")
     successful = sum(1 for result in results.values() if result == "success")
     total = len(results)
     
@@ -335,13 +335,13 @@ async def run_all_tests():
         status_icon = "✅" if result == "success" else "❌"
         print(f"  {status_icon} {name}: {result}")
     
-    print(f"\n📈 Success Rate: {successful}/{total} ({successful/total*100:.1f}%)")
+    print(f"\nSuccess Rate: {successful}/{total} ({successful/total*100:.1f}%)")
     
-    print("\n🎯 Available Supervisor Endpoints:")
-    print("  📝 Text Only: POST /mutil_agent/api/v1/strands/supervisor/process")
-    print("  📄 With File: POST /mutil_agent/api/v1/strands/supervisor/process-with-file")
+    print("\nAvailable Supervisor Endpoints:")
+    print("  Text Only: POST /mutil_agent/api/v1/strands/supervisor/process")
+    print("  With File: POST /mutil_agent/api/v1/strands/supervisor/process-with-file")
     
-    print("\n🎉 All tests completed!")
+    print("\nAll tests completed!")
     return results
 
 

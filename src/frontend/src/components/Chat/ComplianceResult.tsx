@@ -181,7 +181,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
                 {expanded ? 'Thu gọn' : 'Xem chi tiết'}
               </Button>
               <Badge color="blue">
-                📄 {getDocumentTypeText(data.document_type)}
+                {getDocumentTypeText(data.document_type)}
               </Badge>
             </SpaceBetween>
           }
@@ -224,7 +224,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
         {/* Violations Section */}
         {data.violations.length > 0 && (
           <Container 
-            header={<Header variant="h3">⚠️ Vấn đề phát hiện ({data.violations.length})</Header>}
+            header={<Header variant="h3">Vấn đề phát hiện ({data.violations.length})</Header>}
           >
             <SpaceBetween direction="vertical" size="s">
               {data.violations.map((violation, index) => (
@@ -255,7 +255,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
         {/* Recommendations Section */}
         {data.recommendations.length > 0 && (
           <Container 
-            header={<Header variant="h3">💡 Khuyến nghị ({data.recommendations.length})</Header>}
+            header={<Header variant="h3">Khuyến nghị ({data.recommendations.length})</Header>}
           >
             <SpaceBetween direction="vertical" size="s">
               {data.recommendations.map((recommendation, index) => (
@@ -303,7 +303,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
         {expanded && (
           <SpaceBetween direction="vertical" size="s">
             {/* Document Information */}
-            <Container header={<Header variant="h3">📋 Thông tin tài liệu</Header>}>
+            <Container header={<Header variant="h3">Thông tin tài liệu</Header>}>
               <KeyValuePairs
                 columns={2}
                 items={[
@@ -317,7 +317,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
 
             {/* Field Completeness */}
             {data.document_analysis.field_completeness && (
-              <Container header={<Header variant="h3">📊 Độ hoàn thiện thông tin</Header>}>
+              <Container header={<Header variant="h3">Độ hoàn thiện thông tin</Header>}>
                 <SpaceBetween direction="vertical" size="s">
                   <ProgressBar
                     value={Math.round(data.document_analysis.field_completeness.completeness_score * 100)}
@@ -344,7 +344,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
 
             {/* Applicable Regulations */}
             {data.document_analysis.applicable_regulations && (
-              <Container header={<Header variant="h3">📜 Quy định áp dụng</Header>}>
+              <Container header={<Header variant="h3">Quy định áp dụng</Header>}>
                 <SpaceBetween direction="vertical" size="s">
                   {data.document_analysis.applicable_regulations.map((regulation, index) => (
                     <div key={index} style={{ 
@@ -371,7 +371,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
 
             {/* UCP Regulations Analysis */}
             {data.ucp_regulations_applied && (
-              <ExpandableSection headerText="📜 Phân tích quy định UCP">
+              <ExpandableSection headerText="Phân tích quy định UCP">
                 <div style={{ 
                   padding: '16px', 
                   backgroundColor: '#f8f9fa', 
@@ -389,7 +389,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
 
             {/* Required Fields Analysis */}
             {data.document_analysis.required_fields && (
-              <ExpandableSection headerText="📝 Phân tích trường bắt buộc">
+              <ExpandableSection headerText="Phân tích trường bắt buộc">
                 <SpaceBetween direction="vertical" size="s">
                   <Container header={<Header variant="h3">Trường bắt buộc</Header>}>
                     <TextContent>
@@ -406,7 +406,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
 
             {/* Processing Details */}
             {data.processing_details && (
-              <ExpandableSection headerText="🔧 Chi tiết xử lý">
+              <ExpandableSection headerText="Chi tiết xử lý">
                 <KeyValuePairs
                   columns={2}
                   items={[
@@ -421,7 +421,7 @@ const ComplianceResult: React.FC<ComplianceResultProps> = ({ data, message }) =>
             )}
 
             {/* Raw Data (for debugging) */}
-            <ExpandableSection headerText="🔧 Dữ liệu thô (Debug)">
+            <ExpandableSection headerText="Dữ liệu thô (Debug)">
               <div style={{ 
                 padding: '16px', 
                 backgroundColor: '#f8f9fa', 

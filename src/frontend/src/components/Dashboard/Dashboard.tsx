@@ -247,7 +247,7 @@ const Dashboard: React.FC = () => {
                 header: 'Agent Name',
                 cell: item => (
                   <SpaceBetween direction="horizontal" size="s">
-                    <span>🤖</span>
+                    <span></span>
                     <strong>{item.name}</strong>
                   </SpaceBetween>
                 ),

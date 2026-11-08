@@ -146,7 +146,7 @@ const HomePage: React.FC<HomePageProps> = ({ agents, loading }) => {
             </SpaceBetween>
           }
         >
-          🏦 VPBank K-MULT Agent Studio
+          VPBank K-MULT Agent Studio
         </Header>
 
         {/* Performance Metrics */}

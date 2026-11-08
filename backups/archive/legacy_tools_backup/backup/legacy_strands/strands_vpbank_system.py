@@ -193,13 +193,13 @@ def chat_knowledge_assistant(query: str) -> str:
 
 Về câu hỏi "{query}" của bạn:
 
-🏦 **VPBank cung cấp các dịch vụ chính:**
+**VPBank cung cấp các dịch vụ chính:**
 - Tín dụng doanh nghiệp và cá nhân
 - Dịch vụ thanh toán quốc tế
 - Letter of Credit (LC) và Trade Finance
 - Quản lý rủi ro và tuân thủ
 
-📞 **Để được hỗ trợ chi tiết hơn:**
+**Để được hỗ trợ chi tiết hơn:**
 - Hotline: 1900 545 415
 - Website: vpbank.com.vn
 - Hoặc liên hệ chi nhánh VPBank gần nhất
@@ -262,21 +262,21 @@ def risk_assessment_assistant(query: str) -> str:
             return response
         else:
             # Fallback risk assessment response
-            return f"""⚠️ **VPBank Risk Assessment Report**
+            return f"""**VPBank Risk Assessment Report**
 
 **Yêu cầu đánh giá:** {query}
 
-📊 **Phân tích sơ bộ:**
+**Phân tích sơ bộ:**
 - Cần thêm thông tin chi tiết để đánh giá chính xác
 - Áp dụng tiêu chuẩn rủi ro VPBank và SBV
 
-🎯 **Khuyến nghị:**
+**Khuyến nghị:**
 1. Cung cấp thêm dữ liệu tài chính
 2. Xem xét tài sản đảm bảo
 3. Kiểm tra lịch sử tín dụng CIC
 4. Đánh giá khả năng trả nợ
 
-📞 **Liên hệ:** Phòng Quản lý Rủi ro VPBank để được tư vấn chi tiết hơn.
+**Liên hệ:** Phòng Quản lý Rủi ro VPBank để được tư vấn chi tiết hơn.
 
 *Đánh giá này mang tính chất tham khảo và cần được xác nhận bởi chuyên gia VPBank.*"""
         
