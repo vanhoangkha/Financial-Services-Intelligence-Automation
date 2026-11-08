@@ -23,7 +23,7 @@ This comprehensive code review identifies **37 critical issues**, **58 high-prio
 
 ### 1.1 Security Vulnerabilities (Priority: CRITICAL)
 
-#### 🔴 CRITICAL-001: Hardcoded AWS Credentials Exposure
+#### CRITICAL-001: Hardcoded AWS Credentials Exposure
 **File:** `/home/ubuntu/multi-agent-hackathon/src/backend/app/multi_agent/config.py` (Lines 22-24, 48-61)
 
 **Issue:**
@@ -76,7 +76,7 @@ def get_secret():
 
 ---
 
-#### 🔴 CRITICAL-002: Overly Permissive CORS Configuration
+#### CRITICAL-002: Overly Permissive CORS Configuration
 **File:** `/home/ubuntu/multi-agent-hackathon/src/backend/app/multi_agent/main.py` (Lines 161-173)
 
 **Issue:**
@@ -126,7 +126,7 @@ app.add_middleware(
 
 ---
 
-#### 🔴 CRITICAL-003: No Input Validation on File Uploads
+#### CRITICAL-003: No Input Validation on File Uploads
 **File:** Risk and Compliance services accept file uploads without validation
 
 **Issue:** Missing file type validation, size limits, and content scanning
@@ -170,7 +170,7 @@ async def validate_file_upload(file: UploadFile):
 
 ---
 
-#### 🔴 CRITICAL-004: Missing Rate Limiting
+#### CRITICAL-004: Missing Rate Limiting
 **Location:** All API endpoints lack rate limiting
 
 **Issue:** No protection against API abuse, DoS attacks, or credential stuffing
@@ -207,7 +207,7 @@ async def validate_compliance(request: Request, data: ComplianceRequest):
 
 ---
 
-#### 🔴 CRITICAL-005: Sensitive Data in Logs
+#### CRITICAL-005: Sensitive Data in Logs
 **File:** Multiple services log full request/response data
 
 **Issue:**
@@ -257,7 +257,7 @@ logger.info(f"Processing request: {sanitize_for_logging(request_data)}")
 
 ---
 
-#### 🔴 CRITICAL-006: No Authentication/Authorization
+#### CRITICAL-006: No Authentication/Authorization
 **Location:** All API endpoints are publicly accessible
 
 **Issue:** No JWT validation, no API key requirement, no user authentication
@@ -303,7 +303,7 @@ async def assess_risk(
 
 ---
 
-#### 🔴 CRITICAL-007: Axios Vulnerability (CVE-2024-XXXX)
+#### CRITICAL-007: Axios Vulnerability (CVE-2024-XXXX)
 **File:** `/home/ubuntu/multi-agent-hackathon/src/frontend/package.json`
 
 **Issue:** Axios 1.10.0 vulnerable to DoS attack (GHSA-4hjh-wcwx-xvwj)
@@ -318,7 +318,7 @@ npm install axios@latest
 
 ---
 
-#### 🔴 CRITICAL-008: form-data Critical Vulnerability
+#### CRITICAL-008: form-data Critical Vulnerability
 **Issue:** form-data uses unsafe random function for boundary generation
 **Risk:** Predictable boundary values, potential data corruption
 **Recommendation:**
@@ -330,7 +330,7 @@ npm update form-data
 
 ### 1.2 Code Quality Issues (Priority: HIGH)
 
-#### 🟠 HIGH-001: TypeScript Strict Mode Disabled
+#### HIGH-001: TypeScript Strict Mode Disabled
 **File:** `/home/ubuntu/multi-agent-hackathon/src/frontend/tsconfig.json` (Line 13)
 
 **Issue:**
@@ -368,7 +368,7 @@ npm update form-data
 
 ---
 
-#### 🟠 HIGH-002: Excessive Use of `any` Type (37 occurrences)
+#### HIGH-002: Excessive Use of `any` Type (37 occurrences)
 **Location:** Throughout frontend codebase
 
 **Issue:** TypeScript `any` type defeats type safety
@@ -417,7 +417,7 @@ export function useApi<T>(
 
 ---
 
-#### 🟠 HIGH-003: Bare `except Exception` Catches (211 instances)
+#### HIGH-003: Bare `except Exception` Catches (211 instances)
 **Location:** Throughout Python backend
 
 **Issue:** Generic exception handling masks specific errors
@@ -467,7 +467,7 @@ async def validate_document_compliance(self, ocr_text: str):
 
 ---
 
-#### 🟠 HIGH-004: Missing Type Hints in Python (Many functions)
+#### HIGH-004: Missing Type Hints in Python (Many functions)
 **Location:** Throughout Python backend
 
 **Issue:**
@@ -512,7 +512,7 @@ async def call_claude_sonnet(prompt: str) -> str:
 
 ---
 
-#### 🟠 HIGH-005: Console.log Statements in Production Code (17 instances)
+#### HIGH-005: Console.log Statements in Production Code (17 instances)
 **File:** `/home/ubuntu/multi-agent-hackathon/src/frontend/src/components/Chat/ChatInterface.tsx`
 
 **Issue:**
@@ -566,7 +566,7 @@ logger.debug('API Response:', response);  // Only logs in development
 
 ---
 
-#### 🟠 HIGH-006: Hardcoded Strings and Magic Numbers
+#### HIGH-006: Hardcoded Strings and Magic Numbers
 **Location:** Throughout codebase
 
 **Issue:**
@@ -612,7 +612,7 @@ if not ocr_text or len(ocr_text.strip()) < ComplianceConstants.MIN_DOCUMENT_LENG
 
 ---
 
-#### 🟠 HIGH-007: Inconsistent Error Response Formats
+#### HIGH-007: Inconsistent Error Response Formats
 **Location:** API endpoints return different error structures
 
 **Issue:**
@@ -664,7 +664,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 
 ---
 
-#### 🟠 HIGH-008: Missing Async Context Managers
+#### HIGH-008: Missing Async Context Managers
 **Location:** File operations, database connections
 
 **Issue:** No proper resource cleanup with async operations
@@ -700,7 +700,7 @@ async with get_db_session() as session:
 
 ### 1.3 Architecture & Design Issues
 
-#### 🟡 MEDIUM-001: Tight Coupling Between Routes and Services
+#### MEDIUM-001: Tight Coupling Between Routes and Services
 **Location:** Route handlers directly instantiate services
 
 **Issue:**
@@ -740,7 +740,7 @@ async def risk_assessment_endpoint(
 
 ---
 
-#### 🟡 MEDIUM-002: Missing Database Connection Pooling
+#### MEDIUM-002: Missing Database Connection Pooling
 **Location:** DynamoDB and MongoDB connections
 
 **Issue:** Each request creates new connections
@@ -751,7 +751,7 @@ async def risk_assessment_endpoint(
 
 ---
 
-#### 🟡 MEDIUM-003: No Caching Strategy
+#### MEDIUM-003: No Caching Strategy
 **Location:** Repeated calls to knowledge base and AI models
 
 **Issue:** Same queries processed multiple times
@@ -796,7 +796,7 @@ async def query_knowledge_base(query: str):
 
 ---
 
-#### 🟡 MEDIUM-004: No Request Tracing/Correlation IDs
+#### MEDIUM-004: No Request Tracing/Correlation IDs
 **Issue:** Cannot trace requests across services
 **Recommendation:**
 - Add correlation ID to all requests
@@ -805,7 +805,7 @@ async def query_knowledge_base(query: str):
 
 ---
 
-#### 🟡 MEDIUM-005: Strands Agent Service Not Using Actual SDK
+#### MEDIUM-005: Strands Agent Service Not Using Actual SDK
 **File:** `/home/ubuntu/multi-agent-hackathon/src/backend/app/multi_agent/services/strands_agent_service.py`
 
 **Issue:**
@@ -832,7 +832,7 @@ from app.mutil_agent.agents.strands_tools import (
 
 ### 2.1 Testing & Quality Assurance
 
-#### 🔵 REC-001: Insufficient Test Coverage
+#### REC-001: Insufficient Test Coverage
 **Current State:** Only 7 test files found
 **Recommendation:**
 - Achieve minimum 80% code coverage
@@ -876,7 +876,7 @@ async def test_assess_risk_missing_fields():
 
 ---
 
-#### 🔵 REC-002: Add API Contract Testing
+#### REC-002: Add API Contract Testing
 **Recommendation:**
 - Use OpenAPI schema validation
 - Implement contract tests with Pact
@@ -884,7 +884,7 @@ async def test_assess_risk_missing_fields():
 
 ---
 
-#### 🔵 REC-003: Add Performance Testing
+#### REC-003: Add Performance Testing
 **Recommendation:**
 - Load test with Locust or k6
 - Set performance SLAs (e.g., P95 < 2s)
@@ -894,7 +894,7 @@ async def test_assess_risk_missing_fields():
 
 ### 2.2 Monitoring & Observability
 
-#### 🔵 REC-004: Add Structured Logging
+#### REC-004: Add Structured Logging
 **Current:** Mix of print statements and basic logging
 **Recommendation:**
 ```python
@@ -915,7 +915,7 @@ logger.info(
 
 ---
 
-#### 🔵 REC-005: Add Application Performance Monitoring (APM)
+#### REC-005: Add Application Performance Monitoring (APM)
 **Recommendation:**
 - Integrate AWS X-Ray or DataDog
 - Track API latency, error rates
@@ -923,7 +923,7 @@ logger.info(
 
 ---
 
-#### 🔵 REC-006: Add Health Check Monitoring
+#### REC-006: Add Health Check Monitoring
 **Current:** Basic health endpoints exist
 **Recommendation:**
 - Add dependency health checks (DynamoDB, Bedrock, S3)
@@ -934,7 +934,7 @@ logger.info(
 
 ### 2.3 Code Quality Improvements
 
-#### 🔵 REC-007: Remove Code Duplication
+#### REC-007: Remove Code Duplication
 **Issue:** Similar patterns repeated across services
 
 **Example:**
@@ -955,7 +955,7 @@ max_tokens = int(LLM_MAX_TOKENS or "8192")
 
 ---
 
-#### 🔵 REC-008: Improve Error Messages
+#### REC-008: Improve Error Messages
 **Current:** Generic error messages in Vietnamese and English mix
 **Recommendation:**
 - Use i18n for multilingual support
@@ -964,7 +964,7 @@ max_tokens = int(LLM_MAX_TOKENS or "8192")
 
 ---
 
-#### 🔵 REC-009: Add Docstrings to All Functions
+#### REC-009: Add Docstrings to All Functions
 **Current:** Many functions lack documentation
 **Recommendation:**
 - Use Google-style docstrings
@@ -975,7 +975,7 @@ max_tokens = int(LLM_MAX_TOKENS or "8192")
 
 ### 2.4 Security Enhancements
 
-#### 🔵 REC-010: Implement Request Validation
+#### REC-010: Implement Request Validation
 **Recommendation:**
 - Validate all input with Pydantic
 - Add custom validators for business rules
@@ -983,7 +983,7 @@ max_tokens = int(LLM_MAX_TOKENS or "8192")
 
 ---
 
-#### 🔵 REC-011: Add Security Headers
+#### REC-011: Add Security Headers
 **Recommendation:**
 ```python
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -1003,7 +1003,7 @@ async def add_security_headers(request: Request, call_next):
 
 ---
 
-#### 🔵 REC-012: Implement Audit Logging
+#### REC-012: Implement Audit Logging
 **Recommendation:**
 - Log all authentication attempts
 - Log all financial operations
@@ -1013,7 +1013,7 @@ async def add_security_headers(request: Request, call_next):
 
 ### 2.5 Performance Optimization
 
-#### 🔵 REC-013: Implement Async Background Tasks
+#### REC-013: Implement Async Background Tasks
 **Issue:** Long-running operations block request handling
 **Recommendation:**
 ```python
@@ -1039,7 +1039,7 @@ async def get_assessment_result(task_id: str):
 
 ---
 
-#### 🔵 REC-014: Optimize Database Queries
+#### REC-014: Optimize Database Queries
 **Recommendation:**
 - Add indexes to DynamoDB tables
 - Use batch operations where possible
@@ -1047,7 +1047,7 @@ async def get_assessment_result(task_id: str):
 
 ---
 
-#### 🔵 REC-015: Reduce AWS Bedrock API Calls
+#### REC-015: Reduce AWS Bedrock API Calls
 **Recommendation:**
 - Cache common prompts/responses
 - Batch similar requests
@@ -1059,7 +1059,7 @@ async def get_assessment_result(task_id: str):
 
 ### 3.1 Code Organization
 
-#### 🟢 IMP-001: Create Shared Type Definitions
+#### IMP-001: Create Shared Type Definitions
 **Recommendation:**
 - Create common types package
 - Share types between frontend and backend (TypeScript + Python)
@@ -1067,7 +1067,7 @@ async def get_assessment_result(task_id: str):
 
 ---
 
-#### 🟢 IMP-002: Reorganize Project Structure
+#### IMP-002: Reorganize Project Structure
 **Current Structure Issues:**
 - Inconsistent naming (`mutil_agent` vs `multi_agent`)
 - Mixed concerns in routes
@@ -1102,7 +1102,7 @@ src/backend/
 
 ---
 
-#### 🟢 IMP-003: Add Pre-commit Hooks
+#### IMP-003: Add Pre-commit Hooks
 **Recommendation:**
 ```yaml
 # .pre-commit-config.yaml
@@ -1130,7 +1130,7 @@ repos:
 
 ### 3.2 Documentation
 
-#### 🟢 IMP-004: Add API Documentation
+#### IMP-004: Add API Documentation
 **Recommendation:**
 - Enhance OpenAPI documentation
 - Add example requests/responses
@@ -1139,7 +1139,7 @@ repos:
 
 ---
 
-#### 🟢 IMP-005: Add Architecture Documentation
+#### IMP-005: Add Architecture Documentation
 **Recommendation:**
 - Create architecture diagrams (C4 model)
 - Document agent communication patterns
@@ -1148,7 +1148,7 @@ repos:
 
 ---
 
-#### 🟢 IMP-006: Add Developer Guide
+#### IMP-006: Add Developer Guide
 **Recommendation:**
 - Setup instructions
 - Development workflow
@@ -1159,7 +1159,7 @@ repos:
 
 ### 3.3 DevOps & Infrastructure
 
-#### 🟢 IMP-007: Add CI/CD Pipeline
+#### IMP-007: Add CI/CD Pipeline
 **Recommendation:**
 ```yaml
 # .github/workflows/ci.yml
@@ -1202,7 +1202,7 @@ jobs:
 
 ---
 
-#### 🟢 IMP-008: Add Container Security Scanning
+#### IMP-008: Add Container Security Scanning
 **Recommendation:**
 - Scan Docker images with Trivy
 - Check for vulnerabilities in base images
@@ -1210,7 +1210,7 @@ jobs:
 
 ---
 
-#### 🟢 IMP-009: Implement Blue-Green Deployment
+#### IMP-009: Implement Blue-Green Deployment
 **Recommendation:**
 - Use AWS ECS with blue-green deployment
 - Implement health checks
@@ -1220,7 +1220,7 @@ jobs:
 
 ### 3.4 Frontend Improvements
 
-#### 🟢 IMP-010: Implement Proper State Management
+#### IMP-010: Implement Proper State Management
 **Current:** Local state with useState
 **Recommendation:**
 - Use Redux or Zustand for global state
@@ -1229,7 +1229,7 @@ jobs:
 
 ---
 
-#### 🟢 IMP-011: Add Frontend Error Boundaries
+#### IMP-011: Add Frontend Error Boundaries
 **Recommendation:**
 ```typescript
 import React from 'react';
@@ -1270,7 +1270,7 @@ export default ErrorBoundary;
 
 ---
 
-#### 🟢 IMP-012: Add Frontend Input Validation
+#### IMP-012: Add Frontend Input Validation
 **Recommendation:**
 - Use Yup or Zod for schema validation
 - Validate before API calls
@@ -1280,7 +1280,7 @@ export default ErrorBoundary;
 
 ## 4. Strands Agent Specific Issues
 
-### 🔴 STRANDS-001: Not Using Actual Strands SDK
+### STRANDS-001: Not Using Actual Strands SDK
 **File:** `strands_agent_service.py`
 
 **Issue:** Imports reference local wrapper functions, not Strands SDK
@@ -1291,7 +1291,7 @@ export default ErrorBoundary;
 
 ---
 
-### 🟡 STRANDS-002: Missing Agent Health Monitoring
+### STRANDS-002: Missing Agent Health Monitoring
 **Issue:** No health checks for individual agents
 **Recommendation:**
 - Monitor agent response times
@@ -1300,7 +1300,7 @@ export default ErrorBoundary;
 
 ---
 
-### 🟡 STRANDS-003: No Agent Performance Metrics
+### STRANDS-003: No Agent Performance Metrics
 **Recommendation:**
 - Track agent invocation counts
 - Monitor token usage per agent
@@ -1312,12 +1312,12 @@ export default ErrorBoundary;
 
 ### Backend Dependencies (requirements.txt)
 
-✅ **Good Practices:**
+**Good Practices:**
 - Using specific versions (good for reproducibility)
 - Recent versions of core packages
 - Security-focused versions noted
 
-⚠️ **Concerns:**
+**Concerns:**
 - No dependency scanning in CI/CD
 - No automated dependency updates
 
@@ -1337,7 +1337,7 @@ pip-audit
 
 ### Frontend Dependencies (package.json)
 
-⚠️ **Critical Vulnerabilities:**
+**Critical Vulnerabilities:**
 - axios (DoS vulnerability)
 - form-data (unsafe random function)
 - on-headers (header manipulation)
