@@ -4,22 +4,22 @@
 [![Strands Agent](https://img.shields.io/badge/powered--by-Strands%20Agents-blue.svg)](https://strands.com)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)]()
 
-## 🏦 Overview
+## Overview
 
 Enterprise-grade **Strands Multi-Agent AI System** designed specifically for **Banking, Financial Services, and Insurance (BFSI)** operations. Built on the **Strands Agent Framework**, this platform leverages specialized AI agents to automate financial intelligence tasks, risk assessment, compliance monitoring, and customer service operations.
 
 Powered by **Strands Agents SDK** with security-first architecture to meet stringent regulatory requirements including PCI DSS, GDPR, and banking regulations.
 
-## 🎯 Key Features
+## Key Features
 
-### 🤖 Strands Multi-Agent Intelligence
+### Strands Multi-Agent Intelligence
 - **Strands Agent Framework**: Production-ready multi-agent orchestration for banking
 - **Specialized Banking Agents**: Pre-built agents for financial services use cases
 - **Agent Coordination**: Strands-powered agent communication and workflow management
 - **Real-time Collaboration**: Agents communicate and share context via Strands message bus
 - **Task Distribution**: Intelligent routing with Strands orchestrator
 
-### 📊 Financial Services Capabilities
+### Financial Services Capabilities
 - **Document Processing**: Automated extraction from financial statements, KYC documents, contracts
 - **Risk Assessment**: AI-powered credit risk, market risk, and portfolio analysis
 - **Compliance Monitoring**: AML, KYC verification, regulatory compliance checks
@@ -27,7 +27,7 @@ Powered by **Strands Agents SDK** with security-first architecture to meet strin
 - **Fraud Detection**: Real-time anomaly detection and pattern recognition
 - **Transaction Monitoring**: Real-time transaction analysis and risk scoring
 
-### 🏗️ Strands Agent Architecture
+### Strands Agent Architecture
 
 Our system implements **Strands Agent Framework** with specialized domain agents:
 
@@ -59,7 +59,7 @@ Our system implements **Strands Agent Framework** with specialized domain agents
               └─────────────────────────┘
 ```
 
-### 🔧 Strands Agent Types
+### Strands Agent Types
 
 **Built on Strands Agent SDK:**
 
@@ -93,7 +93,7 @@ Our system implements **Strands Agent Framework** with specialized domain agents
    - Task routing and distribution
    - Result aggregation
 
-### 🔄 Strands Orchestration Patterns
+### Strands Orchestration Patterns
 
 ```bash
 # Sequential Processing
@@ -112,7 +112,7 @@ Supervisor Agent
     └─→ Aggregator (combine results)
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -171,25 +171,25 @@ uvicorn app.multi_agent.main:app --reload --port 8080
 - Strands API: `http://localhost:8080/multi_agent/api/v1/strands`
 - Health Check: `http://localhost:8080/health`
 
-## 🔐 Security (BFSI Compliant)
+## Security (BFSI Compliant)
 
 ### Enterprise Security Features
-- ✅ **SSL/TLS Encryption** (TLS 1.2+)
-- ✅ **JWT Authentication** + MFA
-- ✅ **Role-Based Access Control** (RBAC)
-- ✅ **Input Sanitization** (SQL injection, XSS prevention)
-- ✅ **Rate Limiting** (DDoS protection)
-- ✅ **Security Headers** (OWASP best practices)
-- ✅ **Audit Logging** (PCI DSS compliant)
-- ✅ **Data Encryption** (AES-256 at rest)
+- **SSL/TLS Encryption** (TLS 1.2+)
+- **JWT Authentication** + MFA
+- **Role-Based Access Control** (RBAC)
+- **Input Sanitization** (SQL injection, XSS prevention)
+- **Rate Limiting** (DDoS protection)
+- **Security Headers** (OWASP best practices)
+- **Audit Logging** (PCI DSS compliant)
+- **Data Encryption** (AES-256 at rest)
 
 ### Compliance Standards
-- ✅ **PCI DSS** - Payment Card Industry Data Security
-- ✅ **GDPR** - Data privacy and protection
-- ✅ **SOC 2 Type II** - Service organization controls
-- ✅ **Banking Regulations** - Regional financial compliance
+- **PCI DSS** - Payment Card Industry Data Security
+- **GDPR** - Data privacy and protection
+- **SOC 2 Type II** - Service organization controls
+- **Banking Regulations** - Regional financial compliance
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Backend (Strands Agent System)
 - **Framework**: FastAPI 0.115.9
@@ -210,7 +210,7 @@ uvicorn app.multi_agent.main:app --reload --port 8080
 - **CI/CD**: GitHub Actions
 - **Monitoring**: CloudWatch, Sentry
 
-## 📡 Strands Agent Endpoints
+## Strands Agent Endpoints
 
 ### Core Agent APIs
 
@@ -253,7 +253,7 @@ curl -X POST http://localhost:8080/multi_agent/api/v1/strands/risk/assess \
   }'
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Development
 ```bash
@@ -265,7 +265,7 @@ docker-compose up -d
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
-## ☁️ AWS Deployment
+## AWS Deployment
 
 ```bash
 cd deployments/infrastructure/cdk
@@ -274,14 +274,14 @@ cdk bootstrap
 cdk deploy --all
 ```
 
-## 📊 Monitoring & Health Checks
+## Monitoring & Health Checks
 
 - **Backend Health**: `/health`
 - **Agents Status**: `/multi_agent/api/v1/strands/agents/status`
 - **Database**: `/health/db`
 - **API Docs**: `/docs` (OpenAPI/Swagger)
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Backend tests (Strands Agents)
@@ -293,14 +293,14 @@ cd src/frontend
 npm test
 ```
 
-## 📈 Performance
+## Performance
 
 - **API Response**: < 100ms (P95)
 - **Agent Processing**: < 2s for standard tasks
 - **Concurrent Users**: 10,000+ supported
 - **Availability**: 99.9% uptime SLA
 
-## 🏆 BFSI Use Cases
+## BFSI Use Cases
 
 1. **Customer Onboarding** - KYC verification, risk assessment
 2. **Loan Processing** - Credit scoring, document verification
@@ -308,13 +308,13 @@ npm test
 4. **Fraud Detection** - Real-time anomaly detection
 5. **Customer Support** - AI-powered chat and Q&A
 
-## 📞 Support
+## Support
 
 - **Email**: support@vpbank.com
 - **Documentation**: `/docs`
 - **API Reference**: `http://localhost:8080/docs`
 
-## 📄 License
+## License
 
 Proprietary - All rights reserved.
 
